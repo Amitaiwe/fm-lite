@@ -1,0 +1,2002 @@
+[
+  {
+    "id": 1001,
+    "name_he": "קיליאן אמבפה",
+    "name_en": "Kylian Mbappé",
+    "position": "striker",
+    "ability": 99,
+    "market_value": 180000000
+  },
+  {
+    "id": 1002,
+    "name_he": "רודרי",
+    "name_en": "Rodri",
+    "position": "midfielder",
+    "ability": 99,
+    "market_value": 180000000
+  },
+  {
+    "id": 1003,
+    "name_he": "ג'וד בלינגהאם",
+    "name_en": "Jude Bellingham",
+    "position": "midfielder",
+    "ability": 98,
+    "market_value": 165000000
+  },
+  {
+    "id": 1004,
+    "name_he": "ויניסיוס ג'וניור",
+    "name_en": "Vini Jr.",
+    "position": "striker",
+    "ability": 98,
+    "market_value": 165000000
+  },
+  {
+    "id": 1005,
+    "name_he": "קווין דה בראונה",
+    "name_en": "Kevin De Bruyne",
+    "position": "midfielder",
+    "ability": 98,
+    "market_value": 165000000
+  },
+  {
+    "id": 1006,
+    "name_he": "הארי קיין",
+    "name_en": "Harry Kane",
+    "position": "striker",
+    "ability": 98,
+    "market_value": 165000000
+  },
+  {
+    "id": 1007,
+    "name_he": "מרטין אודגור",
+    "name_en": "Martin Ødegaard",
+    "position": "midfielder",
+    "ability": 97,
+    "market_value": 150000000
+  },
+  {
+    "id": 1008,
+    "name_he": "ג'אנלואיג'י דוננרומה",
+    "name_en": "Gianluigi Donnarumma",
+    "position": "goalkeeper",
+    "ability": 97,
+    "market_value": 150000000
+  },
+  {
+    "id": 1009,
+    "name_he": "אליסון",
+    "name_en": "Alisson",
+    "position": "goalkeeper",
+    "ability": 97,
+    "market_value": 150000000
+  },
+  {
+    "id": 1010,
+    "name_he": "לאוטארו מרטינס",
+    "name_en": "Lautaro Martínez",
+    "position": "striker",
+    "ability": 97,
+    "market_value": 150000000
+  },
+  {
+    "id": 1011,
+    "name_he": "פירג'יל ואן דייק",
+    "name_en": "Virgil van Dijk",
+    "position": "defender",
+    "ability": 97,
+    "market_value": 150000000
+  },
+  {
+    "id": 1012,
+    "name_he": "מארק-אנדרה טר שטגן",
+    "name_en": "Marc-André ter Stegen",
+    "position": "goalkeeper",
+    "ability": 97,
+    "market_value": 150000000
+  },
+  {
+    "id": 1013,
+    "name_he": "מוחמד סלאח",
+    "name_en": "Mohamed Salah",
+    "position": "striker",
+    "ability": 97,
+    "market_value": 150000000
+  },
+  {
+    "id": 1014,
+    "name_he": "פיל פודן",
+    "name_en": "Phil Foden",
+    "position": "striker",
+    "ability": 96,
+    "market_value": 135000000
+  },
+  {
+    "id": 1015,
+    "name_he": "אנטואן גריזמן",
+    "name_en": "Antoine Griezmann",
+    "position": "striker",
+    "ability": 96,
+    "market_value": 135000000
+  },
+  {
+    "id": 1016,
+    "name_he": "רובן דיאש",
+    "name_en": "Rúben Dias",
+    "position": "defender",
+    "ability": 96,
+    "market_value": 135000000
+  },
+  {
+    "id": 1017,
+    "name_he": "רוברט לבנדובסקי",
+    "name_en": "Robert Lewandowski",
+    "position": "striker",
+    "ability": 96,
+    "market_value": 135000000
+  },
+  {
+    "id": 1018,
+    "name_he": "פדריקו ולוורדה",
+    "name_en": "Federico Valverde",
+    "position": "midfielder",
+    "ability": 96,
+    "market_value": 135000000
+  },
+  {
+    "id": 1019,
+    "name_he": "ברנרדו סילבה",
+    "name_en": "Bernardo Silva",
+    "position": "midfielder",
+    "ability": 96,
+    "market_value": 135000000
+  },
+  {
+    "id": 1020,
+    "name_he": "יאן אובלאק",
+    "name_en": "Jan Oblak",
+    "position": "goalkeeper",
+    "ability": 96,
+    "market_value": 135000000
+  },
+  {
+    "id": 1021,
+    "name_he": "אנטוניו רודיגר",
+    "name_en": "Antonio Rüdiger",
+    "position": "defender",
+    "ability": 96,
+    "market_value": 135000000
+  },
+  {
+    "id": 1022,
+    "name_he": "פלוריאן וירץ",
+    "name_en": "Florian Wirtz",
+    "position": "midfielder",
+    "ability": 96,
+    "market_value": 135000000
+  },
+  {
+    "id": 1023,
+    "name_he": "גרגור קובל",
+    "name_en": "Gregor Kobel",
+    "position": "goalkeeper",
+    "ability": 96,
+    "market_value": 135000000
+  },
+  {
+    "id": 1024,
+    "name_he": "וויליאם סליבה",
+    "name_en": "William Saliba",
+    "position": "defender",
+    "ability": 95,
+    "market_value": 120000000
+  },
+  {
+    "id": 1025,
+    "name_he": "ויקטור אוסימן",
+    "name_en": "Victor Osimhen",
+    "position": "striker",
+    "ability": 95,
+    "market_value": 120000000
+  },
+  {
+    "id": 1026,
+    "name_he": "ג'מאל מוסיאלה",
+    "name_en": "Jamal Musiala",
+    "position": "midfielder",
+    "ability": 95,
+    "market_value": 120000000
+  },
+  {
+    "id": 1027,
+    "name_he": "בוקאיו סאקה",
+    "name_en": "Bukayo Saka",
+    "position": "striker",
+    "ability": 95,
+    "market_value": 120000000
+  },
+  {
+    "id": 1028,
+    "name_he": "פאולו דיבאלה",
+    "name_en": "Paulo Dybala",
+    "position": "midfielder",
+    "ability": 95,
+    "market_value": 120000000
+  },
+  {
+    "id": 1029,
+    "name_he": "תאו הרננדס",
+    "name_en": "Theo Hernández",
+    "position": "defender",
+    "ability": 95,
+    "market_value": 120000000
+  },
+  {
+    "id": 1030,
+    "name_he": "מייק מניאן",
+    "name_en": "Mike Maignan",
+    "position": "goalkeeper",
+    "ability": 95,
+    "market_value": 120000000
+  },
+  {
+    "id": 1031,
+    "name_he": "סון הונג-מין",
+    "name_en": "Heung Min Son",
+    "position": "striker",
+    "ability": 95,
+    "market_value": 120000000
+  },
+  {
+    "id": 1032,
+    "name_he": "מרקיניוס",
+    "name_en": "Marquinhos",
+    "position": "defender",
+    "ability": 95,
+    "market_value": 120000000
+  },
+  {
+    "id": 1033,
+    "name_he": "אלסנדרו בסטוני",
+    "name_en": "Alessandro Bastoni",
+    "position": "defender",
+    "ability": 95,
+    "market_value": 120000000
+  },
+  {
+    "id": 1034,
+    "name_he": "אמיליאנו מרטינס",
+    "name_en": "Emiliano Martínez",
+    "position": "goalkeeper",
+    "ability": 95,
+    "market_value": 120000000
+  },
+  {
+    "id": 1035,
+    "name_he": "ניקולו ברלה",
+    "name_en": "Nicolò Barella",
+    "position": "midfielder",
+    "ability": 95,
+    "market_value": 120000000
+  },
+  {
+    "id": 1036,
+    "name_he": "יאן זומר",
+    "name_en": "Yann Sommer",
+    "position": "goalkeeper",
+    "ability": 95,
+    "market_value": 120000000
+  },
+  {
+    "id": 1037,
+    "name_he": "גבריאל",
+    "name_en": "Gabriel",
+    "position": "defender",
+    "ability": 94,
+    "market_value": 112000000
+  },
+  {
+    "id": 1038,
+    "name_he": "גרניט שאקה",
+    "name_en": "Granit Xhaka",
+    "position": "midfielder",
+    "ability": 94,
+    "market_value": 112000000
+  },
+  {
+    "id": 1039,
+    "name_he": "רפאל לאאו",
+    "name_en": "Rafael Leão",
+    "position": "striker",
+    "ability": 94,
+    "market_value": 112000000
+  },
+  {
+    "id": 1040,
+    "name_he": "גרימאלדו",
+    "name_en": "Grimaldo",
+    "position": "midfielder",
+    "ability": 94,
+    "market_value": 112000000
+  },
+  {
+    "id": 1041,
+    "name_he": "אוסמן דמבלה",
+    "name_en": "Ousmane Dembélé",
+    "position": "striker",
+    "ability": 94,
+    "market_value": 112000000
+  },
+  {
+    "id": 1042,
+    "name_he": "טרנט אלכסנדר-ארנולד",
+    "name_en": "Trent Alexander-Arnold",
+    "position": "defender",
+    "ability": 94,
+    "market_value": 112000000
+  },
+  {
+    "id": 1043,
+    "name_he": "פדרי",
+    "name_en": "Pedri",
+    "position": "midfielder",
+    "ability": 94,
+    "market_value": 112000000
+  },
+  {
+    "id": 1044,
+    "name_he": "יונתן טה",
+    "name_en": "Jonathan Tah",
+    "position": "defender",
+    "ability": 94,
+    "market_value": 112000000
+  },
+  {
+    "id": 1045,
+    "name_he": "ברמר",
+    "name_en": "Bremer",
+    "position": "defender",
+    "ability": 94,
+    "market_value": 112000000
+  },
+  {
+    "id": 1046,
+    "name_he": "יושוע קימיך",
+    "name_en": "Joshua Kimmich",
+    "position": "defender",
+    "ability": 94,
+    "market_value": 112000000
+  },
+  {
+    "id": 1047,
+    "name_he": "אונאי סימון",
+    "name_en": "Unai Simón",
+    "position": "goalkeeper",
+    "ability": 94,
+    "market_value": 112000000
+  },
+  {
+    "id": 1048,
+    "name_he": "מנואל נוייר",
+    "name_en": "Manuel Neuer",
+    "position": "goalkeeper",
+    "ability": 94,
+    "market_value": 112000000
+  },
+  {
+    "id": 1049,
+    "name_he": "האקאן צ'לחנאוגלו",
+    "name_en": "Hakan Çalhanoğlu",
+    "position": "midfielder",
+    "ability": 94,
+    "market_value": 112000000
+  },
+  {
+    "id": 1050,
+    "name_he": "אלכסנדר איסאק",
+    "name_en": "Alexander Isak",
+    "position": "striker",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1051,
+    "name_he": "אנדרו רוברטסון",
+    "name_en": "Andrew Robertson",
+    "position": "defender",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1052,
+    "name_he": "קול פאלמר",
+    "name_en": "Cole Palmer",
+    "position": "midfielder",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1053,
+    "name_he": "גיורגי ממרדשווילי",
+    "name_en": "Giorgi Mamardashvili",
+    "position": "goalkeeper",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1054,
+    "name_he": "ג'יימס מדיסון",
+    "name_en": "James Maddison",
+    "position": "midfielder",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1055,
+    "name_he": "ז'יל קונדה",
+    "name_en": "Jules Koundé",
+    "position": "defender",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1056,
+    "name_he": "יוליאן ברנדט",
+    "name_en": "Julian Brandt",
+    "position": "midfielder",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1057,
+    "name_he": "חביצ'ה קווארצחליה",
+    "name_en": "Khvicha Kvaratskhelia",
+    "position": "striker",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1058,
+    "name_he": "לואיס אופנדה",
+    "name_en": "Loïs Openda",
+    "position": "striker",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1059,
+    "name_he": "ניקו שלוטרבק",
+    "name_en": "Nico Schlotterbeck",
+    "position": "defender",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1060,
+    "name_he": "ניקו וויליאמס",
+    "name_en": "Nico Williams",
+    "position": "midfielder",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1061,
+    "name_he": "אולי ווטקינס",
+    "name_en": "Ollie Watkins",
+    "position": "striker",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1062,
+    "name_he": "פלהיניה",
+    "name_en": "Palhinha",
+    "position": "midfielder",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1063,
+    "name_he": "רונלד אראוחו",
+    "name_en": "Ronald Araujo",
+    "position": "defender",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1064,
+    "name_he": "ויטיניה",
+    "name_en": "Vitinha",
+    "position": "midfielder",
+    "ability": 93,
+    "market_value": 104000000
+  },
+  {
+    "id": 1065,
+    "name_he": "ארטם דובביק",
+    "name_en": "Artem Dovbyk",
+    "position": "striker",
+    "ability": 92,
+    "market_value": 96000000
+  },
+  {
+    "id": 1066,
+    "name_he": "קאסמירו",
+    "name_en": "Casemiro",
+    "position": "midfielder",
+    "ability": 92,
+    "market_value": 96000000
+  },
+  {
+    "id": 1067,
+    "name_he": "דושאן ולאהוביץ'",
+    "name_en": "Dušan Vlahović",
+    "position": "striker",
+    "ability": 92,
+    "market_value": 96000000
+  },
+  {
+    "id": 1068,
+    "name_he": "איאגו אספאס",
+    "name_en": "Iago Aspas",
+    "position": "striker",
+    "ability": 92,
+    "market_value": 96000000
+  },
+  {
+    "id": 1069,
+    "name_he": "לוקאש הרדצקי",
+    "name_en": "Lukáš Hrádecký",
+    "position": "goalkeeper",
+    "ability": 92,
+    "market_value": 96000000
+  },
+  {
+    "id": 1070,
+    "name_he": "אלסיו רומניולי",
+    "name_en": "Alessio Romagnoli",
+    "position": "defender",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1071,
+    "name_he": "דאגלס לואיז",
+    "name_en": "Douglas Luiz",
+    "position": "midfielder",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1072,
+    "name_he": "דובן סאפאטה",
+    "name_en": "Duván Zapata",
+    "position": "striker",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1073,
+    "name_he": "פיקאיו טומורי",
+    "name_en": "Fikayo Tomori",
+    "position": "defender",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1074,
+    "name_he": "ז'ראר מורנו",
+    "name_en": "Gerard Moreno",
+    "position": "striker",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1075,
+    "name_he": "איבן פרובדל",
+    "name_en": "Ivan Provedel",
+    "position": "goalkeeper",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1076,
+    "name_he": "חוסה מריה חימנס",
+    "name_en": "José María Giménez",
+    "position": "defender",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1077,
+    "name_he": "לוקאס הרננדס",
+    "name_en": "Lucas Hernández",
+    "position": "defender",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1078,
+    "name_he": "מטיה זקאני",
+    "name_en": "Mattia Zaccagni",
+    "position": "striker",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1079,
+    "name_he": "פארחו",
+    "name_en": "Parejo",
+    "position": "midfielder",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1080,
+    "name_he": "רובין לה נורמן",
+    "name_en": "Robin Le Normand",
+    "position": "defender",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1081,
+    "name_he": "טון קופמיינרס",
+    "name_en": "Teun Koopmeiners",
+    "position": "midfielder",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1082,
+    "name_he": "וילי אורבן",
+    "name_en": "Willi Orban",
+    "position": "defender",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1083,
+    "name_he": "צ'אבי סימונס",
+    "name_en": "Xavi Simons",
+    "position": "midfielder",
+    "ability": 91,
+    "market_value": 88000000
+  },
+  {
+    "id": 1084,
+    "name_he": "אלכסנדר לקזט",
+    "name_en": "Alexandre Lacazette",
+    "position": "striker",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1085,
+    "name_he": "אנתוני גורדון",
+    "name_en": "Anthony Gordon",
+    "position": "striker",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1086,
+    "name_he": "בריס סמבה",
+    "name_en": "Brice Samba",
+    "position": "goalkeeper",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1087,
+    "name_he": "דנילו",
+    "name_en": "Danilo",
+    "position": "defender",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1088,
+    "name_he": "אמרה ג'אן",
+    "name_en": "Emre Can",
+    "position": "midfielder",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1089,
+    "name_he": "גאיה",
+    "name_en": "Gayà",
+    "position": "defender",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1090,
+    "name_he": "ג'אנלוקה מנצ'יני",
+    "name_en": "Gianluca Mancini",
+    "position": "defender",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1091,
+    "name_he": "ג'ובאני די לורנצו",
+    "name_en": "Giovanni Di Lorenzo",
+    "position": "defender",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1092,
+    "name_he": "איניאקי וויליאמס",
+    "name_en": "Iñaki Williams",
+    "position": "midfielder",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1093,
+    "name_he": "ג'ון מקגין",
+    "name_en": "John McGinn",
+    "position": "midfielder",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1094,
+    "name_he": "קווין טראפ",
+    "name_en": "Kevin Trapp",
+    "position": "goalkeeper",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1095,
+    "name_he": "מרקו קרנסקי",
+    "name_en": "Marco Carnesecchi",
+    "position": "goalkeeper",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1096,
+    "name_he": "מתיאס גינטר",
+    "name_en": "Matthias Ginter",
+    "position": "defender",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1097,
+    "name_he": "מוחמד קודוס",
+    "name_en": "Mohammed Kudus",
+    "position": "midfielder",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1098,
+    "name_he": "נאוול מולינה",
+    "name_en": "Nahuel Molina",
+    "position": "defender",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1099,
+    "name_he": "ניקלאס פילקרוג",
+    "name_en": "Niclas Füllkrug",
+    "position": "striker",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1100,
+    "name_he": "ניקלס זולה",
+    "name_en": "Niklas Süle",
+    "position": "defender",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1101,
+    "name_he": "אויארסבל",
+    "name_en": "Oyarzabal",
+    "position": "striker",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1102,
+    "name_he": "פאולו גסניגה",
+    "name_en": "Paulo Gazzaniga",
+    "position": "goalkeeper",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1103,
+    "name_he": "פטר גולאצ'י",
+    "name_en": "Péter Gulácsi",
+    "position": "goalkeeper",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1104,
+    "name_he": "רפאל וראן",
+    "name_en": "Raphaël Varane",
+    "position": "defender",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1105,
+    "name_he": "רומלו לוקאקו",
+    "name_en": "Romelu Lukaku",
+    "position": "striker",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1106,
+    "name_he": "סטניסלב לובוטקה",
+    "name_en": "Stanislav Lobotka",
+    "position": "midfielder",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1107,
+    "name_he": "תומס פארטיי",
+    "name_en": "Thomas Partey",
+    "position": "midfielder",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1108,
+    "name_he": "טיג'אני ריינדרס",
+    "name_en": "Tijjani Reijnders",
+    "position": "midfielder",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1109,
+    "name_he": "יאנגל הררה",
+    "name_en": "Yangel Herrera",
+    "position": "midfielder",
+    "ability": 90,
+    "market_value": 80000000
+  },
+  {
+    "id": 1110,
+    "name_he": "אלכסנדר גולובין",
+    "name_en": "Alexandr Golovin",
+    "position": "midfielder",
+    "ability": 89,
+    "market_value": 75000000
+  },
+  {
+    "id": 1111,
+    "name_he": "אנדריי קרמריץ'",
+    "name_en": "Andrej Kramarić",
+    "position": "striker",
+    "ability": 89,
+    "market_value": 75000000
+  },
+  {
+    "id": 1112,
+    "name_he": "בראיס מנדס",
+    "name_en": "Brais Méndez",
+    "position": "midfielder",
+    "ability": 89,
+    "market_value": 75000000
+  },
+  {
+    "id": 1113,
+    "name_he": "דאיצ'י קמאדה",
+    "name_en": "Daichi Kamada",
+    "position": "midfielder",
+    "ability": 89,
+    "market_value": 75000000
+  },
+  {
+    "id": 1114,
+    "name_he": "דויד ראום",
+    "name_en": "David Raum",
+    "position": "defender",
+    "ability": 89,
+    "market_value": 75000000
+  },
+  {
+    "id": 1115,
+    "name_he": "אליאס סקירי",
+    "name_en": "Ellyes Skhiri",
+    "position": "midfielder",
+    "ability": 89,
+    "market_value": 75000000
+  },
+  {
+    "id": 1116,
+    "name_he": "ג'ונתן דיוויד",
+    "name_en": "Jonathan David",
+    "position": "striker",
+    "ability": 89,
+    "market_value": 75000000
+  },
+  {
+    "id": 1117,
+    "name_he": "טאקפוסה קובו",
+    "name_en": "Takefusa Kubo",
+    "position": "striker",
+    "ability": 89,
+    "market_value": 75000000
+  },
+  {
+    "id": 1118,
+    "name_he": "אלכסנדר נובל",
+    "name_en": "Alexander Nübel",
+    "position": "goalkeeper",
+    "ability": 88,
+    "market_value": 70000000
+  },
+  {
+    "id": 1119,
+    "name_he": "בנג'מין אנדרה",
+    "name_en": "Benjamin André",
+    "position": "midfielder",
+    "ability": 88,
+    "market_value": 70000000
+  },
+  {
+    "id": 1120,
+    "name_he": "אוואנילסון",
+    "name_en": "Evanilson",
+    "position": "striker",
+    "ability": 88,
+    "market_value": 70000000
+  },
+  {
+    "id": 1121,
+    "name_he": "פקונדו מדינה",
+    "name_en": "Facundo Medina",
+    "position": "defender",
+    "ability": 88,
+    "market_value": 70000000
+  },
+  {
+    "id": 1122,
+    "name_he": "חמארי טראורה",
+    "name_en": "Hamari Traoré",
+    "position": "defender",
+    "ability": 88,
+    "market_value": 70000000
+  },
+  {
+    "id": 1123,
+    "name_he": "יואכים אנדרסן",
+    "name_en": "Joachim Andersen",
+    "position": "defender",
+    "ability": 88,
+    "market_value": 70000000
+  },
+  {
+    "id": 1124,
+    "name_he": "ג'ונתן קלאוס",
+    "name_en": "Jonathan Clauss",
+    "position": "defender",
+    "ability": 88,
+    "market_value": 70000000
+  },
+  {
+    "id": 1125,
+    "name_he": "ג'ורדן וורטו",
+    "name_en": "Jordan Veretout",
+    "position": "midfielder",
+    "ability": 88,
+    "market_value": 70000000
+  },
+  {
+    "id": 1126,
+    "name_he": "ז'ואאו פליקס",
+    "name_en": "João Félix",
+    "position": "striker",
+    "ability": 88,
+    "market_value": 70000000
+  },
+  {
+    "id": 1127,
+    "name_he": "קווין דאנסו",
+    "name_en": "Kevin Danso",
+    "position": "defender",
+    "ability": 88,
+    "market_value": 70000000
+  },
+  {
+    "id": 1128,
+    "name_he": "לוקאס שבלייה",
+    "name_en": "Lucas Chevalier",
+    "position": "goalkeeper",
+    "ability": 88,
+    "market_value": 70000000
+  },
+  {
+    "id": 1129,
+    "name_he": "טג'י סבאנייה",
+    "name_en": "Téji Savanier",
+    "position": "midfielder",
+    "ability": 88,
+    "market_value": 70000000
+  },
+  {
+    "id": 1130,
+    "name_he": "אנתוני לופס",
+    "name_en": "Anthony Lopes",
+    "position": "goalkeeper",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1131,
+    "name_he": "אאיוזה פרס",
+    "name_en": "Ayoze Pérez",
+    "position": "midfielder",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1132,
+    "name_he": "בולאיי דיא",
+    "name_en": "Boulaye Dia",
+    "position": "striker",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1133,
+    "name_he": "שנסל מבמבה",
+    "name_en": "Chancel Mbemba",
+    "position": "defender",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1134,
+    "name_he": "כריס פיריך",
+    "name_en": "Chris Führich",
+    "position": "midfielder",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1135,
+    "name_he": "דנטה",
+    "name_en": "Dante",
+    "position": "defender",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1136,
+    "name_he": "אדון ז'גרובה",
+    "name_en": "Edon Zhegrova",
+    "position": "midfielder",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1137,
+    "name_he": "ארמדין דמירוביץ'",
+    "name_en": "Ermedin Demirović",
+    "position": "striker",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1138,
+    "name_he": "ג'רונימו רולי",
+    "name_en": "Gerónimo Rulli",
+    "position": "goalkeeper",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1139,
+    "name_he": "לאונרדו באלרדי",
+    "name_en": "Leonardo Balerdi",
+    "position": "defender",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1140,
+    "name_he": "מרצ'ין בולקה",
+    "name_en": "Marcin Bułka",
+    "position": "goalkeeper",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1141,
+    "name_he": "מרקו ביזוט",
+    "name_en": "Marco Bizot",
+    "position": "goalkeeper",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1142,
+    "name_he": "מייסון גרינווד",
+    "name_en": "Mason Greenwood",
+    "position": "midfielder",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1143,
+    "name_he": "מקסימיליאן מיטלשטדט",
+    "name_en": "Maximilian Mittelstädt",
+    "position": "defender",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1144,
+    "name_he": "ניקולה מילנקוביץ'",
+    "name_en": "Nikola Milenković",
+    "position": "defender",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1145,
+    "name_he": "עומר מרמוש",
+    "name_en": "Omar Marmoush",
+    "position": "striker",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1146,
+    "name_he": "פיליפ לינהארט",
+    "name_en": "Philipp Lienhart",
+    "position": "defender",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1147,
+    "name_he": "פייר ליס-מלו",
+    "name_en": "Pierre Lees-Melou",
+    "position": "midfielder",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1148,
+    "name_he": "רובין קוך",
+    "name_en": "Robin Koch",
+    "position": "defender",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1149,
+    "name_he": "רומן דל קסטיו",
+    "name_en": "Romain Del Castillo",
+    "position": "striker",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1150,
+    "name_he": "סבסטיאן האלר",
+    "name_en": "Sébastien Haller",
+    "position": "striker",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1151,
+    "name_he": "טאקומי מינאמינו",
+    "name_en": "Takumi Minamino",
+    "position": "midfielder",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1152,
+    "name_he": "ולנטין קסטייאנוס",
+    "name_en": "Valentin Castellanos",
+    "position": "striker",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1153,
+    "name_he": "וילפריד סינגו",
+    "name_en": "Wilfried Singo",
+    "position": "defender",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1154,
+    "name_he": "ג'ורג'ה פטרוביץ'",
+    "name_en": "Đorđe Petrović",
+    "position": "goalkeeper",
+    "ability": 87,
+    "market_value": 65000000
+  },
+  {
+    "id": 1155,
+    "name_he": "בורחה איגלסיאס",
+    "name_en": "Borja Iglesias",
+    "position": "striker",
+    "ability": 86,
+    "market_value": 60000000
+  },
+  {
+    "id": 1156,
+    "name_he": "ג'ורג'ו סקלביני",
+    "name_en": "Giorgio Scalvini",
+    "position": "defender",
+    "ability": 86,
+    "market_value": 60000000
+  },
+  {
+    "id": 1157,
+    "name_he": "גואיטה",
+    "name_en": "Guaita",
+    "position": "goalkeeper",
+    "ability": 86,
+    "market_value": 60000000
+  },
+  {
+    "id": 1158,
+    "name_he": "ג'ורדן טזה",
+    "name_en": "Jordan Teze",
+    "position": "defender",
+    "ability": 86,
+    "market_value": 60000000
+  },
+  {
+    "id": 1159,
+    "name_he": "לני יורו",
+    "name_en": "Leny Yoro",
+    "position": "defender",
+    "ability": 86,
+    "market_value": 60000000
+  },
+  {
+    "id": 1160,
+    "name_he": "לוקאס פרי",
+    "name_en": "Lucas Perri",
+    "position": "goalkeeper",
+    "ability": 86,
+    "market_value": 60000000
+  },
+  {
+    "id": 1161,
+    "name_he": "מבאלה נזולה",
+    "name_en": "M'Bala Nzola",
+    "position": "striker",
+    "ability": 86,
+    "market_value": 60000000
+  },
+  {
+    "id": 1162,
+    "name_he": "מיגל אלמירון",
+    "name_en": "Miguel Almirón",
+    "position": "striker",
+    "ability": 86,
+    "market_value": 60000000
+  },
+  {
+    "id": 1163,
+    "name_he": "מונקאיולה",
+    "name_en": "Moncayola",
+    "position": "midfielder",
+    "ability": 86,
+    "market_value": 60000000
+  },
+  {
+    "id": 1164,
+    "name_he": "סולי מארץ'",
+    "name_en": "Solly March",
+    "position": "midfielder",
+    "ability": 86,
+    "market_value": 60000000
+  },
+  {
+    "id": 1165,
+    "name_he": "ולדימיר צופל",
+    "name_en": "Vladimír Coufal",
+    "position": "defender",
+    "ability": 86,
+    "market_value": 60000000
+  },
+  {
+    "id": 1166,
+    "name_he": "דרווין מאצ'יס",
+    "name_en": "Darwin Machís",
+    "position": "midfielder",
+    "ability": 85,
+    "market_value": 55000000
+  },
+  {
+    "id": 1167,
+    "name_he": "אנזו לה פיי",
+    "name_en": "Enzo Le Fée",
+    "position": "midfielder",
+    "ability": 85,
+    "market_value": 55000000
+  },
+  {
+    "id": 1168,
+    "name_he": "פיליפ יורגנסן",
+    "name_en": "Filip Jörgensen",
+    "position": "goalkeeper",
+    "ability": 85,
+    "market_value": 55000000
+  },
+  {
+    "id": 1169,
+    "name_he": "פלוריאן סוטוקה",
+    "name_en": "Florian Sotoca",
+    "position": "striker",
+    "ability": 85,
+    "market_value": 55000000
+  },
+  {
+    "id": 1170,
+    "name_he": "ז'רמי בוגה",
+    "name_en": "Jérémie Boga",
+    "position": "striker",
+    "ability": 85,
+    "market_value": 55000000
+  },
+  {
+    "id": 1171,
+    "name_he": "ניקולה זלבסקי",
+    "name_en": "Nicola Zalewski",
+    "position": "midfielder",
+    "ability": 85,
+    "market_value": 55000000
+  },
+  {
+    "id": 1172,
+    "name_he": "פיליפ בילינג",
+    "name_en": "Philip Billing",
+    "position": "midfielder",
+    "ability": 85,
+    "market_value": 55000000
+  },
+  {
+    "id": 1173,
+    "name_he": "רידל באקו",
+    "name_en": "Ridle Baku",
+    "position": "defender",
+    "ability": 85,
+    "market_value": 55000000
+  },
+  {
+    "id": 1174,
+    "name_he": "יוסוף סבאלי",
+    "name_en": "Youssouf Sabaly",
+    "position": "defender",
+    "ability": 85,
+    "market_value": 55000000
+  },
+  {
+    "id": 1175,
+    "name_he": "אלבן לאפון",
+    "name_en": "Alban Lafont",
+    "position": "goalkeeper",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1176,
+    "name_he": "ארנה מאייר",
+    "name_en": "Arne Maier",
+    "position": "midfielder",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1177,
+    "name_he": "קרלס פרס",
+    "name_en": "Carles Pérez",
+    "position": "midfielder",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1178,
+    "name_he": "קורנטן טוליסו",
+    "name_en": "Corentin Tolisso",
+    "position": "midfielder",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1179,
+    "name_he": "כריסטיאן סטואני",
+    "name_en": "Cristhian Stuani",
+    "position": "striker",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1180,
+    "name_he": "ארן דינקצ'י",
+    "name_en": "Eren Dinkçi",
+    "position": "midfielder",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1181,
+    "name_he": "גורוסבל",
+    "name_en": "Gorosabel",
+    "position": "defender",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1182,
+    "name_he": "ג'פרי גאוולאו",
+    "name_en": "Jeffrey Gouweleeuw",
+    "position": "defender",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1183,
+    "name_he": "יספר קרלסון",
+    "name_en": "Jesper Karlsson",
+    "position": "striker",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1184,
+    "name_he": "ג'וניור דינה אבימבה",
+    "name_en": "Junior Dina Ebimbe",
+    "position": "midfielder",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1185,
+    "name_he": "קווין פולנד",
+    "name_en": "Kevin Volland",
+    "position": "striker",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1186,
+    "name_he": "מיכאל צטרר",
+    "name_en": "Michael Zetterer",
+    "position": "goalkeeper",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1187,
+    "name_he": "מישל אבישר",
+    "name_en": "Michel Aebischer",
+    "position": "midfielder",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1188,
+    "name_he": "מירנדה",
+    "name_en": "Miranda",
+    "position": "defender",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1189,
+    "name_he": "מוסא ניאקהטה",
+    "name_en": "Moussa Niakhaté",
+    "position": "defender",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1190,
+    "name_he": "פפה ריינה",
+    "name_en": "Pepe Reina",
+    "position": "goalkeeper",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1191,
+    "name_he": "ריקרדו סוטיל",
+    "name_en": "Riccardo Sottil",
+    "position": "striker",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1192,
+    "name_he": "סטפי מבידידי",
+    "name_en": "Stephy Mavididi",
+    "position": "striker",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1193,
+    "name_he": "טילו קרר",
+    "name_en": "Thilo Kehrer",
+    "position": "defender",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1194,
+    "name_he": "טוטי",
+    "name_en": "Toti",
+    "position": "defender",
+    "ability": 84,
+    "market_value": 50000000
+  },
+  {
+    "id": 1195,
+    "name_he": "אלברט סמבי לוקונגה",
+    "name_en": "Albert Sambi Lokonga",
+    "position": "midfielder",
+    "ability": 83,
+    "market_value": 45000000
+  },
+  {
+    "id": 1196,
+    "name_he": "סדריק קיפרה",
+    "name_en": "Cédric Kipré",
+    "position": "defender",
+    "ability": 83,
+    "market_value": 45000000
+  },
+  {
+    "id": 1197,
+    "name_he": "יושע וגנומן",
+    "name_en": "Josha Vagnoman",
+    "position": "defender",
+    "ability": 83,
+    "market_value": 45000000
+  },
+  {
+    "id": 1198,
+    "name_he": "חואן קרוס",
+    "name_en": "Juan Cruz",
+    "position": "defender",
+    "ability": 83,
+    "market_value": 45000000
+  },
+  {
+    "id": 1199,
+    "name_he": "קיקה בארחה",
+    "name_en": "Kike Barja",
+    "position": "midfielder",
+    "ability": 83,
+    "market_value": 45000000
+  },
+  {
+    "id": 1200,
+    "name_he": "לזאר סמרג'יץ'",
+    "name_en": "Lazar Samardžić",
+    "position": "midfielder",
+    "ability": 83,
+    "market_value": 45000000
+  },
+  {
+    "id": 1201,
+    "name_he": "ניקולה קרסטוביץ'",
+    "name_en": "Nikola Krstović",
+    "position": "striker",
+    "ability": 83,
+    "market_value": 45000000
+  },
+  {
+    "id": 1202,
+    "name_he": "רובן ורגאס",
+    "name_en": "Ruben Vargas",
+    "position": "midfielder",
+    "ability": 83,
+    "market_value": 45000000
+  },
+  {
+    "id": 1203,
+    "name_he": "טום קיירני",
+    "name_en": "Tom Cairney",
+    "position": "midfielder",
+    "ability": 83,
+    "market_value": 45000000
+  },
+  {
+    "id": 1204,
+    "name_he": "תומאש צ'וואנצ'ארה",
+    "name_en": "Tomáš Čvančara",
+    "position": "striker",
+    "ability": 83,
+    "market_value": 45000000
+  },
+  {
+    "id": 1205,
+    "name_he": "אנתוני לוסילה",
+    "name_en": "Anthony Losilla",
+    "position": "midfielder",
+    "ability": 82,
+    "market_value": 40000000
+  },
+  {
+    "id": 1206,
+    "name_he": "רובין אולסן",
+    "name_en": "Robin Olsen",
+    "position": "goalkeeper",
+    "ability": 82,
+    "market_value": 40000000
+  },
+  {
+    "id": 1207,
+    "name_he": "ויניסיוס",
+    "name_en": "Vinícius",
+    "position": "striker",
+    "ability": 82,
+    "market_value": 40000000
+  },
+  {
+    "id": 1208,
+    "name_he": "בובקר קויאטה",
+    "name_en": "Boubakar Kouyaté",
+    "position": "defender",
+    "ability": 81,
+    "market_value": 35000000
+  },
+  {
+    "id": 1209,
+    "name_he": "קרלוס בלבה",
+    "name_en": "Carlos Baleba",
+    "position": "midfielder",
+    "ability": 81,
+    "market_value": 35000000
+  },
+  {
+    "id": 1210,
+    "name_he": "קין לואיס-פוטר",
+    "name_en": "Keane Lewis-Potter",
+    "position": "striker",
+    "ability": 81,
+    "market_value": 35000000
+  },
+  {
+    "id": 1211,
+    "name_he": "לטסה",
+    "name_en": "Latasa",
+    "position": "striker",
+    "ability": 81,
+    "market_value": 35000000
+  },
+  {
+    "id": 1212,
+    "name_he": "לוקה מצ'יטלי",
+    "name_en": "Luca Mazzitelli",
+    "position": "midfielder",
+    "ability": 81,
+    "market_value": 35000000
+  },
+  {
+    "id": 1213,
+    "name_he": "לוק וולפנדן",
+    "name_en": "Luke Woolfenden",
+    "position": "defender",
+    "ability": 81,
+    "market_value": 35000000
+  },
+  {
+    "id": 1214,
+    "name_he": "נדיליקו לברוביץ'",
+    "name_en": "Nediljko Labrović",
+    "position": "goalkeeper",
+    "ability": 81,
+    "market_value": 35000000
+  },
+  {
+    "id": 1215,
+    "name_he": "נואה אטובולו",
+    "name_en": "Noah Atubolu",
+    "position": "goalkeeper",
+    "ability": 81,
+    "market_value": 35000000
+  },
+  {
+    "id": 1216,
+    "name_he": "פול ז'ולי",
+    "name_en": "Paul Joly",
+    "position": "defender",
+    "ability": 81,
+    "market_value": 35000000
+  },
+  {
+    "id": 1217,
+    "name_he": "רוב הולדינג",
+    "name_en": "Rob Holding",
+    "position": "defender",
+    "ability": 81,
+    "market_value": 35000000
+  },
+  {
+    "id": 1218,
+    "name_he": "סימונה סקופט",
+    "name_en": "Simone Scuffet",
+    "position": "goalkeeper",
+    "ability": 81,
+    "market_value": 35000000
+  },
+  {
+    "id": 1219,
+    "name_he": "דאלי סינקגרייבן",
+    "name_en": "Daley Sinkgraven",
+    "position": "defender",
+    "ability": 80,
+    "market_value": 30000000
+  },
+  {
+    "id": 1220,
+    "name_he": "דימיטריס ג'אנוליס",
+    "name_en": "Dimitris Giannoulis",
+    "position": "defender",
+    "ability": 80,
+    "market_value": 30000000
+  },
+  {
+    "id": 1221,
+    "name_he": "ז'אומה",
+    "name_en": "Jaume",
+    "position": "goalkeeper",
+    "ability": 80,
+    "market_value": 30000000
+  },
+  {
+    "id": 1222,
+    "name_he": "ג'וניור מוואנגה",
+    "name_en": "Junior Mwanga",
+    "position": "midfielder",
+    "ability": 80,
+    "market_value": 30000000
+  },
+  {
+    "id": 1223,
+    "name_he": "קיאלונדה גספר",
+    "name_en": "Kialonda Gaspar",
+    "position": "defender",
+    "ability": 80,
+    "market_value": 30000000
+  },
+  {
+    "id": 1224,
+    "name_he": "מאמדו סילה",
+    "name_en": "Mamadou Sylla",
+    "position": "striker",
+    "ability": 80,
+    "market_value": 30000000
+  },
+  {
+    "id": 1225,
+    "name_he": "אומאר דיאקיטה",
+    "name_en": "Oumar Diakité",
+    "position": "striker",
+    "ability": 80,
+    "market_value": 30000000
+  },
+  {
+    "id": 1226,
+    "name_he": "סבסטיאנו אספוזיטו",
+    "name_en": "Sebastiano Esposito",
+    "position": "striker",
+    "ability": 80,
+    "market_value": 30000000
+  },
+  {
+    "id": 1227,
+    "name_he": "סטיבן סקז'יבסקי",
+    "name_en": "Steven Skrzybski",
+    "position": "striker",
+    "ability": 80,
+    "market_value": 30000000
+  },
+  {
+    "id": 1228,
+    "name_he": "יורדן אוסוריו",
+    "name_en": "Yordan Osorio",
+    "position": "defender",
+    "ability": 80,
+    "market_value": 30000000
+  },
+  {
+    "id": 1229,
+    "name_he": "זוריקו דבית'שווילי",
+    "name_en": "Zuriko Davitashvili",
+    "position": "midfielder",
+    "ability": 80,
+    "market_value": 30000000
+  },
+  {
+    "id": 1230,
+    "name_he": "ארמינדו זיב",
+    "name_en": "Armindo Sieb",
+    "position": "striker",
+    "ability": 79,
+    "market_value": 28000000
+  },
+  {
+    "id": 1231,
+    "name_he": "צ'זארה קזדיי",
+    "name_en": "Cesare Casadei",
+    "position": "midfielder",
+    "ability": 79,
+    "market_value": 28000000
+  },
+  {
+    "id": 1232,
+    "name_he": "פליקס למרשאל",
+    "name_en": "Félix Lemaréchal",
+    "position": "midfielder",
+    "ability": 79,
+    "market_value": 28000000
+  },
+  {
+    "id": 1233,
+    "name_he": "אייזק היידן",
+    "name_en": "Isaac Hayden",
+    "position": "midfielder",
+    "ability": 79,
+    "market_value": 28000000
+  },
+  {
+    "id": 1234,
+    "name_he": "ג'קסון פורוסו",
+    "name_en": "Jackson Porozo",
+    "position": "defender",
+    "ability": 79,
+    "market_value": 28000000
+  },
+  {
+    "id": 1235,
+    "name_he": "מנקיו",
+    "name_en": "Manquillo",
+    "position": "defender",
+    "ability": 79,
+    "market_value": 28000000
+  },
+  {
+    "id": 1236,
+    "name_he": "נורמן תוירקאוף",
+    "name_en": "Norman Theuerkauf",
+    "position": "midfielder",
+    "ability": 79,
+    "market_value": 28000000
+  },
+  {
+    "id": 1237,
+    "name_he": "ראול מורו",
+    "name_en": "Raúl Moro",
+    "position": "midfielder",
+    "ability": 79,
+    "market_value": 28000000
+  },
+  {
+    "id": 1238,
+    "name_he": "אדו אונאיווו",
+    "name_en": "Ado Onaiwu",
+    "position": "striker",
+    "ability": 78,
+    "market_value": 26000000
+  },
+  {
+    "id": 1239,
+    "name_he": "קלב אקובן",
+    "name_en": "Caleb Ekuban",
+    "position": "striker",
+    "ability": 78,
+    "market_value": 26000000
+  },
+  {
+    "id": 1240,
+    "name_he": "קארול מטס",
+    "name_en": "Karol Mets",
+    "position": "defender",
+    "ability": 78,
+    "market_value": 26000000
+  },
+  {
+    "id": 1241,
+    "name_he": "ליאם הנדרסון",
+    "name_en": "Liam Henderson",
+    "position": "midfielder",
+    "ability": 78,
+    "market_value": 26000000
+  },
+  {
+    "id": 1242,
+    "name_he": "סמואל אדוזי",
+    "name_en": "Samuel Edozie",
+    "position": "striker",
+    "ability": 78,
+    "market_value": 26000000
+  },
+  {
+    "id": 1243,
+    "name_he": "קרלוס מרטין",
+    "name_en": "Carlos Martín",
+    "position": "striker",
+    "ability": 77,
+    "market_value": 24000000
+  },
+  {
+    "id": 1244,
+    "name_he": "דניאלה פאדלי",
+    "name_en": "Daniele Padelli",
+    "position": "goalkeeper",
+    "ability": 77,
+    "market_value": 24000000
+  },
+  {
+    "id": 1245,
+    "name_he": "סעידו סו",
+    "name_en": "Saïdou Sow",
+    "position": "defender",
+    "ability": 77,
+    "market_value": 24000000
+  },
+  {
+    "id": 1246,
+    "name_he": "טימותה פמבלה",
+    "name_en": "Timothée Pembélé",
+    "position": "defender",
+    "ability": 77,
+    "market_value": 24000000
+  },
+  {
+    "id": 1247,
+    "name_he": "עלאא בלערוש",
+    "name_en": "Alaa Bellaarouch",
+    "position": "goalkeeper",
+    "ability": 76,
+    "market_value": 22000000
+  },
+  {
+    "id": 1248,
+    "name_he": "דין האוסן",
+    "name_en": "Dean Huijsen",
+    "position": "defender",
+    "ability": 76,
+    "market_value": 22000000
+  },
+  {
+    "id": 1249,
+    "name_he": "מרקו פאיאץ'",
+    "name_en": "Marko Pajač",
+    "position": "defender",
+    "ability": 76,
+    "market_value": 22000000
+  },
+  {
+    "id": 1250,
+    "name_he": "תומאס דנה",
+    "name_en": "Thomas Dähne",
+    "position": "goalkeeper",
+    "ability": 76,
+    "market_value": 22000000
+  }
+]

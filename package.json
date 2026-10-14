@@ -1,0 +1,10 @@
+{
+  "name": "football-manager-lite",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Football Manager Lite - משחק ניהול כדורגל בעברית",
+  "scripts": {
+    "test": "node --test tests/**/*.test.js"
+  }
+}
