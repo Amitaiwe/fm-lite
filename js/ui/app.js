@@ -109,6 +109,9 @@ function render() {
   }
 
   appEl.innerHTML = html + (ui.toast ? `<div class="toast ${ui.toast.type}">${ui.toast.message}</div>` : "");
+  // תמיד גוללים לראש המסך במעבר בין מסכים, כדי שתוצאת המחזור/האירוע
+  // החדש תהיה מיד גלויה בלי שהמשתמש יצטרך לגלול ידנית.
+  window.scrollTo(0, 0);
 }
 
 function advanceScreenQueue() {

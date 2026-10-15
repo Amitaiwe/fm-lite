@@ -3,6 +3,8 @@ import { findById } from "../engine/playersRepo.js";
 import { calcNetPrice } from "../engine/transferMarket.js";
 import { getSlotByPosition } from "../engine/squad.js";
 import { totalSquadSalary } from "../engine/economy.js";
+import { findTeamMatch } from "../engine/fixtures.js";
+import { sortedTable } from "../engine/table.js";
 import { SETTINGS, POSITION_LABELS_HE } from "../data/settings.js";
 import { formatMoney, positionLabel, escapeHtml } from "./format.js";
 
@@ -83,24 +85,63 @@ export function renderLeaguePick({ confirmOverwrite }) {
   `;
 }
 
-function squadGridHtml(state, allPlayers, fitnessDiffs) {
+function pitchPlayerCardHtml(slot, allPlayers, fitnessDiffs) {
+  const player = findById(allPlayers, slot.playerId);
+  const diff = fitnessDiffs ? fitnessDiffs[slot.playerId] || 0 : 0;
   return `
-    <div class="squad-grid">
-      ${state.squad
-        .map((slot) => {
-          const player = findById(allPlayers, slot.playerId);
-          const diff = fitnessDiffs ? fitnessDiffs[slot.playerId] || 0 : 0;
-          return `
-          <div class="player-card">
-            <div class="pos-label">${positionLabel(slot.position)}</div>
-            <div class="p-name">${escapeHtml(player.name_he)}</div>
-            <div class="stat-line"><span>יכולת</span><b>${slot.currentAbility}</b></div>
-            <div class="stat-line"><span>כושר</span><b>${slot.fitness} ${fitnessArrowHtml(diff)}</b></div>
-            <div class="fitness-bar-track"><div class="fitness-bar-fill" style="width:${slot.fitness}%"></div></div>
-            <div class="stat-line" style="margin-top:6px"><span>שכר עונתי</span><b>${formatMoney(slot.salary)}</b></div>
-          </div>`;
-        })
-        .join("")}
+    <div class="pitch-player">
+      <div class="pos-label">${positionLabel(slot.position)}</div>
+      <div class="p-name">${escapeHtml(player.name_he)}</div>
+      <div class="stat-line"><span>יכ'</span><b>${slot.currentAbility}</b><span>כושר</span><b>${slot.fitness}${fitnessArrowHtml(diff)}</b></div>
+      <div class="fitness-bar-track"><div class="fitness-bar-fill" style="width:${slot.fitness}%"></div></div>
+    </div>`;
+}
+
+/**
+ * מציג את הסגל כ"מגרש" 2x2 קומפקטי: שוער+מגן למעלה (ליד השער שלנו),
+ * קשר+חלוץ למטה (ליד שער היריבה) - תואם כדורגל אמיתי, וקטן משמעותית
+ * מה-grid המלא שהיה קודם.
+ */
+function squadPitchHtml(state, allPlayers, fitnessDiffs) {
+  const bySlot = (pos) => state.squad.find((s) => s.position === pos);
+  const gk = bySlot("goalkeeper");
+  const df = bySlot("defender");
+  const mf = bySlot("midfielder");
+  const st = bySlot("striker");
+  return `
+    <div class="pitch">
+      <div class="pitch-line"></div>
+      <div class="pitch-circle"></div>
+      <div class="pitch-goal-label top">השער שלנו</div>
+      <div class="pitch-row">
+        ${gk ? pitchPlayerCardHtml(gk, allPlayers, fitnessDiffs) : ""}
+        ${df ? pitchPlayerCardHtml(df, allPlayers, fitnessDiffs) : ""}
+      </div>
+      <div class="pitch-row">
+        ${mf ? pitchPlayerCardHtml(mf, allPlayers, fitnessDiffs) : ""}
+        ${st ? pitchPlayerCardHtml(st, allPlayers, fitnessDiffs) : ""}
+      </div>
+      <div class="pitch-goal-label bottom">שער היריבה</div>
+    </div>
+  `;
+}
+
+function nextOpponentHtml(state) {
+  const roundsTotal = state.fixtures.length;
+  if (state.round >= roundsTotal) return "";
+  const round = state.fixtures[state.round];
+  const match = findTeamMatch(round, state.teamId);
+  if (!match) {
+    return `<div class="card-flat next-opponent"><span class="muted">המחזור הבא: קבוצתכם נחה</span></div>`;
+  }
+  const standings = sortedTable(state.table);
+  const idx = standings.findIndex((r) => r.teamId === match.opponent);
+  const position = idx === -1 ? null : idx + 1;
+  return `
+    <div class="card-flat next-opponent">
+      <span class="muted">היריב הבא (${match.isHome ? "בית" : "חוץ"}):</span>
+      <span class="next-opponent-name">${teamName(state.leagueId, match.opponent)}</span>
+      ${position ? `<span class="badge">מקום ${position}</span>` : ""}
     </div>
   `;
 }
@@ -129,7 +170,9 @@ export function renderHome({ state, allPlayers }) {
       ${navTabsHtml("home")}
 
       <h2>הסגל שלך</h2>
-      ${squadGridHtml(state, allPlayers)}
+      ${squadPitchHtml(state, allPlayers)}
+
+      ${nextOpponentHtml(state)}
 
       <div style="margin-top:18px">
         <button class="btn" data-action="play-round">⚽ שחק מחזור הבא</button>
@@ -275,7 +318,7 @@ export function renderTransferWindow({ state, allPlayers, feedback }) {
         <h2>🔄 חלון העברות</h2>
         <span class="budget-display">${formatMoney(state.budget)}</span>
       </div>
-      <p>${state.transferWindow.atRound === 0 ? "חלון ההעברות הראשון של העונה" : "חלון ההעברות השני של העונה"} - 7 שחקנים זמינים. ניתן לבצע כמה רכישות שתרצה, כל עוד יש מספיק תקציב.</p>
+      <p>${state.transferWindow.atRound === 0 ? "חלון ההעברות הראשון של העונה" : "חלון ההעברות השני של העונה"} - 7 שחקנים זמינים. ניתן לבצע רכישה אחת לכל עמדה בחלון הזה, כל עוד יש מספיק תקציב.</p>
 
       ${feedback ? `<div class="card-flat" style="margin-bottom:12px;border-color:${feedback.ok ? "var(--accent)" : "var(--red)"}">${escapeHtml(feedback.message)}</div>` : ""}
 
@@ -286,7 +329,14 @@ export function renderTransferWindow({ state, allPlayers, feedback }) {
             const currentPlayer = currentSlot ? findById(allPlayers, currentSlot.playerId) : null;
             const { netPrice } = calcNetPrice(state.squad, allPlayers, p);
             const alreadyOwned = currentSlot && currentSlot.playerId === p.id;
+            const positionUsed = (state.transferWindow.purchasedPositions || []).includes(p.position);
             const affordable = netPrice <= state.budget;
+            const isProfit = netPrice < 0;
+            const priceLabel = isProfit
+              ? `רווח משינמוך: +${formatMoney(Math.abs(netPrice))}`
+              : netPrice === 0
+                ? "מחיר נטו: חינם"
+                : `מחיר נטו: ${formatMoney(netPrice)}`;
             return `
             <div class="transfer-card">
               <div class="row">
@@ -304,10 +354,10 @@ export function renderTransferWindow({ state, allPlayers, feedback }) {
                 <span class="muted">שחקן נוכחי בעמדה: ${currentPlayer ? escapeHtml(currentPlayer.name_he) + " (" + formatMoney(currentPlayer.market_value) + ")" : "-"}</span>
               </div>
               <div class="row" style="margin-top:8px">
-                <span class="net-price ${netPrice === 0 ? "free" : ""}">מחיר נטו: ${formatMoney(netPrice)}</span>
+                <span class="net-price ${netPrice <= 0 ? "free" : ""}">${priceLabel}</span>
                 <button class="btn" style="width:auto" data-action="buy-player" data-player="${p.id}"
-                  ${alreadyOwned || !affordable ? "disabled" : ""}>
-                  ${alreadyOwned ? "כבר בסגל" : affordable ? "קנה" : "אין מספיק כסף"}
+                  ${alreadyOwned || !affordable || positionUsed ? "disabled" : ""}>
+                  ${alreadyOwned ? "כבר בסגל" : positionUsed ? "כבר בוצעה רכישה לעמדה זו" : !affordable ? "אין מספיק כסף" : isProfit ? "קנה ותרוויח" : "קנה"}
                 </button>
               </div>
             </div>`;
@@ -424,6 +474,12 @@ export function renderEventOutcome({ outcome }) {
   `;
 }
 
+function positionDeltaHtml(delta) {
+  if (!delta) return `<span class="pos-delta same">–</span>`;
+  if (delta > 0) return `<span class="pos-delta up">▲${delta}</span>`;
+  return `<span class="pos-delta down">▼${Math.abs(delta)}</span>`;
+}
+
 export function renderRoundResult({ state, allPlayers, roundSummary, fitnessDiffs }) {
   const league = getLeague(state.leagueId);
   const um = roundSummary.userMatch;
@@ -443,29 +499,49 @@ export function renderRoundResult({ state, allPlayers, roundSummary, fitnessDiff
       <div class="match-result-hero">
         <div class="badge ${outcomeClass}" style="background:transparent">${outcomeLabel}</div>
         <div class="teams">${teamName(state.leagueId, state.teamId)} נגד ${teamName(state.leagueId, oppTeam)}</div>
-        <div class="score ${outcomeClass}">${myGoals} - ${oppGoals}</div>
+        <div class="score score-reveal ${outcomeClass}">${myGoals} - ${oppGoals}</div>
       </div>
     `;
   }
 
+  // חלון טבלה מצומצם: הקבוצה שלנו ± 2 שורות, כדי שרואים את ההשפעה על
+  // המיקום בלי להציג את כל 11 הקבוצות (שם הסיבה העיקרית לגלילה הארוכה).
+  const standings = roundSummary.standings;
+  const userIdx = standings.findIndex((r) => r.teamId === state.teamId);
+  const windowStart = Math.max(0, Math.min(userIdx - 2, standings.length - 5));
+  const windowEnd = Math.min(standings.length, windowStart + 5);
+  const windowedStandings = standings.slice(windowStart, windowEnd).map((r, i) => ({ row: r, rank: windowStart + i + 1 }));
+
+  const fitnessLines = state.squad
+    .map((slot) => {
+      const player = findById(allPlayers, slot.playerId);
+      const diff = fitnessDiffs ? fitnessDiffs[slot.playerId] || 0 : 0;
+      if (!diff) return null;
+      return `<div class="fitness-change-line"><span>${positionLabel(slot.position)} · ${escapeHtml(player.name_he)}</span><span class="${diff > 0 ? "income-amount" : "expense-amount"}">${diff > 0 ? "+" : ""}${diff} כושר</span></div>`;
+    })
+    .filter(Boolean)
+    .join("");
+
   return `
     <div class="screen">
       <div class="card">${heroHtml}</div>
-      <h2>טבלת ${league.name_he}</h2>
+
+      <h2>טבלת ${league.name_he} ${windowStart > 0 || windowEnd < standings.length ? '<span class="muted" style="font-size:0.75rem">(סביב מיקומכם)</span>' : ""}</h2>
       <div class="card" style="overflow-x:auto">
         <table class="league-table">
           <thead>
-            <tr><th>#</th><th>קבוצה</th><th>מש'</th><th>נק'</th></tr>
+            <tr><th>#</th><th>קבוצה</th><th>מש'</th><th>נק'</th><th>שינוי</th></tr>
           </thead>
           <tbody>
-            ${roundSummary.standings
+            ${windowedStandings
               .map(
-                (r, i) => `
+                ({ row: r, rank }) => `
               <tr class="${r.teamId === state.teamId ? "user-row" : ""}">
-                <td>${i + 1}</td>
+                <td>${rank}</td>
                 <td class="team-cell">${teamName(state.leagueId, r.teamId)}</td>
                 <td>${r.played}</td>
                 <td><b>${r.points}</b></td>
+                <td>${positionDeltaHtml(roundSummary.positionDeltas ? roundSummary.positionDeltas[r.teamId] : 0)}</td>
               </tr>`
               )
               .join("")}
@@ -473,8 +549,7 @@ export function renderRoundResult({ state, allPlayers, roundSummary, fitnessDiff
         </table>
       </div>
 
-      <h2>מצב הסגל</h2>
-      ${squadGridHtml(state, allPlayers, fitnessDiffs)}
+      ${fitnessLines ? `<div class="card-flat"><h3 style="margin-top:0">שינויי כושר מהמחזור</h3>${fitnessLines}</div>` : ""}
 
       <button class="btn" style="margin-top:16px" data-action="continue-flow">המשך</button>
     </div>
@@ -496,6 +571,7 @@ export function renderSeasonEnd({ state, leagueId, teamId, summary, championTeam
       <div class="card">
         <h3>סיכום כלכלי</h3>
         <div class="finance-line"><span>פרס מיקום בטבלה</span><span class="income-amount">+${formatMoney(summary.prize)}</span></div>
+        <div class="finance-line"><span>הכנסת חסות/שידור קבועה</span><span class="income-amount">+${formatMoney(summary.baseIncome || 0)}</span></div>
         <div class="finance-line"><span>שכר ששולם</span><span class="expense-amount">-${formatMoney(summary.salaries)}</span></div>
         ${summary.commitmentsApplied
           .map(
