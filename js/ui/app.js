@@ -13,6 +13,7 @@ import {
   renderFinances,
   renderTransferWindow,
   renderEvent,
+  renderEventOutcome,
   renderRoundResult,
   renderSeasonEnd,
   renderGameOver,
@@ -25,13 +26,14 @@ let allPlayers = null;
 
 // מצב תצוגה זמני (לא נשמר)
 const ui = {
-  screen: "loading", // loading | start | leaguePick | home | table | finances | transferWindow | event | roundResult | seasonEnd | gameOver
+  screen: "loading", // loading | start | leaguePick | home | table | finances | transferWindow | event | eventOutcome | roundResult | seasonEnd | gameOver
   confirmOverwrite: false,
   transferFeedback: null,
   screenQueue: [], // תור מסכים להצגה אחרי playNextRound (roundResult -> seasonEnd/gameOver/event)
   lastRoundSummary: null,
   lastFitnessDiffs: null,
   lastSeasonEndData: null,
+  lastEventOutcome: null,
   toast: null,
 };
 
@@ -79,6 +81,9 @@ function render() {
       break;
     case "event":
       html = renderEvent({ state: controller.state });
+      break;
+    case "eventOutcome":
+      html = renderEventOutcome({ outcome: ui.lastEventOutcome });
       break;
     case "roundResult":
       html = renderRoundResult({
@@ -186,6 +191,13 @@ function onCloseTransferWindow() {
 
 function onResolveEvent(optionId) {
   controller.resolveEvent(optionId);
+  ui.lastEventOutcome = controller.state.lastEventOutcome || null;
+  ui.screen = "eventOutcome";
+  render();
+}
+
+function onContinueAfterEventOutcome() {
+  ui.lastEventOutcome = null;
   advanceScreenQueue();
 }
 
@@ -248,6 +260,9 @@ function wireEvents() {
         break;
       case "resolve-event":
         onResolveEvent(el.dataset.option);
+        break;
+      case "continue-event-outcome":
+        onContinueAfterEventOutcome();
         break;
       case "continue-flow":
         advanceScreenQueue();
