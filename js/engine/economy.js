@@ -70,13 +70,19 @@ export function totalSquadSalary(squad) {
  */
 export function processSeasonEndEconomy(state, finalPosition) {
   let s = { ...state };
-  const summary = { prize: 0, commitmentsApplied: [], salaries: 0, inflationApplied: 0 };
+  const summary = { prize: 0, baseIncome: 0, commitmentsApplied: [], salaries: 0, inflationApplied: 0 };
 
   // 1. פרס מיקום בטבלה
   const prize = SETTINGS.SEASON_PRIZES[finalPosition] || 0;
   if (prize > 0) {
     s = ledgerBudgetChange(s, prize, "prizes", false);
     summary.prize = prize;
+  }
+
+  // 1ב. הכנסת חסות/שידור קבועה לעונה (רצפת הכנסה, לא תלויה בתוצאות)
+  if (SETTINGS.SEASON_BASE_INCOME > 0) {
+    s = ledgerBudgetChange(s, SETTINGS.SEASON_BASE_INCOME, "sponsorships", false);
+    summary.baseIncome = SETTINGS.SEASON_BASE_INCOME;
   }
 
   // 2. התחייבויות נדחות שנצברו העונה (חסויות, בקשות שכר שהתקבלו וכו')

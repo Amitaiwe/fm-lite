@@ -30,7 +30,10 @@ export function needsTransferWindow(state) {
 
 export function openTransferWindow(state, allPlayers, rng) {
   const players = generateTransferWindowPlayers(allPlayers, rng);
-  return { ...state, transferWindow: { atRound: state.round, players } };
+  // purchasedPositions עוקב אחרי אילו עמדות כבר הוחלפו בחלון הזה - מוגבלות
+  // לרכישה אחת לעמדה בכל חלון (ראו transferMarket.js), כדי שלא יהיה אפשר
+  // "לשנמך" את אותה עמדה כמה פעמים ברצף ולהרוויח קיזוז על כל החלפה.
+  return { ...state, transferWindow: { atRound: state.round, players, purchasedPositions: [] } };
 }
 
 export function closeTransferWindow(state) {
@@ -70,6 +73,12 @@ export function playNextRound(state, allPlayers, rng) {
     return { ok: false, reason: "אין עוד מחזורים בעונה זו", state };
   }
 
+  // מיקומי הקבוצות *לפני* מחזור זה, לצורך חישוב חץ עלייה/ירידה אחרי שהמחזור יסתיים
+  const positionsBefore = {};
+  sortedTable(state.table).forEach((row, i) => {
+    positionsBefore[row.teamId] = i + 1;
+  });
+
   let table = { ...state.table };
   // עותק עמוק מספיק לשורות הטבלה
   for (const teamId of Object.keys(table)) table[teamId] = { ...table[teamId] };
@@ -106,11 +115,20 @@ export function playNextRound(state, allPlayers, rng) {
     matchResultsByRound: { ...state.matchResultsByRound, [roundIndex]: allMatches },
   };
 
+  const standingsAfter = sortedTable(table);
+  const positionDeltas = {};
+  standingsAfter.forEach((row, i) => {
+    const posAfter = i + 1;
+    const posBefore = positionsBefore[row.teamId] ?? posAfter;
+    positionDeltas[row.teamId] = posBefore - posAfter; // חיובי = עלה (השתפר), שלילי = ירד
+  });
+
   const roundSummary = {
     roundIndex,
     userMatch,
     userOutcome, // null אם הקבוצה נחה במחזור זה
-    standings: sortedTable(table),
+    standings: standingsAfter,
+    positionDeltas, // teamId -> שינוי מיקום לעומת המחזור הקודם (חיובי=עלייה, שלילי=ירידה)
   };
   newState = { ...newState, lastRoundSummary: roundSummary };
 
