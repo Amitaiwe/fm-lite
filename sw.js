@@ -1,7 +1,7 @@
 // Service Worker פשוט - מאפשר התקנה כ-PWA והפעלה אופליין בסיסית
 // ע"י cache-first לקבצים הסטטיים של האפליקציה.
 
-const CACHE_NAME = "fm-lite-cache-v1";
+const CACHE_NAME = "fm-lite-cache-v2";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -49,18 +49,19 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
+// network-first, fallback ל-cache: כשיש אינטרנט תמיד מביא את הקובץ העדכני
+// מהשרת (ומעדכן את ה-cache), וחוזר לגרסה השמורה רק אם אין רשת. כך עדכון
+// קבצים (כמו זה) נכנס לתוקף באופן אוטומטי אצל כל מי שכבר התקין את ה-PWA,
+// בלי להישאר תקוע על גרסה ישנה בגלל cache-first.
 self.addEventListener("fetch", (event) => {
   if (event.request.method !== "GET") return;
   event.respondWith(
-    caches.match(event.request).then((cached) => {
-      if (cached) return cached;
-      return fetch(event.request)
-        .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
-          return response;
-        })
-        .catch(() => cached);
-    })
+    fetch(event.request)
+      .then((response) => {
+        const copy = response.clone();
+        caches.open(CACHE_NAME).then((cache) => cache.put(event.request, copy));
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
