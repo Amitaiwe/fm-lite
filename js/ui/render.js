@@ -320,20 +320,65 @@ export function renderTransferWindow({ state, allPlayers, feedback }) {
   `;
 }
 
+function oddsBarHtml(branches) {
+  return `
+    <div class="odds-bar">
+      ${branches
+        .map(
+          (b) =>
+            `<div class="odds-seg tone-${b.tone}${b.hit ? " hit" : ""}" style="width:${(b.probability * 100).toFixed(0)}%">
+              <span>${(b.probability * 100).toFixed(0)}%</span>
+            </div>`
+        )
+        .join("")}
+    </div>
+    <div class="odds-legend">
+      ${branches
+        .map(
+          (b) =>
+            `<div class="odds-legend-item${b.hit ? " hit" : ""}">
+              <span class="odds-dot tone-${b.tone}"></span>
+              <span>${escapeHtml(b.label)}${b.lines.length ? " · " + b.lines.map(escapeHtml).join(", ") : ""}</span>
+            </div>`
+        )
+        .join("")}
+    </div>
+  `;
+}
+
 export function renderEvent({ state }) {
   const ev = state.pendingEvent;
   return `
     <div class="screen">
-      <div class="card center-col">
-        <div style="font-size:2rem">📣</div>
-        <h2>${escapeHtml(ev.title)}</h2>
-        <p>${escapeHtml(ev.description)}</p>
-        <div class="btn-row" style="width:100%">
+      <div class="card">
+        <div class="center-col" style="padding-top:0;padding-bottom:8px">
+          <div style="font-size:2rem">📣</div>
+          <h2>${escapeHtml(ev.title)}</h2>
+          <p>${escapeHtml(ev.description)}</p>
+        </div>
+        <div class="col-stack">
           ${ev.options
-            .map(
-              (o, i) =>
-                `<button class="btn ${i === 0 ? "" : "btn-secondary"}" data-action="resolve-event" data-option="${o.id}">${escapeHtml(o.label)}</button>`
-            )
+            .map((o, i) => {
+              const sureLines = o.summaryLines.length
+                ? `<div class="event-option-lines">${o.summaryLines.map((l) => `<span class="event-line">${escapeHtml(l)}</span>`).join("")}</div>`
+                : o.gamble
+                  ? ""
+                  : `<div class="event-option-lines"><span class="event-line">ללא השפעה</span></div>`;
+              const gambleHtml = o.gamble
+                ? `<div class="gamble-box">${oddsBarHtml(o.gamble.branches)}</div>`
+                : "";
+              return `
+                <div class="card-flat event-option">
+                  <div class="row" style="align-items:flex-start">
+                    <div style="flex:1">
+                      <div class="event-option-label">${escapeHtml(o.label)}</div>
+                      ${sureLines}
+                      ${gambleHtml}
+                    </div>
+                  </div>
+                  <button class="btn ${i === 0 ? "" : "btn-secondary"}" style="margin-top:10px" data-action="resolve-event" data-option="${o.id}">לבחור באופציה זו</button>
+                </div>`;
+            })
             .join("")}
         </div>
       </div>
@@ -341,8 +386,42 @@ export function renderEvent({ state }) {
   `;
 }
 
-export function renderAutomaticEventToast(log) {
-  return `<div class="toast success">${escapeHtml(log.title)}: ${escapeHtml(log.description)}</div>`;
+export function renderEventOutcome({ outcome }) {
+  const ro = outcome.randomOutcome;
+  return `
+    <div class="screen">
+      <div class="card center-col">
+        <div style="font-size:2rem">${ro ? "🎲" : "✅"}</div>
+        <h2>${escapeHtml(outcome.title)}</h2>
+        <p class="muted">בחרת: ${escapeHtml(outcome.optionLabel)}</p>
+
+        ${
+          ro
+            ? `
+          <div class="gamble-box reveal" style="width:100%">
+            ${oddsBarHtml(
+              outcome.gamble
+                ? outcome.gamble.branches.map((b) => ({ ...b, hit: b.label === ro.label }))
+                : [{ probability: 1, tone: ro.tone, label: ro.label, lines: ro.subNotes || [] }]
+            )}
+            <div class="odds-result tone-${ro.tone}">🎯 ${escapeHtml(ro.label)} (${(ro.probability * 100).toFixed(0)}% סיכוי)</div>
+          </div>`
+            : ""
+        }
+
+        <div class="event-outcome-lines">
+          ${(outcome.notes || [])
+            .filter((n) => n !== ro?.label)
+            .map((n) => `<div class="event-line result">${escapeHtml(n)}</div>`)
+            .join("")}
+          ${ro && (ro.subNotes || []).length ? ro.subNotes.map((n) => `<div class="event-line result">${escapeHtml(n)}</div>`).join("") : ""}
+          ${!(outcome.notes || []).length && !ro ? `<div class="event-line result">ללא השפעה</div>` : ""}
+        </div>
+
+        <button class="btn" style="width:100%;margin-top:10px" data-action="continue-event-outcome">המשך</button>
+      </div>
+    </div>
+  `;
 }
 
 export function renderRoundResult({ state, allPlayers, roundSummary, fitnessDiffs }) {
