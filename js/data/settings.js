@@ -39,9 +39,14 @@ export const SETTINGS = {
   POINTS_LOSS: 0,
 
   // בונוסים/קנסות על תוצאות משחק (של קבוצת השחקן בלבד)
-  BONUS_WIN: 150_000,
-  BONUS_DRAW: 50_000,
+  BONUS_WIN: 180_000,
+  BONUS_DRAW: 60_000,
   PENALTY_LOSS: 50_000,
+
+  // הכנסת חסות/שידור קבועה לכל עונה (רצפת הכנסה, לא תלויה בתוצאות) -
+  // משולמת בסוף העונה יחד עם הפרס, כדי לייצב את הכלכלה ולא לסמוך רק
+  // על בונוסי ניצחון/תיקו.
+  SEASON_BASE_INCOME: 1_800_000,
 
   // פרסים כספיים בסוף העונה לפי מיקום (1 = ראשון)
   SEASON_PRIZES: {
@@ -59,8 +64,8 @@ export const SETTINGS = {
   },
 
   // נוסחת שכר התחלתי לפי יכולת: שכר עונתי = BASE + ABILITY * PER_ABILITY_POINT
-  SALARY_BASE: 200_000,
-  SALARY_PER_ABILITY_POINT: 25_000,
+  SALARY_BASE: 120_000,
+  SALARY_PER_ABILITY_POINT: 11_000,
 
   // אינפלציה שנתית על שכר (מיושמת בסוף כל עונה)
   SALARY_INFLATION_RATE: 0.02,
