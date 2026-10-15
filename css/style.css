@@ -495,6 +495,181 @@ table.league-table tr.champion-row td.team-cell::before {
   margin: 14px 0;
 }
 
+.event-option {
+  text-align: right;
+}
+
+.event-option-label {
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.event-option-lines {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 4px;
+}
+
+.event-line {
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+}
+
+.event-line.result {
+  background: transparent;
+  border: none;
+  padding: 2px 0;
+  display: block;
+  color: var(--text);
+}
+
+.gamble-box {
+  margin-top: 6px;
+}
+
+.odds-bar {
+  display: flex;
+  width: 100%;
+  height: 30px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--bg-elevated);
+}
+
+.odds-seg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 800;
+  transition: filter 0.2s ease;
+  position: relative;
+}
+
+.odds-seg.tone-positive {
+  background: linear-gradient(180deg, var(--accent), var(--accent-dark));
+  color: #06281a;
+}
+
+.odds-seg.tone-negative {
+  background: linear-gradient(180deg, #ef7382, var(--red));
+  color: #2a0a0f;
+}
+
+.odds-seg.tone-neutral,
+.odds-seg.tone-mixed {
+  background: linear-gradient(180deg, #e7c75e, var(--gold));
+  color: #2a1d02;
+}
+
+.odds-seg.hit {
+  animation: oddsHitPulse 1.1s ease-in-out 2;
+  box-shadow: inset 0 0 0 2px #fff;
+  z-index: 1;
+}
+
+@keyframes oddsHitPulse {
+  0%,
+  100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.35);
+  }
+}
+
+.odds-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.odds-legend-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+}
+
+.odds-legend-item.hit {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.odds-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-top: 4px;
+  flex-shrink: 0;
+}
+
+.odds-dot.tone-positive {
+  background: var(--accent);
+}
+
+.odds-dot.tone-negative {
+  background: var(--red);
+}
+
+.odds-dot.tone-neutral,
+.odds-dot.tone-mixed {
+  background: var(--gold);
+}
+
+.gamble-box.reveal .odds-bar {
+  animation: revealShake 0.5s ease;
+}
+
+@keyframes revealShake {
+  0% {
+    transform: scale(0.96);
+    opacity: 0.4;
+  }
+  60% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.odds-result {
+  margin-top: 10px;
+  font-weight: 800;
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.odds-result.tone-positive {
+  color: var(--accent);
+}
+
+.odds-result.tone-negative {
+  color: var(--red);
+}
+
+.odds-result.tone-neutral,
+.odds-result.tone-mixed {
+  color: var(--gold);
+}
+
+.event-outcome-lines {
+  width: 100%;
+  margin-top: 8px;
+}
+
 .spinner {
   width: 32px;
   height: 32px;
