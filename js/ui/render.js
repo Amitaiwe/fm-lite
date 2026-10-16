@@ -6,7 +6,8 @@ import { totalSquadSalary } from "../engine/economy.js";
 import { findTeamMatch } from "../engine/fixtures.js";
 import { sortedTable } from "../engine/table.js";
 import { SETTINGS, POSITION_LABELS_HE } from "../data/settings.js";
-import { formatMoney, positionLabel, escapeHtml } from "./format.js";
+import { formatMoney, formatMoneyShort, positionLabel, escapeHtml } from "./format.js";
+import { teamCrestSvg } from "./crest.js";
 
 function teamName(leagueId, teamId) {
   const t = getTeam(leagueId, teamId);
@@ -85,16 +86,36 @@ export function renderLeaguePick({ confirmOverwrite }) {
   `;
 }
 
+/**
+ * כרטיס שחקן בסגנון "אולטימייט טים" (FUT): מגן זהב/כחול עם דירוג
+ * גדול, עמדה, שם, ושורת סטטים עם אייקונים. משמש גם לסגל (עם כושר)
+ * וגם להצעות שוק ההעברות (בלי כושר - עוד לא בסגל).
+ */
+function futCardHtml({ rating, position, name, statLines, size = "md" }) {
+  return `
+    <div class="fut-card fut-card-${size}">
+      <div class="fut-rating">${rating}</div>
+      <div class="fut-pos">${positionLabel(position)}</div>
+      <div class="fut-name">${escapeHtml(name)}</div>
+      <div class="fut-stats">
+        ${statLines.map((s) => `<span class="fut-stat"><span class="fut-stat-icon">${s.icon}</span>${s.value}</span>`).join("")}
+      </div>
+    </div>`;
+}
+
 function pitchPlayerCardHtml(slot, allPlayers, fitnessDiffs) {
   const player = findById(allPlayers, slot.playerId);
   const diff = fitnessDiffs ? fitnessDiffs[slot.playerId] || 0 : 0;
-  return `
-    <div class="pitch-player">
-      <div class="pos-label">${positionLabel(slot.position)}</div>
-      <div class="p-name">${escapeHtml(player.name_he)}</div>
-      <div class="stat-line"><span>יכ'</span><b>${slot.currentAbility}</b><span>כושר</span><b>${slot.fitness}${fitnessArrowHtml(diff)}</b></div>
-      <div class="fitness-bar-track"><div class="fitness-bar-fill" style="width:${slot.fitness}%"></div></div>
-    </div>`;
+  return futCardHtml({
+    rating: slot.currentAbility,
+    position: slot.position,
+    name: player.name_he,
+    size: "sm",
+    statLines: [
+      { icon: "💪", value: `${slot.fitness}${fitnessArrowHtml(diff)}` },
+      { icon: "💰", value: formatMoneyShort(player.market_value) },
+    ],
+  });
 }
 
 /**
@@ -140,6 +161,7 @@ function nextOpponentHtml(state) {
   return `
     <div class="card-flat next-opponent">
       <span class="muted">היריב הבא (${match.isHome ? "בית" : "חוץ"}):</span>
+      ${teamCrestSvg(match.opponent, 22)}
       <span class="next-opponent-name">${teamName(state.leagueId, match.opponent)}</span>
       ${position ? `<span class="badge">מקום ${position}</span>` : ""}
     </div>
@@ -153,8 +175,11 @@ export function renderHome({ state, allPlayers }) {
     <div class="screen">
       <div class="top-bar">
         <div class="team-identity">
-          <div class="team-name">${teamName(state.leagueId, state.teamId)}</div>
-          <div class="league-name">${league.name_he}</div>
+          ${teamCrestSvg(state.teamId, 38)}
+          <div>
+            <div class="team-name">${teamName(state.leagueId, state.teamId)}</div>
+            <div class="league-name">${league.name_he}</div>
+          </div>
         </div>
         <div class="season-round">
           <div>עונה ${state.season}</div>
@@ -214,7 +239,7 @@ export function renderTable({ state }) {
                 (r, i) => `
               <tr class="${r.teamId === state.teamId ? "user-row" : ""}">
                 <td>${i + 1}</td>
-                <td class="team-cell">${teamName(state.leagueId, r.teamId)}</td>
+                <td class="team-cell"><span class="team-cell-inner">${teamCrestSvg(r.teamId, 18)}${teamName(state.leagueId, r.teamId)}</span></td>
                 <td>${r.played}</td>
                 <td>${r.won}</td>
                 <td>${r.drawn}</td>
@@ -339,20 +364,20 @@ export function renderTransferWindow({ state, allPlayers, feedback }) {
                 : `מחיר נטו: ${formatMoney(netPrice)}`;
             return `
             <div class="transfer-card">
-              <div class="row">
-                <div>
-                  <div class="pos-label">${positionLabel(p.position)}</div>
-                  <div class="p-name">${escapeHtml(p.name_he)}</div>
-                </div>
-                <div style="text-align:left">
-                  <div class="stat-line"><span>יכולת&nbsp;</span><b>${p.ability}</b></div>
-                  <div class="stat-line"><span>שווי שוק&nbsp;</span><b>${formatMoney(p.market_value)}</b></div>
+              <div class="row" style="align-items:flex-start">
+                ${futCardHtml({
+                  rating: p.ability,
+                  position: p.position,
+                  name: p.name_he,
+                  size: "sm",
+                  statLines: [{ icon: "💰", value: formatMoneyShort(p.market_value) }],
+                })}
+                <div style="text-align:left;flex:1">
+                  <div class="muted" style="margin-bottom:4px">שחקן נוכחי בעמדה:</div>
+                  <div>${currentPlayer ? escapeHtml(currentPlayer.name_he) + " (" + formatMoneyShort(currentPlayer.market_value) + ")" : "-"}</div>
                 </div>
               </div>
               <div class="divider"></div>
-              <div class="row">
-                <span class="muted">שחקן נוכחי בעמדה: ${currentPlayer ? escapeHtml(currentPlayer.name_he) + " (" + formatMoney(currentPlayer.market_value) + ")" : "-"}</span>
-              </div>
               <div class="row" style="margin-top:8px">
                 <span class="net-price ${netPrice <= 0 ? "free" : ""}">${priceLabel}</span>
                 <button class="btn" style="width:auto" data-action="buy-player" data-player="${p.id}"
@@ -498,7 +523,7 @@ export function renderRoundResult({ state, allPlayers, roundSummary, fitnessDiff
     heroHtml = `
       <div class="match-result-hero">
         <div class="badge ${outcomeClass}" style="background:transparent">${outcomeLabel}</div>
-        <div class="teams">${teamName(state.leagueId, state.teamId)} נגד ${teamName(state.leagueId, oppTeam)}</div>
+        <div class="teams-crests">${teamCrestSvg(state.teamId, 34)}<span class="teams">${teamName(state.leagueId, state.teamId)} נגד ${teamName(state.leagueId, oppTeam)}</span>${teamCrestSvg(oppTeam, 34)}</div>
         <div class="score score-reveal ${outcomeClass}">${myGoals} - ${oppGoals}</div>
       </div>
     `;
@@ -538,7 +563,7 @@ export function renderRoundResult({ state, allPlayers, roundSummary, fitnessDiff
                 ({ row: r, rank }) => `
               <tr class="${r.teamId === state.teamId ? "user-row" : ""}">
                 <td>${rank}</td>
-                <td class="team-cell">${teamName(state.leagueId, r.teamId)}</td>
+                <td class="team-cell"><span class="team-cell-inner">${teamCrestSvg(r.teamId, 18)}${teamName(state.leagueId, r.teamId)}</span></td>
                 <td>${r.played}</td>
                 <td><b>${r.points}</b></td>
                 <td>${positionDeltaHtml(roundSummary.positionDeltas ? roundSummary.positionDeltas[r.teamId] : 0)}</td>
