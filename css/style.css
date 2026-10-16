@@ -198,7 +198,27 @@ p {
 
 .team-identity {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.crest {
+  flex-shrink: 0;
+  display: block;
+}
+
+.team-cell-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.teams-crests {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
 }
 
 .team-identity .team-name {
@@ -329,27 +349,82 @@ p {
   z-index: 1;
 }
 
-.pitch-player {
-  width: 46%;
+/* כרטיס שחקן בסגנון "אולטימייט טים" (FUT): מגן זהב/כחול עם זוהר,
+   דירוג גדול, עמדה, שם ושורת סטטים עם אייקונים. */
+.fut-card {
+  position: relative;
+  background: linear-gradient(160deg, #163f6b 0%, #0b2440 55%, #051220 100%);
+  border: 2px solid #e9c46a;
+  box-shadow: 0 0 12px rgba(110, 190, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  clip-path: polygon(14% 0%, 86% 0%, 100% 18%, 100% 72%, 50% 100%, 0% 72%, 0% 18%);
+  padding: 10px 6px 22px;
   text-align: center;
-  padding: 8px 8px;
-  background: rgba(13, 20, 32, 0.85);
-  border-color: rgba(255, 255, 255, 0.16);
+  color: #fff;
 }
 
-.pitch-player .p-name {
-  font-size: 0.85rem;
-  margin: 2px 0 5px;
+.fut-card-sm {
+  width: 100%;
+  max-width: 120px;
+  margin: 0 auto;
+  padding: 8px 4px 18px;
 }
 
-.pitch-player .stat-line {
-  font-size: 0.72rem;
+.fut-card-md {
+  width: 100%;
+  max-width: 170px;
+  margin: 0 auto;
+  padding: 14px 8px 28px;
+}
+
+.pitch-row .fut-card-sm {
+  flex: 0 1 46%;
+}
+
+.fut-rating {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #ffd874;
+  line-height: 1;
+  text-shadow: 0 0 6px rgba(255, 216, 116, 0.5);
+}
+
+.fut-pos {
+  font-size: 0.6rem;
+  font-weight: 700;
+  color: #ffd874;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 2px;
+}
+
+.fut-name {
+  font-weight: 800;
+  font-size: 0.8rem;
+  margin: 5px 0 7px;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fut-stats {
+  display: flex;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
-.pitch-player .fitness-bar-track {
-  margin-top: 5px;
+.fut-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 0.68rem;
+  color: #cfe8ff;
+  font-weight: 700;
+}
+
+.fut-stat-icon {
+  font-size: 0.78rem;
 }
 
 .next-opponent {
