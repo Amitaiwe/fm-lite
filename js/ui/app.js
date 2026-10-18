@@ -13,6 +13,7 @@ import {
   renderFinances,
   renderTransferWindow,
   renderEvent,
+  renderEventSpin,
   renderEventOutcome,
   renderRoundResult,
   renderSeasonEnd,
@@ -26,7 +27,7 @@ let allPlayers = null;
 
 // מצב תצוגה זמני (לא נשמר)
 const ui = {
-  screen: "loading", // loading | start | leaguePick | home | table | finances | transferWindow | event | eventOutcome | roundResult | seasonEnd | gameOver
+  screen: "loading", // loading | start | leaguePick | home | table | finances | transferWindow | event | eventSpin | eventOutcome | roundResult | seasonEnd | gameOver
   confirmOverwrite: false,
   transferFeedback: null,
   screenQueue: [], // תור מסכים להצגה אחרי playNextRound (roundResult -> seasonEnd/gameOver/event)
@@ -34,6 +35,7 @@ const ui = {
   lastFitnessDiffs: null,
   lastSeasonEndData: null,
   lastEventOutcome: null,
+  spinData: null, // { title, optionLabel, branches, winningLabel } - להגרלת eventSpin
   toast: null,
 };
 
@@ -81,6 +83,9 @@ function render() {
       break;
     case "event":
       html = renderEvent({ state: controller.state });
+      break;
+    case "eventSpin":
+      html = renderEventSpin(ui.spinData);
       break;
     case "eventOutcome":
       html = renderEventOutcome({ outcome: ui.lastEventOutcome });
@@ -192,15 +197,68 @@ function onCloseTransferWindow() {
   render();
 }
 
+/**
+ * מפעיל את אנימציית ה"הגרלה" (סרט פלחים שזז ונעצר) על מסך eventSpin:
+ * הפוקוס האמיתי (RNG) כבר הוכרע בשלב onResolveEvent, כך שהאנימציה כאן
+ * היא ויזואלית בלבד - 3 שניות, מתחילה מהר ומאטה לקראת הסוף (סגנון
+ * מחוג רולטה), ונעצרת בדיוק על הפריט האחרון בסרט (שהוא תמיד תוצאת
+ * הניצחון בפועל - ראו buildReelItems ב-render.js). דורשת מדידת DOM
+ * אמיתית (offsetLeft/clientWidth), ולכן מופעלת רק אחרי שהמסך צויר.
+ */
+function startEventSpin() {
+  const track = document.getElementById("reel-track");
+  const viewport = document.getElementById("reel-viewport");
+  if (!track || !viewport || !track.lastElementChild) {
+    ui.screen = "eventOutcome";
+    render();
+    return;
+  }
+  const target = track.lastElementChild;
+  track.style.transition = "none";
+  track.style.transform = "translateX(0px)";
+  // "זריקת" reflow כדי שהדפדפן יקליט את מצב ההתחלה לפני שמתחילים לאנימץ
+  void track.offsetWidth;
+  const targetCenter = target.offsetLeft + target.offsetWidth / 2;
+  const viewportCenter = viewport.clientWidth / 2;
+  const offset = targetCenter - viewportCenter;
+  requestAnimationFrame(() => {
+    track.style.transition = "transform 3s cubic-bezier(0.1, 0.72, 0.16, 1)";
+    track.style.transform = `translateX(${-offset}px)`;
+  });
+  setTimeout(() => {
+    ui.screen = "eventOutcome";
+    render();
+  }, 3150);
+}
+
 function onResolveEvent(optionId) {
+  // חייבים לשמור את מידע ה-gamble (אחוזים) של האופציה *לפני* הפתרון,
+  // כי pendingEvent נמחק מה-state ברגע שהאירוע נפתר.
+  const pendingOption = controller.state.pendingEvent?.options.find((o) => o.id === optionId);
   controller.resolveEvent(optionId);
   ui.lastEventOutcome = controller.state.lastEventOutcome || null;
-  ui.screen = "eventOutcome";
-  render();
+
+  const gamble = pendingOption?.gamble;
+  const randomOutcome = ui.lastEventOutcome?.randomOutcome;
+  if (gamble && randomOutcome) {
+    ui.spinData = {
+      title: ui.lastEventOutcome.title,
+      optionLabel: ui.lastEventOutcome.optionLabel,
+      branches: gamble.branches,
+      winningLabel: randomOutcome.label,
+    };
+    ui.screen = "eventSpin";
+    render();
+    startEventSpin();
+  } else {
+    ui.screen = "eventOutcome";
+    render();
+  }
 }
 
 function onContinueAfterEventOutcome() {
   ui.lastEventOutcome = null;
+  ui.spinData = null;
   advanceScreenQueue();
 }
 

@@ -32,10 +32,12 @@ function navTabsHtml(active) {
   `;
 }
 
-function fitnessArrowHtml(diff) {
-  if (diff > 0) return `<span class="fit-arrow-up">▲</span>`;
-  if (diff < 0) return `<span class="fit-arrow-down">▼</span>`;
-  return "";
+/** תג קטן +/-N לשינוי אחרון (כושר אחרי משחק, יכולת אחרי אירוע) - נשאר מוצג עד השינוי הבא. */
+function deltaBadgeHtml(diff) {
+  if (!diff) return "";
+  const cls = diff > 0 ? "delta-up" : "delta-down";
+  const sign = diff > 0 ? "+" : "";
+  return `<span class="delta-badge ${cls}">${sign}${diff}</span>`;
 }
 
 export function renderStartScreen({ hasSave }) {
@@ -91,10 +93,10 @@ export function renderLeaguePick({ confirmOverwrite }) {
  * גדול, עמדה, שם, ושורת סטטים עם אייקונים. משמש גם לסגל (עם כושר)
  * וגם להצעות שוק ההעברות (בלי כושר - עוד לא בסגל).
  */
-function futCardHtml({ rating, position, name, statLines, size = "md" }) {
+function futCardHtml({ rating, ratingDelta, position, name, statLines, size = "md" }) {
   return `
     <div class="fut-card fut-card-${size}">
-      <div class="fut-rating">${rating}</div>
+      <div class="fut-rating">${rating}${ratingDelta ? deltaBadgeHtml(ratingDelta) : ""}</div>
       <div class="fut-pos">${positionLabel(position)}</div>
       <div class="fut-name">${escapeHtml(name)}</div>
       <div class="fut-stats">
@@ -103,16 +105,22 @@ function futCardHtml({ rating, position, name, statLines, size = "md" }) {
     </div>`;
 }
 
-function pitchPlayerCardHtml(slot, allPlayers, fitnessDiffs) {
+/**
+ * כרטיס שחקן בסגל (תצוגת "מגרש" בבית): מציג גם את שינוי הכושר האחרון
+ * (אחרי כל משחק, ±MATCH_FITNESS_SWING אקראי) וגם שינוי יכולת אחרון
+ * (רק דרך אירוע) - נשארים מוצגים עד השינוי הבא, כדי שתמיד יהיה ברור
+ * מה קרה לאחרונה לכל שחקן.
+ */
+function pitchPlayerCardHtml(slot, allPlayers) {
   const player = findById(allPlayers, slot.playerId);
-  const diff = fitnessDiffs ? fitnessDiffs[slot.playerId] || 0 : 0;
   return futCardHtml({
     rating: slot.currentAbility,
+    ratingDelta: slot.lastAbilityDelta,
     position: slot.position,
     name: player.name_he,
     size: "sm",
     statLines: [
-      { icon: "💪", value: `${slot.fitness}${fitnessArrowHtml(diff)}` },
+      { icon: "💪", value: `${slot.fitness}${deltaBadgeHtml(slot.lastFitnessDelta)}` },
       { icon: "💰", value: formatMoneyShort(player.market_value) },
     ],
   });
@@ -123,7 +131,7 @@ function pitchPlayerCardHtml(slot, allPlayers, fitnessDiffs) {
  * קשר+חלוץ למטה (ליד שער היריבה) - תואם כדורגל אמיתי, וקטן משמעותית
  * מה-grid המלא שהיה קודם.
  */
-function squadPitchHtml(state, allPlayers, fitnessDiffs) {
+function squadPitchHtml(state, allPlayers) {
   const bySlot = (pos) => state.squad.find((s) => s.position === pos);
   const gk = bySlot("goalkeeper");
   const df = bySlot("defender");
@@ -135,12 +143,12 @@ function squadPitchHtml(state, allPlayers, fitnessDiffs) {
       <div class="pitch-circle"></div>
       <div class="pitch-goal-label top">השער שלנו</div>
       <div class="pitch-row">
-        ${gk ? pitchPlayerCardHtml(gk, allPlayers, fitnessDiffs) : ""}
-        ${df ? pitchPlayerCardHtml(df, allPlayers, fitnessDiffs) : ""}
+        ${gk ? pitchPlayerCardHtml(gk, allPlayers) : ""}
+        ${df ? pitchPlayerCardHtml(df, allPlayers) : ""}
       </div>
       <div class="pitch-row">
-        ${mf ? pitchPlayerCardHtml(mf, allPlayers, fitnessDiffs) : ""}
-        ${st ? pitchPlayerCardHtml(st, allPlayers, fitnessDiffs) : ""}
+        ${mf ? pitchPlayerCardHtml(mf, allPlayers) : ""}
+        ${st ? pitchPlayerCardHtml(st, allPlayers) : ""}
       </div>
       <div class="pitch-goal-label bottom">שער היריבה</div>
     </div>
@@ -455,6 +463,59 @@ export function renderEvent({ state }) {
                 </div>`;
             })
             .join("")}
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+/**
+ * בונה רצף "פלחים" (חוזרים לפי משקל ההסתברות, כדי שתחושת ההגרלה
+ * תשקף את האחוזים האמיתיים) לסרט ההגרלה - ואת פלח הניצחון כפריט
+ * האחרון ברשימה, שהוא בדיוק מה ש-startEventSpin (ב-app.js) מעצור
+ * עליו תחת המחוג המרכזי, אחרי שה-RNG כבר הכריע בפועל במנוע.
+ */
+function buildReelItems(branches, winningLabel) {
+  const LOOPS = 6;
+  const weighted = [];
+  branches.forEach((b) => {
+    const count = Math.max(1, Math.round(b.probability * 10));
+    for (let i = 0; i < count; i++) weighted.push(b);
+  });
+  const items = [];
+  for (let l = 0; l < LOOPS; l++) items.push(...weighted);
+  const winningBranch = branches.find((b) => b.label === winningLabel) || branches[0];
+  items.push(winningBranch);
+  return items;
+}
+
+function reelChipHtml(branch) {
+  return `
+    <div class="reel-chip tone-${branch.tone}">
+      <div class="reel-chip-pct">${(branch.probability * 100).toFixed(0)}%</div>
+      <div class="reel-chip-label">${escapeHtml(branch.label)}</div>
+    </div>`;
+}
+
+/**
+ * מסך "מגרילים..." - סרט אופקי (כמו מכונת סלוט) שזז ונעצר על התוצאה
+ * שכבר הוכרעה בפועל במנוע (לא כאן - רק האנימציה מוצגת כאן). האנימציה
+ * עצמה (קביעת transform בפועל לאורך 3 שניות) מופעלת מ-app.js מיד
+ * אחרי שהמסך הזה מצויר, כי היא דורשת מדידת פיקסלים אמיתית מה-DOM.
+ */
+export function renderEventSpin({ title, optionLabel, branches, winningLabel }) {
+  const items = buildReelItems(branches, winningLabel);
+  return `
+    <div class="screen">
+      <div class="card center-col">
+        <div style="font-size:2rem">🎰</div>
+        <h2>${escapeHtml(title)}</h2>
+        <p class="muted">בחרת: ${escapeHtml(optionLabel)} · מגרילים...</p>
+        <div class="reel-viewport" id="reel-viewport">
+          <div class="reel-pointer"></div>
+          <div class="reel-track" id="reel-track">
+            ${items.map(reelChipHtml).join("")}
+          </div>
         </div>
       </div>
     </div>
