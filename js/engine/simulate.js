@@ -54,3 +54,34 @@ export function simulateMatch(strengthA, strengthB, rng) {
   const teamBGoals = poissonSample(xgB, rng);
   return { teamAGoals, teamBGoals };
 }
+
+function poissonPmf(k, lambda) {
+  let p = Math.exp(-lambda);
+  for (let i = 1; i <= k; i++) p *= lambda / i;
+  return p;
+}
+
+/**
+ * הערכה אנליטית (לא דגימה אקראית) של סיכויי ניצחון/תיקו/הפסד, לפי
+ * עוצמות הקבוצות הבסיסיות (בלי רכיב ה-swing האקראי שחל רק בפועל
+ * במהלך הסימולציה האמיתית - כאן רוצים "ממוצע צפוי" יציב למסך
+ * סקאוטינג, לא תוצאה אחת מדומה). מחזיר { win, draw, loss } (סכום=1).
+ */
+export function estimateMatchProbabilities(myStrength, oppStrength) {
+  const xgMe = expectedGoals(myStrength, oppStrength);
+  const xgOpp = expectedGoals(oppStrength, myStrength);
+  const MAX_GOALS = 8;
+  let win = 0;
+  let draw = 0;
+  let loss = 0;
+  for (let i = 0; i <= MAX_GOALS; i++) {
+    for (let j = 0; j <= MAX_GOALS; j++) {
+      const p = poissonPmf(i, xgMe) * poissonPmf(j, xgOpp);
+      if (i > j) win += p;
+      else if (i === j) draw += p;
+      else loss += p;
+    }
+  }
+  const total = win + draw + loss || 1;
+  return { win: win / total, draw: draw / total, loss: loss / total };
+}
