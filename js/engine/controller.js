@@ -25,8 +25,8 @@ export class GameController {
     return state;
   }
 
-  startNewGame(leagueId) {
-    this.state = createNewGame(leagueId, this.allPlayers, this.rng);
+  startNewGame(leagueId, teamId = null) {
+    this.state = createNewGame(leagueId, this.allPlayers, this.rng, teamId);
     saveGame(this.state);
     return this.state;
   }

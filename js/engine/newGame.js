@@ -11,14 +11,18 @@ import { pickRandom } from "./rng.js";
 
 export const GAME_VERSION = 1;
 
-/** יוצר מצב משחק חדש לגמרי, מתוך ליגה שנבחרה ומאגר השחקנים. */
-export function createNewGame(leagueId, allPlayers, rng) {
+/**
+ * יוצר מצב משחק חדש לגמרי, מתוך ליגה שנבחרה ומאגר השחקנים.
+ * teamId אופציונלי - אם ניתן (ותקף לליגה), הקבוצה הזו תנוהל במקום הגרלה אקראית.
+ */
+export function createNewGame(leagueId, allPlayers, rng, teamId = null) {
   const league = getLeague(leagueId);
   if (!league) {
     throw new Error(`ליגה לא קיימת: ${leagueId}`);
   }
   const teamIds = league.teams.map((t) => t.id);
-  const userTeam = pickRandom(rng, league.teams);
+  const chosenTeam = teamId ? league.teams.find((t) => t.id === teamId) : null;
+  const userTeam = chosenTeam || pickRandom(rng, league.teams);
   const squad = draftInitialSquad(allPlayers, rng);
   const fixtures = generateFixtures(teamIds);
   const table = initTable(teamIds);
