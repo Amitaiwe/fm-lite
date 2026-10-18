@@ -39,9 +39,24 @@ export function draftInitialSquad(allPlayers, rng) {
   return squad;
 }
 
-/** מרענן את הכושר של כל שחקני הסגל בתחילת עונה חדשה. */
+/** מרענן את הכושר של כל שחקני הסגל בתחילת עונה חדשה (הגרלה מלאה מאפס). */
 export function refreshSquadFitness(squad, rng) {
   return squad.map((slot) => ({ ...slot, fitness: randomFitness(rng), lastFitnessDelta: null }));
+}
+
+/**
+ * מחיל שינוי כושר אקראי "פרה-עונה" (±SEASON_FITNESS_SWING) על הכושר
+ * *הקיים* של כל שחקן (לא הגרלה מאפס) - כדי שהמעבר בין סוף עונה לתחילת
+ * הבאה יהיה הגיוני (למשל 99 בסוף עונה -> סביב 89-99 בתחילת הבאה, לא
+ * קפיצה אקראית לגמרי כמו 61).
+ */
+export function applySeasonFitnessSwing(squad, rng) {
+  const swing = SETTINGS.SEASON_FITNESS_SWING;
+  return squad.map((slot) => {
+    const delta = randInt(rng, -swing, swing);
+    const newFitness = clampFitness(slot.fitness + delta);
+    return { ...slot, fitness: newFitness, lastFitnessDelta: null };
+  });
 }
 
 /**
