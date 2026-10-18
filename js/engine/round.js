@@ -10,6 +10,7 @@ import { applyMatchResult, sortedTable } from "./table.js";
 import { applyMatchBonusPenalty } from "./economy.js";
 import { generateTransferWindowPlayers } from "./transferMarket.js";
 import { shouldTriggerEvent, triggerEvent } from "./events.js";
+import { applyMatchFitnessSwing } from "./squad.js";
 import { endSeason } from "./seasonEnd.js";
 
 function teamStrengthMap(league) {
@@ -107,9 +108,15 @@ export function playNextRound(state, allPlayers, rng) {
     }
   }
 
+  // שינוי כושר אקראי (±MATCH_FITNESS_SWING) לכל שחקני הסגל, רק אם הקבוצה
+  // שיחקה בפועל במחזור זה (לא במחזור מנוחה) - אין "בלאי" הדרגתי אוטומטי
+  // מעבר לזה, כי אין ספסל/חילופים במשחק.
+  const squadAfterMatch = userMatch ? applyMatchFitnessSwing(economyState.squad, rng) : economyState.squad;
+
   const newRoundCount = state.round + 1;
   let newState = {
     ...economyState,
+    squad: squadAfterMatch,
     table,
     round: newRoundCount,
     matchResultsByRound: { ...state.matchResultsByRound, [roundIndex]: allMatches },

@@ -41,7 +41,22 @@ export function draftInitialSquad(allPlayers, rng) {
 
 /** מרענן את הכושר של כל שחקני הסגל בתחילת עונה חדשה. */
 export function refreshSquadFitness(squad, rng) {
-  return squad.map((slot) => ({ ...slot, fitness: randomFitness(rng) }));
+  return squad.map((slot) => ({ ...slot, fitness: randomFitness(rng), lastFitnessDelta: null }));
+}
+
+/**
+ * מחיל שינוי כושר אקראי (±MATCH_FITNESS_SWING) על כל שחקן בסגל, אחרי
+ * כל משחק שהקבוצה המנוהלת שיחקה בפועל (לא במחזורי מנוחה - ראו round.js).
+ * שומר את השינוי בפועל (אחרי הגבלת הטווח) ב-lastFitnessDelta, כדי
+ * שה-UI יוכל להציג חץ+מספר קבוע ליד השחקן בתצוגת הסגל.
+ */
+export function applyMatchFitnessSwing(squad, rng) {
+  const swing = SETTINGS.MATCH_FITNESS_SWING;
+  return squad.map((slot) => {
+    const delta = randInt(rng, -swing, swing);
+    const newFitness = clampFitness(slot.fitness + delta);
+    return { ...slot, fitness: newFitness, lastFitnessDelta: newFitness - slot.fitness };
+  });
 }
 
 /**

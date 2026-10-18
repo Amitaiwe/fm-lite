@@ -115,23 +115,28 @@ function applyEffect(state, allPlayers, eff, ctx, rng) {
       const note = `כושר ${eff.target === "all" ? "כל הסגל" : "השחקן"} ${fmtSigned(amount)}`;
       let squad;
       if (eff.target === "all") {
-        squad = state.squad.map((s) => ({ ...s, fitness: clampFitness(s.fitness + amount) }));
+        squad = state.squad.map((s) => {
+          const newFitness = clampFitness(s.fitness + amount);
+          return { ...s, fitness: newFitness, lastFitnessDelta: newFitness - s.fitness };
+        });
       } else {
         if (!ctx.slot) return { state, note: null };
-        squad = state.squad.map((s) =>
-          s.playerId === ctx.slot.playerId ? { ...s, fitness: clampFitness(s.fitness + amount) } : s
-        );
+        squad = state.squad.map((s) => {
+          if (s.playerId !== ctx.slot.playerId) return s;
+          const newFitness = clampFitness(s.fitness + amount);
+          return { ...s, fitness: newFitness, lastFitnessDelta: newFitness - s.fitness };
+        });
       }
       return { state: { ...state, squad }, note };
     }
 
     case "ability": {
       if (!ctx.slot) return { state, note: null };
-      const squad = state.squad.map((s) =>
-        s.playerId === ctx.slot.playerId
-          ? { ...s, currentAbility: clampAbility(s.currentAbility + eff.amount) }
-          : s
-      );
+      const squad = state.squad.map((s) => {
+        if (s.playerId !== ctx.slot.playerId) return s;
+        const newAbility = clampAbility(s.currentAbility + eff.amount);
+        return { ...s, currentAbility: newAbility, lastAbilityDelta: newAbility - s.currentAbility };
+      });
       return { state: { ...state, squad }, note: `יכולת השחקן ${fmtSigned(eff.amount)}` };
     }
 
