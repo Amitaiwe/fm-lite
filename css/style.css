@@ -964,6 +964,62 @@ table.league-table tr.champion-row td.team-cell::before {
   background: rgba(231, 182, 73, 0.14);
 }
 
+/* מסך סקאוטינג (renderScouting) - השוואת עוצמות ובר קושי */
+.scout-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  margin-bottom: 4px;
+}
+
+.scout-label {
+  color: var(--text-dim);
+}
+
+.scout-value {
+  font-weight: 800;
+  color: var(--text);
+}
+
+.scout-bar-track {
+  background: #0c1628;
+  border-radius: 999px;
+  height: 9px;
+  overflow: hidden;
+}
+
+.scout-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+}
+
+.scout-bar-fill.mine {
+  background: linear-gradient(90deg, var(--accent-dark), var(--accent));
+}
+
+.scout-bar-fill.opp {
+  background: linear-gradient(90deg, #c23b4e, var(--red));
+}
+
+.scout-difficulty {
+  margin: 10px 0 0;
+  font-weight: 800;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.scout-difficulty.tone-positive {
+  color: var(--accent);
+}
+
+.scout-difficulty.tone-negative {
+  color: var(--red);
+}
+
+.scout-difficulty.tone-neutral {
+  color: var(--gold);
+}
+
 .reel-pointer {
   position: absolute;
   left: 50%;
