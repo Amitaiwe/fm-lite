@@ -10,6 +10,7 @@ import { findTeamMatch } from "../engine/fixtures.js";
 import {
   renderStartScreen,
   renderLeaguePick,
+  renderTeamPick,
   renderHome,
   renderTable,
   renderFinances,
@@ -30,8 +31,9 @@ let allPlayers = null;
 
 // מצב תצוגה זמני (לא נשמר)
 const ui = {
-  screen: "loading", // loading | start | leaguePick | home | table | finances | transferWindow | scouting | event | eventSpin | eventOutcome | roundResult | seasonEnd | gameOver
+  screen: "loading", // loading | start | leaguePick | teamPick | home | table | finances | transferWindow | scouting | event | eventSpin | eventOutcome | roundResult | seasonEnd | gameOver
   confirmOverwrite: false,
+  pickedLeagueId: null,
   transferFeedback: null,
   screenQueue: [], // תור מסכים להצגה אחרי playNextRound (roundResult -> seasonEnd/gameOver/event)
   lastRoundSummary: null,
@@ -71,6 +73,9 @@ function render() {
       break;
     case "leaguePick":
       html = renderLeaguePick({ confirmOverwrite: ui.confirmOverwrite });
+      break;
+    case "teamPick":
+      html = renderTeamPick({ leagueId: ui.pickedLeagueId });
       break;
     case "home":
       html = renderHome({ state: controller.state, allPlayers });
@@ -289,9 +294,10 @@ function onContinueAfterEventOutcome() {
   advanceScreenQueue();
 }
 
-async function onStartNewGame(leagueId) {
-  controller.startNewGame(leagueId);
+async function onStartNewGame(leagueId, teamId = null) {
+  controller.startNewGame(leagueId, teamId);
   ui.confirmOverwrite = false;
+  ui.pickedLeagueId = null;
   ui.screen = "home";
   render();
 }
@@ -311,7 +317,16 @@ function wireEvents() {
       case "continue-game": {
         const loaded = controller.loadSavedGame();
         if (loaded) {
-          ui.screen = loaded.gameOver ? "gameOver" : "home";
+          // אם יש אירוע ממתין או חלון העברות פתוח, חוזרים ישר למסך
+          // הרלוונטי - אחרת "המשך משחק שמור" היה תקוע על מסך הבית בלי
+          // דרך להגיע לאירוע/לחלון שחוסם את ההתקדמות.
+          ui.screen = loaded.gameOver
+            ? "gameOver"
+            : loaded.pendingEvent
+              ? "event"
+              : loaded.transferWindow
+                ? "transferWindow"
+                : "home";
           render();
         } else {
           showToast("לא נמצא משחק שמור", "error");
@@ -331,7 +346,15 @@ function wireEvents() {
         render();
         break;
       case "pick-league":
-        onStartNewGame(el.dataset.league);
+        ui.pickedLeagueId = el.dataset.league;
+        ui.screen = "teamPick";
+        render();
+        break;
+      case "pick-team":
+        onStartNewGame(el.dataset.league, el.dataset.team);
+        break;
+      case "pick-team-random":
+        onStartNewGame(el.dataset.league, null);
         break;
       case "tab":
         ui.screen = el.dataset.tab;

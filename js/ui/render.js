@@ -72,7 +72,7 @@ export function renderLeaguePick({ confirmOverwrite }) {
     <div class="screen">
       <div class="brand">
         <div class="logo">בחירת <span>ליגה</span></div>
-        <div class="tagline">הקבוצה שתנהל תוגרל אוטומטית מתוך 11 הקבוצות בליגה שתבחר</div>
+        <div class="tagline">בחר ליגה, ואז תוכל לבחור את הקבוצה שתנהל מתוך 11 הקבוצות בה</div>
       </div>
       ${
         confirmOverwrite
@@ -92,6 +92,36 @@ export function renderLeaguePick({ confirmOverwrite }) {
             </div>
             <button class="btn btn-secondary" data-action="back-to-start">חזרה</button>`
       }
+    </div>
+  `;
+}
+
+export function renderTeamPick({ leagueId }) {
+  const league = getLeague(leagueId);
+  // ממוינות לפי כוח בסיס יורד, כדי שתהיה תחושה ברורה של "מי הכי חזקה"
+  const teams = [...league.teams].sort((a, b) => b.baseStrength - a.baseStrength);
+  return `
+    <div class="screen">
+      <div class="brand">
+        <div class="logo">בחירת <span>קבוצה</span></div>
+        <div class="tagline">${league.name_he} - באיזו קבוצה תרצה לנהל?</div>
+      </div>
+      <div class="team-pick-grid">
+        ${teams
+          .map(
+            (t) => `
+          <div class="team-pick" data-action="pick-team" data-league="${leagueId}" data-team="${t.id}">
+            ${teamCrestSvg(t.id, 40)}
+            <span class="team-pick-name">${t.name_he}</span>
+            <span class="team-pick-strength">כוח ${t.baseStrength}</span>
+          </div>`
+          )
+          .join("")}
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-secondary" data-action="pick-team-random" data-league="${leagueId}">הגרל לי קבוצה</button>
+        <button class="btn btn-secondary" data-action="goto-new-game">חזרה לליגות</button>
+      </div>
     </div>
   `;
 }
