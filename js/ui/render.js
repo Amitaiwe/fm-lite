@@ -778,6 +778,19 @@ export function renderRoundResult({ state, allPlayers, roundSummary, fitnessDiff
 export function renderSeasonEnd({ state, leagueId, teamId, summary, championTeamId, finalPosition, bankrupt }) {
   const league = getLeague(leagueId);
   const isChampion = championTeamId === teamId;
+
+  // התקציב בתחילת העונה שזה עתה הסתיימה = התקציב בסוף העונה שלפניה
+  // (או תקציב ההתחלה של המשחק, אם זו העונה הראשונה). מחושב מ-financeHistory,
+  // ששומר endingBudget לכל עונה שהסתיימה - כולל הרשומה שנוספה כרגע לעונה הזו.
+  const history = state.financeHistory;
+  const currentEntry = history[history.length - 1];
+  const previousEntry = history.length >= 2 ? history[history.length - 2] : null;
+  const startOfSeasonBudget = previousEntry ? previousEntry.endingBudget : SETTINGS.STARTING_BUDGET;
+  const endOfSeasonBudget = currentEntry ? currentEntry.endingBudget : state.budget;
+  const netChange = endOfSeasonBudget - startOfSeasonBudget;
+  const netClass = netChange > 0 ? "income-amount" : netChange < 0 ? "expense-amount" : "";
+  const netSign = netChange > 0 ? "+" : netChange < 0 ? "-" : "";
+
   return `
     <div class="screen">
       <div class="card center-col">
@@ -789,6 +802,7 @@ export function renderSeasonEnd({ state, leagueId, teamId, summary, championTeam
 
       <div class="card">
         <h3>סיכום כלכלי</h3>
+        <div class="finance-line"><span>תקציב בתחילת העונה</span><span>${formatMoney(startOfSeasonBudget)}</span></div>
         <div class="finance-line"><span>פרס מיקום בטבלה</span><span class="income-amount">+${formatMoney(summary.prize)}</span></div>
         <div class="finance-line"><span>הכנסת חסות/שידור קבועה</span><span class="income-amount">+${formatMoney(summary.baseIncome || 0)}</span></div>
         <div class="finance-line"><span>שכר ששולם</span><span class="expense-amount">-${formatMoney(summary.salaries)}</span></div>
@@ -798,7 +812,11 @@ export function renderSeasonEnd({ state, leagueId, teamId, summary, championTeam
               `<div class="finance-line"><span>${escapeHtml(c.description)}</span><span class="${c.isExpenseBucket ? "expense-amount" : "income-amount"}">${c.isExpenseBucket ? "-" : "+"}${formatMoney(Math.abs(c.amount))}</span></div>`
           )
           .join("")}
-        <div class="finance-line"><span><b>יתרת תקציב לעונה הבאה</b></span><b>${formatMoney(state.budget)}</b></div>
+        <div class="finance-line"><span><b>יתרת תקציב לעונה הבאה</b></span><b>${formatMoney(endOfSeasonBudget)}</b></div>
+        <div class="finance-line" style="border-top:1px solid var(--border); margin-top:6px; padding-top:10px;">
+          <span><b>רווח/הפסד נטו לעונה</b></span>
+          <b class="${netClass}">${netSign}${formatMoney(Math.abs(netChange))}</b>
+        </div>
         <p class="muted">שכר השחקנים עודכן באינפלציה של 2% לקראת העונה הבאה.</p>
       </div>
 
