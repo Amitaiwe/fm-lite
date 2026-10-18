@@ -10,6 +10,10 @@ export const SETTINGS = {
   FITNESS_MIN: 51,
   FITNESS_MAX: 99,
 
+  // טווח השינוי האקראי בכושר אחרי כל משחק שהקבוצה שיחקה (לא במחזורי מנוחה) -
+  // כל שחקן מקבל שינוי אקראי בטווח ±MATCH_FITNESS_SWING
+  MATCH_FITNESS_SWING: 5,
+
   // טווח יכולת (לא משתנה אוטומטית, רק דרך אירועים)
   ABILITY_MIN: 1,
   ABILITY_MAX: 99,
