@@ -1,4 +1,5 @@
-// נתוני הליגות והקבוצות - 5 ליגות, 11 קבוצות אמיתיות בכל ליגה.
+// נתוני הליגות והקבוצות - 5 ליגות, 14 קבוצות אמיתיות בכל ליגה (מספר זוגי,
+// כדי שלא יהיה צורך במחזור מנוחה - ראו הערה ב-settings.js).
 // baseStrength: דירוג כוח בסיסי לקבוצה (65-95), משמש לסימולציית משחקים
 // של קבוצות שאינן בניהול השחקן (ולחישוב קושי בבחירת הקבוצה המוגרלת).
 
@@ -19,6 +20,9 @@ export const LEAGUES = {
       { id: "eng_whu", name_he: "ווסט האם", name_en: "West Ham United", baseStrength: 76 },
       { id: "eng_bha", name_he: "ברייטון", name_en: "Brighton", baseStrength: 78 },
       { id: "eng_eve", name_he: "אברטון", name_en: "Everton", baseStrength: 73 },
+      { id: "eng_wol", name_he: "וולברהמפטון", name_en: "Wolverhampton", baseStrength: 74 },
+      { id: "eng_cry", name_he: "קריסטל פאלאס", name_en: "Crystal Palace", baseStrength: 75 },
+      { id: "eng_ful", name_he: "פולהאם", name_en: "Fulham", baseStrength: 74 },
     ],
   },
   spain: {
@@ -37,6 +41,9 @@ export const LEAGUES = {
       { id: "esp_val", name_he: "ולנסיה", name_en: "Valencia", baseStrength: 75 },
       { id: "esp_cel", name_he: "סלטה ויגו", name_en: "Celta Vigo", baseStrength: 73 },
       { id: "esp_osa", name_he: "אוססונה", name_en: "Osasuna", baseStrength: 72 },
+      { id: "esp_gir", name_he: "חירונה", name_en: "Girona", baseStrength: 79 },
+      { id: "esp_mal", name_he: "מיורקה", name_en: "Real Mallorca", baseStrength: 71 },
+      { id: "esp_ray", name_he: "ראיו וייקאנו", name_en: "Rayo Vallecano", baseStrength: 72 },
     ],
   },
   germany: {
@@ -55,6 +62,9 @@ export const LEAGUES = {
       { id: "ger_fcu", name_he: "יוניון ברלין", name_en: "Union Berlin", baseStrength: 74 },
       { id: "ger_m05", name_he: "מיינץ", name_en: "Mainz 05", baseStrength: 71 },
       { id: "ger_vfb", name_he: "שטוטגרט", name_en: "Stuttgart", baseStrength: 79 },
+      { id: "ger_svw", name_he: "ורדר ברמן", name_en: "Werder Bremen", baseStrength: 73 },
+      { id: "ger_tsg", name_he: "הופנהיים", name_en: "Hoffenheim", baseStrength: 74 },
+      { id: "ger_fca", name_he: "אוגסבורג", name_en: "Augsburg", baseStrength: 70 },
     ],
   },
   italy: {
@@ -73,6 +83,9 @@ export const LEAGUES = {
       { id: "ita_tor", name_he: "טורינו", name_en: "Torino", baseStrength: 73 },
       { id: "ita_bol", name_he: "בולוניה", name_en: "Bologna", baseStrength: 78 },
       { id: "ita_udi", name_he: "אודינזה", name_en: "Udinese", baseStrength: 70 },
+      { id: "ita_gen", name_he: "ג'נואה", name_en: "Genoa", baseStrength: 70 },
+      { id: "ita_sas", name_he: "סאסואולו", name_en: "Sassuolo", baseStrength: 71 },
+      { id: "ita_hve", name_he: "הלאס ורונה", name_en: "Hellas Verona", baseStrength: 68 },
     ],
   },
   france: {
@@ -91,6 +104,9 @@ export const LEAGUES = {
       { id: "fra_rcs", name_he: "סטרסבור", name_en: "Strasbourg", baseStrength: 71 },
       { id: "fra_fcn", name_he: "נאנט", name_en: "Nantes", baseStrength: 70 },
       { id: "fra_tfc", name_he: "טולוז", name_en: "Toulouse", baseStrength: 69 },
+      { id: "fra_rei", name_he: "ראנס", name_en: "Reims", baseStrength: 72 },
+      { id: "fra_mtp", name_he: "מונפלייה", name_en: "Montpellier", baseStrength: 70 },
+      { id: "fra_bre", name_he: "ברסט", name_en: "Brest", baseStrength: 73 },
     ],
   },
 };
