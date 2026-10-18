@@ -15,12 +15,19 @@ function teamName(leagueId, teamId) {
   return t ? t.name_he : teamId;
 }
 
-function navTabsHtml(active) {
+/**
+ * כפתורי הניווט העליונים. כאשר חלון העברות פתוח (state.transferWindow),
+ * מוסיפים לו טאב "🔄 שוק" כדי שאפשר יהיה לקפוץ אליו ובחזרה מכל מסך
+ * (סגל/טבלה/כספים) כמה פעמים שרוצים, בלי לסגור את החלון - הסגירה
+ * בפועל קורית רק בלחיצה על הכפתור הייעודי במסך השוק עצמו.
+ */
+function navTabsHtml(active, { hasTransferWindow = false } = {}) {
   const tabs = [
     { id: "home", label: "סגל" },
     { id: "table", label: "טבלה" },
     { id: "finances", label: "כספים" },
   ];
+  if (hasTransferWindow) tabs.push({ id: "transferWindow", label: "🔄 שוק" });
   return `
     <div class="nav-tabs">
       ${tabs
@@ -291,7 +298,7 @@ export function renderHome({ state, allPlayers }) {
         <span class="budget-display">${formatMoney(state.budget)}</span>
       </div>
 
-      ${navTabsHtml("home")}
+      ${navTabsHtml("home", { hasTransferWindow: !!state.transferWindow })}
 
       <h2>הסגל שלך</h2>
       ${squadPitchHtml(state, allPlayers)}
@@ -323,7 +330,7 @@ export function renderTable({ state }) {
       <div class="top-bar">
         <h2>טבלת ${league.name_he}</h2>
       </div>
-      ${navTabsHtml("table")}
+      ${navTabsHtml("table", { hasTransferWindow: !!state.transferWindow })}
       <div class="card" style="overflow-x:auto">
         <table class="league-table">
           <thead>
@@ -380,7 +387,7 @@ export function renderFinances({ state }) {
       <div class="top-bar">
         <h2>מצב כספי - עונה ${state.season}</h2>
       </div>
-      ${navTabsHtml("finances")}
+      ${navTabsHtml("finances", { hasTransferWindow: !!state.transferWindow })}
 
       <div class="card row">
         <span>יתרה נוכחית</span>
@@ -434,7 +441,11 @@ export function renderFinances({ state }) {
 
 export function renderTransferWindow({ state, allPlayers, feedback }) {
   const league = getLeague(state.leagueId);
-  const offers = state.transferWindow.players.map((id) => findById(allPlayers, id));
+  // ממוינים לפי סדר העמדות הקבוע (שוער -> מגן -> קשר -> חלוץ), כדי שיהיה
+  // קל יותר לסרוק את 7 ההצעות - לא לפי סדר הגרלה אקראי כמו קודם.
+  const offers = state.transferWindow.players
+    .map((id) => findById(allPlayers, id))
+    .sort((a, b) => SETTINGS.SQUAD_POSITIONS.indexOf(a.position) - SETTINGS.SQUAD_POSITIONS.indexOf(b.position));
 
   return `
     <div class="screen">
@@ -442,7 +453,8 @@ export function renderTransferWindow({ state, allPlayers, feedback }) {
         <h2>🔄 חלון העברות</h2>
         <span class="budget-display">${formatMoney(state.budget)}</span>
       </div>
-      <p>${state.transferWindow.atRound === 0 ? "חלון ההעברות הראשון של העונה" : "חלון ההעברות השני של העונה"} - 7 שחקנים זמינים. ניתן לבצע רכישה אחת לכל עמדה בחלון הזה, כל עוד יש מספיק תקציב.</p>
+      ${navTabsHtml("transferWindow", { hasTransferWindow: true })}
+      <p>${state.transferWindow.atRound === 0 ? "חלון ההעברות הראשון של העונה" : "חלון ההעברות השני של העונה"} - 7 שחקנים זמינים, ממוינים לפי עמדה. ניתן לבצע רכישה אחת לכל עמדה בחלון הזה, כל עוד יש מספיק תקציב. אפשר לקפוץ לסגל/טבלה/כספים ולחזור לשוק כמה פעמים שרוצים - הקניות נשמרות, החלון נסגר רק בלחיצה על הכפתור בתחתית.</p>
 
       ${feedback ? `<div class="card-flat" style="margin-bottom:12px;border-color:${feedback.ok ? "var(--accent)" : "var(--red)"}">${escapeHtml(feedback.message)}</div>` : ""}
 
