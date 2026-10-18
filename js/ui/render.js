@@ -72,7 +72,7 @@ export function renderLeaguePick({ confirmOverwrite }) {
     <div class="screen">
       <div class="brand">
         <div class="logo">בחירת <span>ליגה</span></div>
-        <div class="tagline">בחר ליגה, ואז תוכל לבחור את הקבוצה שתנהל מתוך 11 הקבוצות בה</div>
+        <div class="tagline">בחר ליגה, ואז תוכל לבחור את הקבוצה שתנהל מתוך 14 הקבוצות בה</div>
       </div>
       ${
         confirmOverwrite
@@ -724,7 +724,7 @@ export function renderRoundResult({ state, allPlayers, roundSummary, fitnessDiff
   }
 
   // חלון טבלה מצומצם: הקבוצה שלנו ± 2 שורות, כדי שרואים את ההשפעה על
-  // המיקום בלי להציג את כל 11 הקבוצות (שם הסיבה העיקרית לגלילה הארוכה).
+  // המיקום בלי להציג את כל הקבוצות בליגה (שם הסיבה העיקרית לגלילה הארוכה).
   const standings = roundSummary.standings;
   const userIdx = standings.findIndex((r) => r.teamId === state.teamId);
   const windowStart = Math.max(0, Math.min(userIdx - 2, standings.length - 5));
@@ -796,7 +796,7 @@ export function renderSeasonEnd({ state, leagueId, teamId, summary, championTeam
       <div class="card center-col">
         <div class="trophy">${isChampion ? "🏆" : "🏁"}</div>
         <h1>סוף העונה - ${league.name_he}</h1>
-        ${isChampion ? `<h2 style="color:var(--gold)">אלופים! 🎉</h2>` : `<p>סיימתם במקום ${finalPosition} מתוך 11</p>`}
+        ${isChampion ? `<h2 style="color:var(--gold)">אלופים! 🎉</h2>` : `<p>סיימתם במקום ${finalPosition} מתוך ${league.teams.length}</p>`}
         <p>האלופה: <b>${teamName(leagueId, championTeamId)}</b></p>
       </div>
 
