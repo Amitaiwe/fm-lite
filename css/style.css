@@ -1,19 +1,26 @@
 :root {
-  --bg: #0d1420;
-  --bg-elevated: #151f31;
-  --bg-card: #1b2740;
-  --border: #2a3a58;
-  --text: #eef2f8;
-  --text-dim: #9fb0c9;
+  /* מסך ליגה לילית מואר: בסיס כהה-כחלחל קריר (לא הניווי החם שהיה קודם),
+     זהב "פלאדליים" לכרטיסי FUT, ירוק-דשא לחיובי, וצבע "זוהר מרקע" חדש
+     (ציאן חשמלי) שמחבר את החוויה לתמונת האצטדיון המואר ברקע. */
+  --stadium-navy: #070b14;
+  --bg: #070b14;
+  --bg-elevated: rgba(16, 23, 40, 0.58);
+  --bg-card: rgba(11, 17, 32, 0.62);
+  --border: rgba(255, 255, 255, 0.14);
+  --text: #f3f6fb;
+  --text-dim: #aab8d4;
   --accent: #35c97a;
   --accent-dark: #22a561;
-  --accent-soft: rgba(53, 201, 122, 0.14);
+  --accent-soft: rgba(53, 201, 122, 0.16);
   --red: #e5556a;
-  --red-soft: rgba(229, 85, 106, 0.14);
-  --gold: #e7b649;
-  --radius: 14px;
-  --radius-sm: 9px;
-  --shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --red-soft: rgba(229, 85, 106, 0.16);
+  --gold: #f0c14b;
+  --electric: #3ee1ff;
+  --electric-soft: rgba(62, 225, 255, 0.14);
+  --radius: 16px;
+  --radius-sm: 11px;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --glass-blur: blur(16px);
   font-size: 16px;
 }
 
@@ -25,11 +32,43 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: radial-gradient(circle at 20% 0%, #182544 0%, var(--bg) 55%);
+  background: var(--stadium-navy);
   color: var(--text);
-  font-family: "Segoe UI", "Arial Hebrew", Arial, sans-serif;
+  font-family: "Rubik", "Segoe UI", "Arial Hebrew", Arial, sans-serif;
   direction: rtl;
   min-height: 100vh;
+}
+
+/* תמונת רקע קבועה של אצטדיון מואר בלילה, עם ויניאט כהה מעליה כדי
+   לשמור על קריאות הטקסט לאורך כל הגלילה (למעלה/למטה כהה יותר,
+   באמצע קצת יותר בהיר כדי שהאור עצמו יישאר נראה), ועוד "זוהר" ציאני
+   עדין למעלה שמחבר לצבע ה-electric החדש. z-index שלילי + position:fixed
+   כדי שהתמונה תישאר קבועה מאחורי כל התוכן בכל גלילה ובכל מסך. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background-image: linear-gradient(
+      180deg,
+      rgba(5, 7, 13, 0.9) 0%,
+      rgba(5, 8, 15, 0.58) 24%,
+      rgba(5, 8, 15, 0.74) 62%,
+      rgba(4, 6, 11, 0.95) 100%
+    ),
+    url("https://images.unsplash.com/photo-1549333580-4cb2c5c8e421?q=80&w=1600&auto=format&fit=crop");
+  background-size: cover;
+  background-position: center 35%;
+  background-repeat: no-repeat;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: radial-gradient(ellipse 900px 500px at 50% -8%, var(--electric-soft), transparent 60%);
+  pointer-events: none;
 }
 
 #app {
@@ -37,6 +76,7 @@ body {
   margin: 0 auto;
   padding: 16px 16px 64px;
   min-height: 100vh;
+  position: relative;
 }
 
 .screen {
@@ -76,27 +116,35 @@ p {
 
 .brand {
   text-align: center;
-  padding: 36px 0 8px;
+  padding: 40px 0 10px;
 }
 
 .brand .logo {
-  font-size: 2.1rem;
-  font-weight: 800;
-  letter-spacing: 0.5px;
+  font-size: 2.3rem;
+  font-weight: 900;
+  letter-spacing: 0.3px;
+  text-shadow: 0 0 24px rgba(62, 225, 255, 0.35);
 }
 
 .brand .logo span {
-  color: var(--accent);
+  color: var(--gold);
+  text-shadow: 0 0 18px rgba(240, 193, 75, 0.5);
 }
 
 .brand .tagline {
   color: var(--text-dim);
-  margin-top: 4px;
+  margin-top: 6px;
 }
 
+/* כרטיסי "זכוכית מחוספסת" - שקופים למחצה עם טשטוש רקע (backdrop-blur),
+   כך שתמונת האצטדיון המואר נשארת מורגשת מתחת לכל תוכן, עם קו עליון
+   בהיר שמדמה אור ניאון/זרקור נתפס על קצה הזכוכית. */
 .card {
   background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--border);
+  border-top-color: rgba(255, 255, 255, 0.28);
   border-radius: var(--radius);
   padding: 18px;
   box-shadow: var(--shadow);
@@ -105,6 +153,8 @@ p {
 
 .card-flat {
   background: var(--bg-elevated);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 12px 14px;
@@ -128,41 +178,52 @@ p {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  background: var(--accent);
+  background: linear-gradient(180deg, var(--accent) 0%, var(--accent-dark) 100%);
   color: #06281a;
   border: none;
-  font-weight: 700;
+  font-weight: 800;
   font-size: 1rem;
   padding: 13px 22px;
   border-radius: 999px;
   cursor: pointer;
-  transition: transform 0.12s ease, background 0.12s ease, opacity 0.12s ease;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12) inset, 0 6px 20px rgba(53, 201, 122, 0.35);
+  transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
   width: 100%;
 }
 
 .btn:hover:not(:disabled) {
-  background: var(--accent-dark);
   transform: translateY(-1px);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.18) inset, 0 8px 26px rgba(53, 201, 122, 0.5);
+}
+
+.btn:active:not(:disabled) {
+  transform: translateY(0);
 }
 
 .btn:disabled {
-  opacity: 0.45;
+  opacity: 0.4;
   cursor: not-allowed;
+  box-shadow: none;
 }
 
 .btn-secondary {
   background: var(--bg-elevated);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   color: var(--text);
   border: 1px solid var(--border);
+  box-shadow: none;
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background: #202e4a;
+  background: rgba(26, 37, 62, 0.72);
+  box-shadow: 0 0 0 1px var(--electric-soft) inset;
 }
 
 .btn-danger {
-  background: var(--red);
+  background: linear-gradient(180deg, #ef7382, var(--red));
   color: #2a0a0f;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12) inset, 0 6px 20px rgba(229, 85, 106, 0.35);
 }
 
 .btn-row {
@@ -252,19 +313,24 @@ p {
 
 .nav-tabs button {
   background: var(--bg-elevated);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--border);
   color: var(--text-dim);
   padding: 8px 16px;
   border-radius: 999px;
   cursor: pointer;
   font-size: 0.85rem;
+  font-weight: 600;
+  transition: border-color 0.12s ease, color 0.12s ease, box-shadow 0.12s ease;
 }
 
 .nav-tabs button.active {
-  background: var(--accent-soft);
-  color: var(--accent);
-  border-color: var(--accent);
-  font-weight: 700;
+  background: var(--electric-soft);
+  color: var(--electric);
+  border-color: var(--electric);
+  font-weight: 800;
+  box-shadow: 0 0 14px rgba(62, 225, 255, 0.3);
 }
 
 .squad-grid {
@@ -639,6 +705,8 @@ table.league-table tr.champion-row td.team-cell::before {
 
 .transfer-card {
   background: var(--bg-elevated);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--border);
   border-radius: var(--radius-sm);
   padding: 14px;
@@ -664,6 +732,8 @@ table.league-table tr.champion-row td.team-cell::before {
   left: 50%;
   transform: translateX(-50%);
   background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--border);
   color: var(--text);
   padding: 12px 20px;
@@ -693,18 +763,21 @@ table.league-table tr.champion-row td.team-cell::before {
 
 .league-pick {
   background: var(--bg-card);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 2px solid var(--border);
   border-radius: var(--radius);
   padding: 20px 10px;
   text-align: center;
   cursor: pointer;
   font-weight: 700;
-  transition: border-color 0.12s ease, transform 0.12s ease;
+  transition: border-color 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
 }
 
 .league-pick:hover {
-  border-color: var(--accent);
+  border-color: var(--electric);
   transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(62, 225, 255, 0.25);
 }
 
 .center-col {
@@ -778,6 +851,8 @@ table.league-table tr.champion-row td.team-cell::before {
   overflow: hidden;
   border: 1px solid var(--border);
   background: var(--bg-elevated);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
 }
 
 .odds-seg {
@@ -911,6 +986,8 @@ table.league-table tr.champion-row td.team-cell::before {
   overflow: hidden;
   border-radius: 12px;
   background: var(--bg-elevated);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--border);
   direction: ltr;
 }
