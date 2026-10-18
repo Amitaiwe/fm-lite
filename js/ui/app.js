@@ -5,6 +5,8 @@
 import { GameController } from "../engine/controller.js";
 import { loadPlayersFromFile } from "../engine/loadPlayers.js";
 import { defaultRng } from "../engine/rng.js";
+import { needsTransferWindow } from "../engine/round.js";
+import { findTeamMatch } from "../engine/fixtures.js";
 import {
   renderStartScreen,
   renderLeaguePick,
@@ -15,6 +17,7 @@ import {
   renderEvent,
   renderEventSpin,
   renderEventOutcome,
+  renderScouting,
   renderRoundResult,
   renderSeasonEnd,
   renderGameOver,
@@ -27,7 +30,7 @@ let allPlayers = null;
 
 // מצב תצוגה זמני (לא נשמר)
 const ui = {
-  screen: "loading", // loading | start | leaguePick | home | table | finances | transferWindow | event | eventSpin | eventOutcome | roundResult | seasonEnd | gameOver
+  screen: "loading", // loading | start | leaguePick | home | table | finances | transferWindow | scouting | event | eventSpin | eventOutcome | roundResult | seasonEnd | gameOver
   confirmOverwrite: false,
   transferFeedback: null,
   screenQueue: [], // תור מסכים להצגה אחרי playNextRound (roundResult -> seasonEnd/gameOver/event)
@@ -80,6 +83,9 @@ function render() {
       break;
     case "transferWindow":
       html = renderTransferWindow({ state: controller.state, allPlayers, feedback: ui.transferFeedback });
+      break;
+    case "scouting":
+      html = renderScouting({ state: controller.state });
       break;
     case "event":
       html = renderEvent({ state: controller.state });
@@ -178,6 +184,27 @@ function onPlayNextRound() {
   ui.preRoundSquad = controller.state.squad;
   const res = controller.playNextRound();
   handlePlayNextRoundResult(res);
+}
+
+/**
+ * נלחץ על "שחק מחזור הבא" בבית: אם המחזור הבא הוא משחק אמיתי של
+ * הקבוצה שלנו (לא מחזור מנוחה, ואין חלון העברות/אירוע שצריך להיפתח
+ * קודם) - מציגים קודם מסך סקאוטינג על היריבה, ורק בלחיצה על "התחל
+ * משחק" שם מריצים בפועל את playNextRound. במחזור מנוחה (אין יריב
+ * לסקאוט) ממשיכים ישר כמו קודם.
+ */
+function onPlayRoundClicked() {
+  const state = controller.state;
+  if (!state.pendingEvent && !state.transferWindow && !needsTransferWindow(state)) {
+    const round = state.fixtures[state.round];
+    const match = round ? findTeamMatch(round, state.teamId) : null;
+    if (match) {
+      ui.screen = "scouting";
+      render();
+      return;
+    }
+  }
+  onPlayNextRound();
 }
 
 function onBuyPlayer(playerId) {
@@ -311,6 +338,9 @@ function wireEvents() {
         render();
         break;
       case "play-round":
+        onPlayRoundClicked();
+        break;
+      case "start-scouted-match":
         onPlayNextRound();
         break;
       case "buy-player":

@@ -5,6 +5,7 @@ import { getSlotByPosition } from "../engine/squad.js";
 import { totalSquadSalary } from "../engine/economy.js";
 import { findTeamMatch } from "../engine/fixtures.js";
 import { sortedTable } from "../engine/table.js";
+import { computeManagedTeamStrength, estimateMatchProbabilities } from "../engine/simulate.js";
 import { SETTINGS, POSITION_LABELS_HE } from "../data/settings.js";
 import { formatMoney, formatMoneyShort, positionLabel, escapeHtml } from "./format.js";
 import { teamCrestSvg } from "./crest.js";
@@ -172,6 +173,96 @@ function nextOpponentHtml(state) {
       ${teamCrestSvg(match.opponent, 22)}
       <span class="next-opponent-name">${teamName(state.leagueId, match.opponent)}</span>
       ${position ? `<span class="badge">מקום ${position}</span>` : ""}
+    </div>
+  `;
+}
+
+function difficultyLabel(diff) {
+  if (diff >= 8) return { text: "היריבה חלשה משמעותית מכם 💪", tone: "positive" };
+  if (diff >= 3) return { text: "היריבה חלשה מכם", tone: "positive" };
+  if (diff > -3) return { text: "קבוצות דומות בעוצמתן - עשוי להיות משחק צמוד", tone: "neutral" };
+  if (diff > -8) return { text: "היריבה חזקה מכם", tone: "negative" };
+  return { text: "היריבה חזקה משמעותית מכם ⚠️", tone: "negative" };
+}
+
+/**
+ * מסך "סקאוטינג" לפני תחילת המשחק הבא: אין נתוני שחקנים בודדים
+ * ליריבות (רק דירוג baseStrength כללי לקבוצה - ראו leagues.js), אז
+ * המסך מתמקד בהשוואת עוצמת הסגל שלנו (כולל כושר נוכחי!) מול דירוג
+ * היריבה, ובהערכת סיכויי ניצחון/תיקו/הפסד המבוססת על אותה נוסחה
+ * שמשמשת בפועל את מנוע הסימולציה (simulate.js) - אך בלי רכיב ה-swing
+ * האקראי, כי כאן רוצים "ממוצע צפוי" יציב ולא דגימה חד-פעמית.
+ */
+export function renderScouting({ state }) {
+  const round = state.fixtures[state.round];
+  const match = round ? findTeamMatch(round, state.teamId) : null;
+  if (!match) {
+    return `
+      <div class="screen">
+        <div class="card center-col">
+          <p>אין משחק במחזור הבא.</p>
+          <button class="btn" data-action="start-scouted-match">המשך</button>
+        </div>
+      </div>`;
+  }
+
+  const myStrength = computeManagedTeamStrength(state.squad);
+  const oppStrength = getTeam(state.leagueId, match.opponent).baseStrength;
+  const diffInfo = difficultyLabel(myStrength - oppStrength);
+  const probs = estimateMatchProbabilities(myStrength, oppStrength);
+
+  const standings = sortedTable(state.table);
+  const idx = standings.findIndex((r) => r.teamId === match.opponent);
+  const position = idx === -1 ? null : idx + 1;
+
+  const maxBar = Math.max(myStrength, oppStrength, 1);
+  const myPct = Math.round((myStrength / maxBar) * 100);
+  const oppPct = Math.round((oppStrength / maxBar) * 100);
+
+  return `
+    <div class="screen">
+      <div class="card center-col">
+        <div style="font-size:1.8rem">🔍</div>
+        <h2>סקאוטינג: המשחק הבא</h2>
+        <div class="teams-crests">
+          ${teamCrestSvg(state.teamId, 36)}
+          <span class="teams">${teamName(state.leagueId, state.teamId)} נגד ${teamName(state.leagueId, match.opponent)}</span>
+          ${teamCrestSvg(match.opponent, 36)}
+        </div>
+        <p class="muted">${match.isHome ? "משחק בית" : "משחק חוץ"}${position ? ` · מקום ${position} בטבלה` : ""}</p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">רמת קושי</h3>
+        <div class="scout-row">
+          <span class="scout-label">הקבוצה שלכם (לפי הסגל והכושר הנוכחי)</span>
+          <span class="scout-value">${myStrength.toFixed(1)}</span>
+        </div>
+        <div class="scout-bar-track"><div class="scout-bar-fill mine" style="width:${myPct}%"></div></div>
+        <div class="scout-row" style="margin-top:8px">
+          <span class="scout-label">${teamName(state.leagueId, match.opponent)}</span>
+          <span class="scout-value">${oppStrength.toFixed(1)}</span>
+        </div>
+        <div class="scout-bar-track"><div class="scout-bar-fill opp" style="width:${oppPct}%"></div></div>
+        <p class="scout-difficulty tone-${diffInfo.tone}">${diffInfo.text}</p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-top:0">הערכת סיכויים למשחק</h3>
+        <div class="odds-bar">
+          <div class="odds-seg tone-positive" style="width:${(probs.win * 100).toFixed(0)}%"><span>${(probs.win * 100).toFixed(0)}%</span></div>
+          <div class="odds-seg tone-neutral" style="width:${(probs.draw * 100).toFixed(0)}%"><span>${(probs.draw * 100).toFixed(0)}%</span></div>
+          <div class="odds-seg tone-negative" style="width:${(probs.loss * 100).toFixed(0)}%"><span>${(probs.loss * 100).toFixed(0)}%</span></div>
+        </div>
+        <div class="odds-legend">
+          <div class="odds-legend-item"><span class="odds-dot tone-positive"></span><span>ניצחון</span></div>
+          <div class="odds-legend-item"><span class="odds-dot tone-neutral"></span><span>תיקו</span></div>
+          <div class="odds-legend-item"><span class="odds-dot tone-negative"></span><span>הפסד</span></div>
+        </div>
+        <p class="muted" style="font-size:0.72rem;margin-top:6px">הערכה משוערת בלבד - התוצאה בפועל תלויה גם ברכיב אקראי שיש בכל משחק.</p>
+      </div>
+
+      <button class="btn" style="margin-top:6px" data-action="start-scouted-match">⚽ התחל משחק</button>
     </div>
   `;
 }
