@@ -66,6 +66,15 @@ export function playNextRound(state, allPlayers, rng) {
     return { ok: true, state: opened, needsAction: "transferWindow" };
   }
 
+  // מנקים את תג "+/-" של שינוי היכולת האחרון (lastAbilityDelta) בתחילת כל
+  // מחזור חדש - הוא נועד להציג בבירור שינוי *טרי* מאירוע (ראו events.js),
+  // לא להישאר קבוע לצמיתות ליד השחקן אחרי שהמחזור שבו זה קרה כבר חלף.
+  // אם יהיה אירוע חדש במחזור הזה שישנה יכולת, הוא ייקבע מחדש כרגיל.
+  state = {
+    ...state,
+    squad: state.squad.map((s) => (s.lastAbilityDelta ? { ...s, lastAbilityDelta: null } : s)),
+  };
+
   const league = getLeague(state.leagueId);
   const strengths = teamStrengthMap(league);
   const roundIndex = state.round; // round = כמה מחזורים הושלמו = אינדקס המחזור הבא
