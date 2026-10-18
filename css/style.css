@@ -476,6 +476,28 @@ p {
   font-weight: 800;
 }
 
+/* תג קטן המציג שינוי אחרון (כושר אחרי משחק / יכולת אחרי אירוע) ליד
+   שחקן בכרטיס ה-FUT של הסגל - נשאר מוצג עד השינוי הבא. */
+.delta-badge {
+  display: inline-block;
+  font-size: 0.62em;
+  font-weight: 800;
+  border-radius: 999px;
+  padding: 1px 5px;
+  margin-right: 3px;
+  vertical-align: middle;
+}
+
+.delta-badge.delta-up {
+  color: #06281a;
+  background: var(--accent);
+}
+
+.delta-badge.delta-down {
+  color: #2a0a0f;
+  background: var(--red);
+}
+
 table.league-table {
   width: 100%;
   border-collapse: collapse;
@@ -877,6 +899,81 @@ table.league-table tr.champion-row td.team-cell::before {
 .odds-result.tone-neutral,
 .odds-result.tone-mixed {
   color: var(--gold);
+}
+
+/* מסך "מגרילים" - סרט פלחים אופקי שזז ונעצר על התוצאה (ראו
+   renderEventSpin ב-render.js והפעלת האנימציה ב-app.js). */
+.reel-viewport {
+  position: relative;
+  width: 100%;
+  height: 66px;
+  margin: 14px 0 6px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  direction: ltr;
+}
+
+.reel-track {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  will-change: transform;
+}
+
+.reel-chip {
+  flex: 0 0 104px;
+  width: 104px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  border-left: 1px solid var(--border);
+  direction: rtl;
+}
+
+.reel-chip-pct {
+  font-weight: 900;
+  font-size: 1rem;
+  color: var(--text);
+}
+
+.reel-chip-label {
+  font-size: 0.6rem;
+  max-width: 94px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: var(--text-dim);
+}
+
+.reel-chip.tone-positive {
+  background: var(--accent-soft);
+}
+
+.reel-chip.tone-negative {
+  background: var(--red-soft);
+}
+
+.reel-chip.tone-neutral,
+.reel-chip.tone-mixed {
+  background: rgba(231, 182, 73, 0.14);
+}
+
+.reel-pointer {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--gold);
+  transform: translateX(-50%);
+  z-index: 2;
+  box-shadow: 0 0 8px rgba(231, 182, 73, 0.8);
 }
 
 .event-outcome-lines {
