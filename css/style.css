@@ -32,7 +32,7 @@ html,
 body {
   margin: 0;
   padding: 0;
-  background: var(--stadium-navy);
+  background: transparent;
   color: var(--text);
   font-family: "Rubik", "Segoe UI", "Arial Hebrew", Arial, sans-serif;
   direction: rtl;
@@ -56,7 +56,7 @@ body::before {
       rgba(5, 8, 15, 0.74) 62%,
       rgba(4, 6, 11, 0.95) 100%
     ),
-    url("img/bg.jpg");
+    url("../img/bg.jpg");
   background-size: cover;
   background-position: center 35%;
   background-repeat: no-repeat;
