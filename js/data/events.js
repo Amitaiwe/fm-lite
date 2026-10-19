@@ -42,12 +42,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.45,
+                probability: 0.5,
                 label_he: "הוא נרגע מעצמו - אין השפעה",
                 effects: [{ kind: "none" }],
               },
               {
-                probability: 0.55,
+                probability: 0.5,
                 label_he: "הוא מתעצבן ומאבד מוטיבציה - היכולת שלו יורדת",
                 effects: [{ kind: "ability", target: "event_player", amount: -4, timing: "immediate" }],
               },
@@ -138,12 +138,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.6,
+                probability: 0.5,
                 label_he: "הוא ממשיך לשחק כרגיל - אין השפעה",
                 effects: [{ kind: "none" }],
               },
               {
-                probability: 0.4,
+                probability: 0.5,
                 label_he: "הוא נפגע מהסירוב והכושר שלו צונח",
                 effects: [{ kind: "fitness", target: "event_player", amount: -10, timing: "immediate" }],
               },
@@ -207,12 +207,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.6,
+                probability: 0.5,
                 label_he: "האירוע הצליח מעל המצופה",
                 effects: [{ kind: "budget", amount: 900_000, timing: "immediate" }],
               },
               {
-                probability: 0.4,
+                probability: 0.5,
                 label_he: "האירוע הניב פחות מהצפוי",
                 effects: [{ kind: "budget", amount: 150_000, timing: "immediate" }],
               },
@@ -237,12 +237,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.7,
+                probability: 0.5,
                 label_he: "הוא החלים לגמרי - אין השפעה",
                 effects: [{ kind: "none" }],
               },
               {
-                probability: 0.3,
+                probability: 0.5,
                 label_he: "הבעיה החמירה במנוחה",
                 effects: [{ kind: "fitness", target: "event_player", amount: -20, timing: "immediate" }],
               },
@@ -298,12 +298,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.55,
+                probability: 0.5,
                 label_he: "הערעור התקבל - הקנס בוטל לגמרי",
                 effects: [{ kind: "none" }],
               },
               {
-                probability: 0.45,
+                probability: 0.5,
                 label_he: "הערעור נדחה - הקנס הוכפל",
                 effects: [{ kind: "budget", amount: -400_000, timing: "immediate" }],
               },
@@ -358,12 +358,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.6,
+                probability: 0.5,
                 label_he: "השחקנים מעריכים את הגיבוי והאווירה משתפרת",
                 effects: [{ kind: "fitness", target: "all", amount: 4, timing: "immediate" }],
               },
               {
-                probability: 0.4,
+                probability: 0.5,
                 label_he: "נוצר מתח בחדר ההלבשה בעקבות המועדפות",
                 effects: [{ kind: "fitness", target: "all", amount: -4, timing: "immediate" }],
               },
@@ -394,12 +394,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.55,
+                probability: 0.5,
                 label_he: "השחקן עשה קפיצת מדרגה אדירה",
                 effects: [{ kind: "ability", target: "event_player", amount: 5, timing: "immediate" }],
               },
               {
-                probability: 0.45,
+                probability: 0.5,
                 label_he: "ההתקדמות הייתה מתונה בלבד",
                 effects: [{ kind: "ability", target: "event_player", amount: 1, timing: "immediate" }],
               },
@@ -480,12 +480,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.65,
+                probability: 0.5,
                 label_he: "המוצרים נחטפו - רווח עצום",
                 effects: [{ kind: "budget", amount: 900_000, timing: "immediate" }],
               },
               {
-                probability: 0.35,
+                probability: 0.5,
                 label_he: "הטרנד חלף מהר - מכירות חלשות",
                 effects: [{ kind: "budget", amount: 100_000, timing: "immediate" }],
               },
@@ -554,12 +554,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.55,
+                probability: 0.5,
                 label_he: "העמידה בציפיות הושגה - בונוס גדול",
                 effects: [{ kind: "budget", amount: 1_800_000, timing: "end_of_season" }],
               },
               {
-                probability: 0.45,
+                probability: 0.5,
                 label_he: "היעדים לא הושגו - קנס על אי עמידה בחוזה",
                 effects: [{ kind: "budget", amount: -300_000, timing: "end_of_season" }],
               },
@@ -618,12 +618,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.4,
+                probability: 0.5,
                 label_he: "הוא התגבר על המכשול והתחזק מנטלית",
                 effects: [{ kind: "ability", target: "event_player", amount: 2, timing: "immediate" }],
               },
               {
-                probability: 0.6,
+                probability: 0.5,
                 label_he: "מצבו הדרדר והפוקוס שלו נפגע",
                 effects: [{ kind: "fitness", target: "event_player", amount: -10, timing: "immediate" }],
               },
@@ -689,12 +689,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.6,
+                probability: 0.5,
                 label_he: "המחאה נחלשה והאוהדים חזרו לעודד",
                 effects: [{ kind: "none" }],
               },
               {
-                probability: 0.4,
+                probability: 0.5,
                 label_he: "החרם הוחמר והפסיד הכנסות ממכירת כרטיסים",
                 effects: [{ kind: "budget", amount: -500_000, timing: "end_of_season" }],
               },
@@ -774,12 +774,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.7,
+                probability: 0.5,
                 label_he: "תורמים אמידים הצטרפו וסכום מכובד גויס",
                 effects: [{ kind: "budget", amount: 600_000, timing: "immediate" }],
               },
               {
-                probability: 0.3,
+                probability: 0.5,
                 label_he: "האירוע היה צנוע והכניס מעט",
                 effects: [{ kind: "budget", amount: 180_000, timing: "immediate" }],
               },
@@ -903,12 +903,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.7,
+                probability: 0.5,
                 label_he: "השמועות התבררו כפייק ניוז - הקבוצה יצאה מחוזקת",
                 effects: [{ kind: "none" }],
               },
               {
-                probability: 0.3,
+                probability: 0.5,
                 label_he: "הפרשה התלקחה והוטל קנס משמעתי",
                 effects: [{ kind: "budget", amount: -650_000, timing: "immediate" }],
               },
@@ -1036,12 +1036,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.6,
+                probability: 0.5,
                 label_he: "השחקן הבין את הטעות ומתמקד באימונים",
                 effects: [{ kind: "ability", target: "event_player", amount: 2, timing: "immediate" }],
               },
               {
-                probability: 0.4,
+                probability: 0.5,
                 label_he: "המשמעת בסגל נפגעה",
                 effects: [{ kind: "fitness", target: "all", amount: -3, timing: "immediate" }],
               },
@@ -1067,12 +1067,12 @@ export const EVENTS = [
             kind: "random_outcome",
             branches: [
               {
-                probability: 0.6,
+                probability: 0.5,
                 label_he: "הסקאוט איתר כישרון על יוצא דופן!",
                 effects: [{ kind: "ability", target: "event_player", amount: 6, timing: "immediate" }],
               },
               {
-                probability: 0.4,
+                probability: 0.5,
                 label_he: "המסע לא הניב מציאות מיוחדות",
                 effects: [{ kind: "none" }],
               },
