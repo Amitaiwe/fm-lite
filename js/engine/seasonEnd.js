@@ -3,7 +3,7 @@
 
 import { sortedTable, initTable } from "./table.js";
 import { processSeasonEndEconomy, emptySeasonFinance } from "./economy.js";
-import { applySeasonFitnessSwing } from "./squad.js";
+import { applySeasonFitnessSwing, resetAbilityToBase } from "./squad.js";
 import { generateFixtures } from "./fixtures.js";
 
 /**
@@ -49,7 +49,10 @@ export function endSeason(state, teamIds, rng) {
 
   // פתיחת עונה חדשה: אותה ליגה וקבוצה, סגל זהה (כושר זז ±SEASON_FITNESS_SWING
   // מהרמה שהייתה בסוף העונה הקודמת - לא איפוס/הגרלה מאפס), טבלה ולוח חדשים.
-  const refreshedSquad = applySeasonFitnessSwing(afterEconomy.squad, rng);
+  // יכולת כל שחקן חוזרת ל-baseAbility שלו - כל עלייה/ירידה מאירועים
+  // הייתה זמנית לעונה אחת בלבד, כדי ששוק ההעברות יישאר רלוונטי.
+  const squadWithResetAbility = resetAbilityToBase(afterEconomy.squad);
+  const refreshedSquad = applySeasonFitnessSwing(squadWithResetAbility, rng);
   const newFixtures = generateFixtures(teamIds);
   const newTable = initTable(teamIds);
 

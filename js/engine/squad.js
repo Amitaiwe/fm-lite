@@ -14,15 +14,35 @@ export function randomFitness(rng) {
   return randInt(rng, SETTINGS.FITNESS_MIN, SETTINGS.FITNESS_MAX);
 }
 
-/** בונה שורת סגל חדשה משחקן מהמאגר. */
+/**
+ * בונה שורת סגל חדשה משחקן מהמאגר. baseAbility הוא היכולת "האמיתית" של
+ * השחקן (כפי שמוגדרת במאגר) - עליה חוזרים בסוף כל עונה (ראו
+ * resetAbilityToBase) - בעוד currentAbility היא היכולת בפועל כרגע,
+ * שיכולה להיות גבוהה/נמוכה ממנה זמנית בעקבות אירועים (ראו applyEffect
+ * ב-events.js, מקרה "ability").
+ */
 export function buildSquadSlot(playerRecord, rng) {
   return {
     playerId: playerRecord.id,
     position: playerRecord.position,
+    baseAbility: playerRecord.ability,
     currentAbility: playerRecord.ability,
     fitness: randomFitness(rng),
     salary: calcSalary(playerRecord.ability),
   };
+}
+
+/**
+ * מאפס את יכולת כל שחקני הסגל בחזרה ל-baseAbility שלהם (מוחק גם את
+ * lastAbilityDelta הישן) - נקרא בסוף כל עונה, כדי ששיפורי יכולת
+ * מאירועים יהיו זמניים לעונה אחת בלבד ושוק ההעברות יישאר רלוונטי.
+ * שחקן משמור ישן בלי baseAbility (מלפני התוספת הזו) פשוט נשאר כמו שהוא.
+ */
+export function resetAbilityToBase(squad) {
+  return squad.map((slot) => {
+    if (slot.baseAbility == null) return slot;
+    return { ...slot, currentAbility: slot.baseAbility, lastAbilityDelta: null };
+  });
 }
 
 /**
