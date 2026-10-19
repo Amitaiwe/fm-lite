@@ -453,6 +453,39 @@ p {
   flex: 0 1 46%;
 }
 
+.fut-card-lg {
+  width: 100%;
+  max-width: 230px;
+  margin: 0 auto;
+  padding: 22px 12px 38px;
+}
+
+.fut-card-lg .fut-rating {
+  font-size: 2rem;
+}
+
+.fut-card-lg .fut-pos {
+  font-size: 0.78rem;
+  margin-top: 6px;
+}
+
+.fut-card-lg .fut-name {
+  font-size: 1.1rem;
+  margin: 10px 0 12px;
+}
+
+.fut-card-lg .fut-stats {
+  gap: 14px;
+}
+
+.fut-card-lg .fut-stat {
+  font-size: 0.85rem;
+}
+
+.fut-card-lg .fut-stat-icon {
+  font-size: 1rem;
+}
+
 .fut-rating {
   font-size: 1.15rem;
   font-weight: 900;
@@ -824,6 +857,28 @@ table.league-table tr.champion-row td.team-cell::before {
 .team-pick-strength {
   font-size: 0.78rem;
   color: var(--muted);
+}
+
+.squad-draft-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 22px;
+  margin: 28px 0;
+  justify-items: center;
+}
+
+.squad-draft-option {
+  cursor: pointer;
+  transition: transform 0.15s ease;
+}
+
+.squad-draft-option:hover .fut-card {
+  box-shadow: 0 0 24px rgba(240, 193, 75, 0.5), 0 0 16px rgba(110, 190, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  transform: translateY(-4px);
+}
+
+.squad-draft-option:active {
+  transform: scale(0.97);
 }
 
 .center-col {
