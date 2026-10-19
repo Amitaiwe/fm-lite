@@ -7,6 +7,7 @@ import { loadPlayersFromFile } from "../engine/loadPlayers.js";
 import { defaultRng } from "../engine/rng.js";
 import { needsTransferWindow } from "../engine/round.js";
 import { findTeamMatch } from "../engine/fixtures.js";
+import { CAREER_STAGES } from "../engine/career.js";
 import { SETTINGS } from "../data/settings.js";
 import {
   renderStartScreen,
@@ -37,6 +38,7 @@ const ui = {
   confirmOverwrite: false,
   pickedLeagueId: null,
   transferFeedback: null,
+  pendingCareer: false, // true אם המשתמש לחץ "ממתחיל לאגדה" ועדיין בתהליך בחירת קבוצה/סגל
   draftLeagueId: null,
   draftTeamId: null,
   draftCandidates: null, // { [position]: [playerRecord, playerRecord] } - מוגרל פעם אחת בתחילת הבחירה
@@ -83,7 +85,7 @@ function render() {
       html = renderLeaguePick({ confirmOverwrite: ui.confirmOverwrite });
       break;
     case "teamPick":
-      html = renderTeamPick({ leagueId: ui.pickedLeagueId });
+      html = renderTeamPick({ leagueId: ui.pickedLeagueId, careerMode: ui.pendingCareer });
       break;
     case "squadDraft": {
       const position = ui.draftPositions[ui.draftStepIndex];
@@ -189,10 +191,14 @@ function handlePlayNextRoundResult(res) {
       ui.screenQueue.push("gameOver");
     } else {
       ui.lastSeasonEndData = {
+        leagueId: res.seasonLeagueId,
         summary: res.seasonEndSummary,
         championTeamId: res.championTeamId,
         finalPosition: res.finalPosition,
         bankrupt: false,
+        careerAdvanced: res.careerAdvanced,
+        careerNewLeagueId: res.careerNewLeagueId,
+        careerWon: res.careerWon,
       };
       ui.screenQueue.push("seasonEnd");
     }
@@ -312,10 +318,11 @@ function onContinueAfterEventOutcome() {
   advanceScreenQueue();
 }
 
-async function onStartNewGame(leagueId, teamId = null, chosenPlayerIds = null) {
-  controller.startNewGame(leagueId, teamId, chosenPlayerIds);
+async function onStartNewGame(leagueId, teamId = null, chosenPlayerIds = null, careerMode = false) {
+  controller.startNewGame(leagueId, teamId, chosenPlayerIds, careerMode);
   ui.confirmOverwrite = false;
   ui.pickedLeagueId = null;
+  ui.pendingCareer = false;
   ui.draftLeagueId = null;
   ui.draftTeamId = null;
   ui.draftCandidates = null;
@@ -349,7 +356,7 @@ function onPickDraftPlayer(playerId) {
     ui.draftStepIndex += 1;
     render();
   } else {
-    onStartNewGame(ui.draftLeagueId, ui.draftTeamId, ui.draftChoices);
+    onStartNewGame(ui.draftLeagueId, ui.draftTeamId, ui.draftChoices, ui.pendingCareer);
   }
 }
 
@@ -361,8 +368,22 @@ function wireEvents() {
 
     switch (action) {
       case "goto-new-game":
+        ui.pendingCareer = false;
         ui.confirmOverwrite = controller.hasSavedGame();
         ui.screen = "leaguePick";
+        render();
+        break;
+      case "start-career":
+        // מסלול "ממתחיל לאגדה" תמיד מתחיל בליגת הצרפתית (השלב הראשון
+        // ב-CAREER_STAGES) - מדלגים ישר לבחירת קבוצה, בלי מסך בחירת ליגה.
+        ui.pendingCareer = true;
+        ui.confirmOverwrite = controller.hasSavedGame();
+        if (ui.confirmOverwrite) {
+          ui.screen = "leaguePick"; // מציג את אזהרת הדריסה הרגילה קודם
+        } else {
+          ui.pickedLeagueId = CAREER_STAGES[0];
+          ui.screen = "teamPick";
+        }
         render();
         break;
       case "continue-game": {
@@ -386,9 +407,14 @@ function wireEvents() {
       }
       case "confirm-new-game":
         ui.confirmOverwrite = false;
+        if (ui.pendingCareer) {
+          ui.pickedLeagueId = CAREER_STAGES[0];
+          ui.screen = "teamPick";
+        }
         render();
         break;
       case "cancel-new-game":
+        ui.pendingCareer = false;
         ui.screen = "start";
         render();
         break;
@@ -397,6 +423,7 @@ function wireEvents() {
         render();
         break;
       case "pick-league":
+        ui.pendingCareer = false;
         ui.pickedLeagueId = el.dataset.league;
         ui.screen = "teamPick";
         render();

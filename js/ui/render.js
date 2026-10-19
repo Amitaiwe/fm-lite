@@ -9,6 +9,7 @@ import { computeManagedTeamStrength, estimateMatchProbabilities } from "../engin
 import { SETTINGS, POSITION_LABELS_HE } from "../data/settings.js";
 import { formatMoney, formatMoneyShort, positionLabel, escapeHtml } from "./format.js";
 import { teamCrestSvg } from "./crest.js";
+import { CAREER_STAGES } from "../engine/career.js";
 
 function teamName(leagueId, teamId) {
   const t = getTeam(leagueId, teamId);
@@ -57,6 +58,7 @@ export function renderStartScreen({ hasSave }) {
       </div>
       <div class="card center-col">
         <button class="btn" data-action="goto-new-game">משחק חדש</button>
+        <button class="btn btn-secondary" data-action="start-career">🏆 ממתחיל לאגדה</button>
         <button class="btn btn-secondary" data-action="continue-game" ${hasSave ? "" : "disabled"}>
           המשך משחק שמור
         </button>
@@ -96,7 +98,7 @@ export function renderLeaguePick({ confirmOverwrite }) {
   `;
 }
 
-export function renderTeamPick({ leagueId }) {
+export function renderTeamPick({ leagueId, careerMode = false }) {
   const league = getLeague(leagueId);
   // ממוינות לפי כוח בסיס יורד, כדי שתהיה תחושה ברורה של "מי הכי חזקה"
   const teams = [...league.teams].sort((a, b) => b.baseStrength - a.baseStrength);
@@ -104,7 +106,10 @@ export function renderTeamPick({ leagueId }) {
     <div class="screen">
       <div class="brand">
         <div class="logo">בחירת <span>קבוצה</span></div>
-        <div class="tagline">${league.name_he} - באיזו קבוצה תרצה לנהל?</div>
+        <div class="tagline">
+          ${league.name_he} - באיזו קבוצה תרצה לנהל?
+          ${careerMode ? '<br><b>מסלול "ממתחיל לאגדה"</b>: הקבוצה שתבחר תטייל איתך בין 7 הליגות ככל שתעלה.' : ""}
+        </div>
       </div>
       <div class="team-pick-grid">
         ${teams
@@ -355,7 +360,10 @@ export function renderHome({ state, allPlayers }) {
           ${teamCrestSvg(state.teamId, 38)}
           <div>
             <div class="team-name">${teamName(state.leagueId, state.teamId)}</div>
-            <div class="league-name">${league.name_he}</div>
+            <div class="league-name">
+              ${league.name_he}
+              ${state.careerMode ? ` · שלב ${(state.careerStageIndex ?? 0) + 1}/${CAREER_STAGES.length}` : ""}
+            </div>
           </div>
         </div>
         <div class="season-round">
@@ -816,9 +824,30 @@ export function renderRoundResult({ state, allPlayers, roundSummary, fitnessDiff
   `;
 }
 
-export function renderSeasonEnd({ state, leagueId, teamId, summary, championTeamId, finalPosition, bankrupt }) {
+export function renderSeasonEnd({
+  state,
+  leagueId,
+  teamId,
+  summary,
+  championTeamId,
+  finalPosition,
+  bankrupt,
+  careerAdvanced = false,
+  careerNewLeagueId = null,
+  careerWon = false,
+}) {
   const league = getLeague(leagueId);
   const isChampion = championTeamId === teamId;
+
+  let careerBannerHtml = "";
+  if (careerWon) {
+    careerBannerHtml = `<h2 style="color:var(--gold)">אגדה! 👑 סיימת את כל מסלול "ממתחיל לאגדה"!</h2>`;
+  } else if (careerAdvanced) {
+    const nextLeague = getLeague(careerNewLeagueId);
+    careerBannerHtml = `<h3 style="color:var(--gold)">עלית לשלב הבא: ${nextLeague.name_he}! 🚀</h3>`;
+  } else if (state.careerMode) {
+    careerBannerHtml = `<p class="muted">נשארת ב${league.name_he} - תנסה שוב לזכות באליפות בעונה הבאה כדי לעלות.</p>`;
+  }
 
   // התקציב בתחילת העונה שזה עתה הסתיימה = התקציב בסוף העונה שלפניה
   // (או תקציב ההתחלה של המשחק, אם זו העונה הראשונה). מחושב מ-financeHistory,
@@ -839,6 +868,7 @@ export function renderSeasonEnd({ state, leagueId, teamId, summary, championTeam
         <h1>סוף העונה - ${league.name_he}</h1>
         ${isChampion ? `<h2 style="color:var(--gold)">אלופים! 🎉</h2>` : `<p>סיימתם במקום ${finalPosition} מתוך ${league.teams.length}</p>`}
         <p>האלופה: <b>${teamName(leagueId, championTeamId)}</b></p>
+        ${careerBannerHtml}
       </div>
 
       <div class="card">
