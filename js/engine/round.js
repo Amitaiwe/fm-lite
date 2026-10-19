@@ -3,7 +3,6 @@
 // אירוע חדש), ועל מניעת סימולציה כפולה של אותו מחזור.
 
 import { SETTINGS } from "../data/settings.js";
-import { getLeague } from "../data/leagues.js";
 import { findTeamMatch } from "./fixtures.js";
 import { computeManagedTeamStrength, simulateMatch } from "./simulate.js";
 import { applyMatchResult, sortedTable } from "./table.js";
@@ -12,12 +11,7 @@ import { generateTransferWindowPlayers } from "./transferMarket.js";
 import { shouldTriggerEvent, triggerEvent } from "./events.js";
 import { applyMatchFitnessSwing } from "./squad.js";
 import { endSeason } from "./seasonEnd.js";
-
-function teamStrengthMap(league) {
-  const map = {};
-  for (const t of league.teams) map[t.id] = t.baseStrength;
-  return map;
-}
+import { resolveStageTeams } from "./career.js";
 
 export function needsTransferWindow(state) {
   return (
@@ -75,8 +69,12 @@ export function playNextRound(state, allPlayers, rng) {
     squad: state.squad.map((s) => (s.lastAbilityDelta ? { ...s, lastAbilityDelta: null } : s)),
   };
 
-  const league = getLeague(state.leagueId);
-  const strengths = teamStrengthMap(league);
+  // רשימת 14 הקבוצות של השלב/ליגה הנוכחית - כולל הקבוצה המטיילת של
+  // מסלול הקריירה אם רלוונטי (ראו career.js; במשחק חופשי זה פשוט שווה
+  // לרשימה הקבועה של הליגה, כי הקבוצה שלך תמיד טבעית לה).
+  const stageTeams = resolveStageTeams(state.leagueId, state.teamId);
+  const strengths = {};
+  for (const t of stageTeams) strengths[t.id] = t.baseStrength;
   const roundIndex = state.round; // round = כמה מחזורים הושלמו = אינדקס המחזור הבא
   const round = state.fixtures[roundIndex];
   if (!round) {
@@ -150,7 +148,7 @@ export function playNextRound(state, allPlayers, rng) {
 
   // סוף עונה?
   if (newRoundCount >= state.fixtures.length) {
-    const teamIds = league.teams.map((t) => t.id);
+    const teamIds = stageTeams.map((t) => t.id);
     const result = endSeason(newState, teamIds, rng);
     return {
       ok: true,
@@ -161,6 +159,12 @@ export function playNextRound(state, allPlayers, rng) {
       championTeamId: result.championTeamId,
       finalPosition: result.finalPosition,
       bankrupt: result.bankrupt,
+      // ה-leagueId שבו שוחקה העונה שהסתיימה כרגע - לשימוש מסך סיכום העונה,
+      // כי result.state.leagueId כבר עודכן לשלב הבא אם הייתה עלייה במסלול הקריירה.
+      seasonLeagueId: state.leagueId,
+      careerAdvanced: result.careerAdvanced,
+      careerNewLeagueId: result.careerNewLeagueId,
+      careerWon: result.careerWon,
     };
   }
 
