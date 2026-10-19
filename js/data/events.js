@@ -505,11 +505,11 @@ export const EVENTS = [
     title_he: "חניכה על ידי שחקן ותיק",
     description_he: "אחד השחקנים הוותיקים בסגל מציע לקיים סדנאות מנהיגות ואימונים אישיים לשחקנים הצעירים.",
     type: "choice",
+    targetPosition: "random",
     options: [
       {
         id: "fund_mentorship",
         label_he: "לממן מענק הדרכה לוותיק (-150,000€, יכולת +3 לשחקן נבחר)",
-        targetPosition: "random",
         effects: [
           { kind: "budget", amount: -150_000, timing: "immediate" },
           { kind: "ability", target: "event_player", amount: 3, timing: "immediate" },
@@ -970,11 +970,11 @@ export const EVENTS = [
     title_he: "מערכת אנליטיקה ואינטליגנציה מלאכותית",
     description_he: "חברת סטארט-אפ מציעה תוכנת AI מתקדמת לניתוח מהלכים טקטיים ומניעת פציעות בזמן אמת.",
     type: "choice",
+    targetPosition: "random",
     options: [
       {
         id: "buy_full_suite",
         label_he: " לרכוש את החבילה המלאה (-320,000€, יכולת +4 לשחקן)",
-        targetPosition: "random",
         effects: [
           { kind: "budget", amount: -320_000, timing: "immediate" },
           { kind: "ability", target: "event_player", amount: 4, timing: "immediate" },
@@ -983,7 +983,6 @@ export const EVENTS = [
       {
         id: "basic_trial",
         label_he: "לנסות גרסת ניסיון בסיסית (-100,000€, יכולת +1 לשחקן)",
-        targetPosition: "random",
         effects: [
           { kind: "budget", amount: -100_000, timing: "immediate" },
           { kind: "ability", target: "event_player", amount: 1, timing: "immediate" },
@@ -1057,6 +1056,7 @@ export const EVENTS = [
     title_he: "מסע סקאוטינג בדרום אמריקה",
     description_he: "ראש מערך הסקאוטינג מבקש תקציב נסיעות מיוחד לאיתור כישרונות צעירים בטורניר נוער בדרום אמריקה.",
     type: "choice",
+    targetPosition: "random",
     options: [
       {
         id: "fund_scout_tour",
