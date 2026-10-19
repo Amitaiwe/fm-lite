@@ -39,6 +39,61 @@ export function draftInitialSquad(allPlayers, rng) {
   return squad;
 }
 
+/**
+ * בוחר, לכל עמדה, זוג שחקנים (רשומות מאגר, לא slot) עם הפרש יכולת
+ * מינימלי - עד נקודה אחת כשאפשר - כדי שהבחירה בין השניים תהיה אמיתית
+ * (שניהם ברמה דומה) ולא "מובנת מאליה". ממוין לפי יכולת, ואז נבחר זוג
+ * שכנים אקראי מתוך כל הזוגות עם הפרש <= 1; אם אין כזה (לא אמור לקרות
+ * במאגר של 250 שחקנים), נופלים חזרה לזוג עם ההפרש הקטן ביותר שקיים.
+ * משמש למסך "בחירת סגל" בתחילת משחק חדש בלבד (לא בתחילת כל עונה).
+ */
+export function draftCandidatePairs(allPlayers, rng) {
+  const result = {};
+  for (const position of SETTINGS.SQUAD_POSITIONS) {
+    const pool = byPosition(allPlayers, position)
+      .slice()
+      .sort((a, b) => a.ability - b.ability);
+
+    const closePairs = [];
+    for (let i = 0; i < pool.length - 1; i++) {
+      if (Math.abs(pool[i + 1].ability - pool[i].ability) <= 1) {
+        closePairs.push([pool[i], pool[i + 1]]);
+      }
+    }
+
+    let pair;
+    if (closePairs.length > 0) {
+      pair = pickRandom(rng, closePairs);
+    } else {
+      let best = null;
+      let bestDiff = Infinity;
+      for (let i = 0; i < pool.length; i++) {
+        for (let j = i + 1; j < pool.length; j++) {
+          const diff = Math.abs(pool[i].ability - pool[j].ability);
+          if (diff < bestDiff) {
+            bestDiff = diff;
+            best = [pool[i], pool[j]];
+          }
+        }
+      }
+      pair = best;
+    }
+
+    // מערבבים מי מוצג ראשון/שני, כדי שהצד הימני לא יהיה תמיד החזק יותר
+    result[position] = rng() < 0.5 ? [pair[1], pair[0]] : pair;
+  }
+  return result;
+}
+
+/** בונה סגל מתוך בחירות מפורשות של המשתמש (מזהה שחקן לכל עמדה), ממסך בחירת הסגל. */
+export function buildSquadFromChoices(allPlayers, rng, chosenPlayerIds) {
+  return SETTINGS.SQUAD_POSITIONS.map((position) => {
+    const playerId = chosenPlayerIds[position];
+    const record = findById(allPlayers, playerId);
+    return buildSquadSlot(record, rng);
+  });
+}
+
 /** מרענן את הכושר של כל שחקני הסגל בתחילת עונה חדשה (הגרלה מלאה מאפס). */
 export function refreshSquadFitness(squad, rng) {
   return squad.map((slot) => ({ ...slot, fitness: randomFitness(rng), lastFitnessDelta: null }));

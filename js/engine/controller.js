@@ -7,6 +7,7 @@ import { executeTransfer } from "./transferMarket.js";
 import { resolveEventChoice } from "./events.js";
 import { saveGame, loadGame, clearSavedGame, hasSavedGame } from "./save.js";
 import { defaultRng } from "./rng.js";
+import { draftCandidatePairs } from "./squad.js";
 
 export class GameController {
   constructor(allPlayers, rng = defaultRng) {
@@ -25,10 +26,14 @@ export class GameController {
     return state;
   }
 
-  startNewGame(leagueId, teamId = null) {
-    this.state = createNewGame(leagueId, this.allPlayers, this.rng, teamId);
+  startNewGame(leagueId, teamId = null, chosenPlayerIds = null) {
+    this.state = createNewGame(leagueId, this.allPlayers, this.rng, teamId, chosenPlayerIds);
     saveGame(this.state);
     return this.state;
+  }
+
+  draftCandidatePairs() {
+    return draftCandidatePairs(this.allPlayers, this.rng);
   }
 
   playNextRound() {

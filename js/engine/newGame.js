@@ -3,7 +3,7 @@
 
 import { SETTINGS } from "../data/settings.js";
 import { getLeague } from "../data/leagues.js";
-import { draftInitialSquad } from "./squad.js";
+import { draftInitialSquad, buildSquadFromChoices } from "./squad.js";
 import { generateFixtures } from "./fixtures.js";
 import { initTable } from "./table.js";
 import { emptySeasonFinance } from "./economy.js";
@@ -14,8 +14,10 @@ export const GAME_VERSION = 1;
 /**
  * יוצר מצב משחק חדש לגמרי, מתוך ליגה שנבחרה ומאגר השחקנים.
  * teamId אופציונלי - אם ניתן (ותקף לליגה), הקבוצה הזו תנוהל במקום הגרלה אקראית.
+ * chosenPlayerIds אופציונלי - מזהה שחקן לכל עמדה, ממסך בחירת הסגל; אם לא
+ * ניתן, מגרילים סגל אקראי לגמרי כמו קודם.
  */
-export function createNewGame(leagueId, allPlayers, rng, teamId = null) {
+export function createNewGame(leagueId, allPlayers, rng, teamId = null, chosenPlayerIds = null) {
   const league = getLeague(leagueId);
   if (!league) {
     throw new Error(`ליגה לא קיימת: ${leagueId}`);
@@ -23,7 +25,9 @@ export function createNewGame(leagueId, allPlayers, rng, teamId = null) {
   const teamIds = league.teams.map((t) => t.id);
   const chosenTeam = teamId ? league.teams.find((t) => t.id === teamId) : null;
   const userTeam = chosenTeam || pickRandom(rng, league.teams);
-  const squad = draftInitialSquad(allPlayers, rng);
+  const squad = chosenPlayerIds
+    ? buildSquadFromChoices(allPlayers, rng, chosenPlayerIds)
+    : draftInitialSquad(allPlayers, rng);
   const fixtures = generateFixtures(teamIds);
   const table = initTable(teamIds);
 
