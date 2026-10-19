@@ -7,10 +7,12 @@ import { loadPlayersFromFile } from "../engine/loadPlayers.js";
 import { defaultRng } from "../engine/rng.js";
 import { needsTransferWindow } from "../engine/round.js";
 import { findTeamMatch } from "../engine/fixtures.js";
+import { SETTINGS } from "../data/settings.js";
 import {
   renderStartScreen,
   renderLeaguePick,
   renderTeamPick,
+  renderSquadDraft,
   renderHome,
   renderTable,
   renderFinances,
@@ -31,10 +33,16 @@ let allPlayers = null;
 
 // מצב תצוגה זמני (לא נשמר)
 const ui = {
-  screen: "loading", // loading | start | leaguePick | teamPick | home | table | finances | transferWindow | scouting | event | eventSpin | eventOutcome | roundResult | seasonEnd | gameOver
+  screen: "loading", // loading | start | leaguePick | teamPick | squadDraft | home | table | finances | transferWindow | scouting | event | eventSpin | eventOutcome | roundResult | seasonEnd | gameOver
   confirmOverwrite: false,
   pickedLeagueId: null,
   transferFeedback: null,
+  draftLeagueId: null,
+  draftTeamId: null,
+  draftCandidates: null, // { [position]: [playerRecord, playerRecord] } - מוגרל פעם אחת בתחילת הבחירה
+  draftPositions: null,
+  draftStepIndex: 0,
+  draftChoices: null, // { [position]: playerId }
   screenQueue: [], // תור מסכים להצגה אחרי playNextRound (roundResult -> seasonEnd/gameOver/event)
   lastRoundSummary: null,
   lastFitnessDiffs: null,
@@ -77,6 +85,16 @@ function render() {
     case "teamPick":
       html = renderTeamPick({ leagueId: ui.pickedLeagueId });
       break;
+    case "squadDraft": {
+      const position = ui.draftPositions[ui.draftStepIndex];
+      html = renderSquadDraft({
+        position,
+        candidates: ui.draftCandidates[position],
+        stepIndex: ui.draftStepIndex,
+        totalSteps: ui.draftPositions.length,
+      });
+      break;
+    }
     case "home":
       html = renderHome({ state: controller.state, allPlayers });
       break;
@@ -294,12 +312,45 @@ function onContinueAfterEventOutcome() {
   advanceScreenQueue();
 }
 
-async function onStartNewGame(leagueId, teamId = null) {
-  controller.startNewGame(leagueId, teamId);
+async function onStartNewGame(leagueId, teamId = null, chosenPlayerIds = null) {
+  controller.startNewGame(leagueId, teamId, chosenPlayerIds);
   ui.confirmOverwrite = false;
   ui.pickedLeagueId = null;
+  ui.draftLeagueId = null;
+  ui.draftTeamId = null;
+  ui.draftCandidates = null;
+  ui.draftPositions = null;
+  ui.draftStepIndex = 0;
+  ui.draftChoices = null;
   ui.screen = "home";
   render();
+}
+
+/**
+ * מתחיל את זרימת "בחירת סגל" לאחר שהמשתמש בחר ליגה+קבוצה (או הגרלה
+ * אקראית): מגריל זוגות מועמדים לכל עמדה פעם אחת, ואז מציג את העמדה
+ * הראשונה. קורה רק פה - פעם אחת בפתיחת משחק חדש, לא בתחילת כל עונה.
+ */
+function onStartSquadDraft(leagueId, teamId) {
+  ui.draftLeagueId = leagueId;
+  ui.draftTeamId = teamId;
+  ui.draftCandidates = controller.draftCandidatePairs();
+  ui.draftPositions = SETTINGS.SQUAD_POSITIONS;
+  ui.draftStepIndex = 0;
+  ui.draftChoices = {};
+  ui.screen = "squadDraft";
+  render();
+}
+
+function onPickDraftPlayer(playerId) {
+  const position = ui.draftPositions[ui.draftStepIndex];
+  ui.draftChoices[position] = Number(playerId);
+  if (ui.draftStepIndex < ui.draftPositions.length - 1) {
+    ui.draftStepIndex += 1;
+    render();
+  } else {
+    onStartNewGame(ui.draftLeagueId, ui.draftTeamId, ui.draftChoices);
+  }
 }
 
 function wireEvents() {
@@ -351,10 +402,13 @@ function wireEvents() {
         render();
         break;
       case "pick-team":
-        onStartNewGame(el.dataset.league, el.dataset.team);
+        onStartSquadDraft(el.dataset.league, el.dataset.team);
         break;
       case "pick-team-random":
-        onStartNewGame(el.dataset.league, null);
+        onStartSquadDraft(el.dataset.league, null);
+        break;
+      case "pick-draft-player":
+        onPickDraftPlayer(el.dataset.player);
         break;
       case "tab":
         ui.screen = el.dataset.tab;

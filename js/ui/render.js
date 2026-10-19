@@ -126,6 +126,47 @@ export function renderTeamPick({ leagueId }) {
   `;
 }
 
+const POSITION_TITLES_HE = {
+  goalkeeper: "בחר שוער",
+  defender: "בחר מגן",
+  midfielder: "בחר קשר",
+  striker: "בחר חלוץ",
+};
+
+/**
+ * מסך "בחירת סגל" בתחילת משחק חדש: מציג עמדה אחת בכל פעם, עם שני
+ * שחקנים מועמדים ברמה דומה (הפרש יכולת עד נקודה אחת) לבחירה - כרטיסיות
+ * גדולות (fut-card-lg). stepIndex/totalSteps משמשים למד-התקדמות.
+ */
+export function renderSquadDraft({ position, candidates, stepIndex, totalSteps }) {
+  return `
+    <div class="screen">
+      <div class="brand">
+        <div class="logo">${POSITION_TITLES_HE[position] || "בחר שחקן"}</div>
+        <div class="tagline">שלב ${stepIndex + 1} מתוך ${totalSteps} - בחר את השחקן שינהל את העמדה הזו בסגל שלך</div>
+      </div>
+      <div class="squad-draft-grid">
+        ${candidates
+          .map(
+            (p) => `
+          <div class="squad-draft-option" data-action="pick-draft-player" data-player="${p.id}">
+            ${futCardHtml({
+              rating: p.ability,
+              position: p.position,
+              name: p.name_he,
+              size: "lg",
+              statLines: [
+                { icon: "💰", value: formatMoneyShort(p.market_value) },
+              ],
+            })}
+          </div>`
+          )
+          .join("")}
+      </div>
+    </div>
+  `;
+}
+
 /**
  * כרטיס שחקן בסגנון "אולטימייט טים" (FUT): מגן זהב/כחול עם דירוג
  * גדול, עמדה, שם, ושורת סטטים עם אייקונים. משמש גם לסגל (עם כושר)
