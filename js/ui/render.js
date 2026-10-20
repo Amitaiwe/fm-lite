@@ -864,8 +864,13 @@ export function renderSeasonEnd({
   // פירוט תוצאות המשחקים (לא כולל שוק העברות) - כמות ניצחונות/תיקו/הפסדים
   // בעונה שהסתיימה כפול הבונוס/הקנס הקבוע לכל אחד, לפי settings.js.
   const record = summary.matchRecord || { won: 0, drawn: 0, lost: 0 };
-  const winTotal = record.won * SETTINGS.BONUS_WIN;
-  const drawTotal = record.drawn * SETTINGS.BONUS_DRAW;
+  // moneyMultiplier משקף את מכפיל שלב הקריירה שהיה בתוקף בעונה שהסתיימה
+  // (ראו careerMoneyMultiplier ב-career.js) - חייב להתבסס על הערך
+  // שחזר מהחישוב בפועל (summary), לא לחשב מחדש מ-state.careerStageIndex
+  // כאן, כי הוא כבר עשוי להיות מעודכן לשלב הבא אם הייתה עלייה.
+  const mult = summary.moneyMultiplier ?? 1;
+  const winTotal = Math.round(record.won * SETTINGS.BONUS_WIN * mult);
+  const drawTotal = Math.round(record.drawn * SETTINGS.BONUS_DRAW * mult);
   const lossTotal = record.lost * SETTINGS.PENALTY_LOSS;
 
   // "רווח/הפסד נטו לעונה" מחושב כאן רק מסכום השורות שמוצגות בכרטיס -
