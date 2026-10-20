@@ -68,13 +68,25 @@ export function renderStartScreen({ hasSave }) {
   `;
 }
 
-export function renderLeaguePick({ confirmOverwrite }) {
-  const leagues = getLeagueList();
+export function renderLeaguePick({ confirmOverwrite, careerMode = false }) {
+  // במסלול "ממתחיל לאגדה" מסך זה משמש רק לבחירת *מאיזו ליגה* לדפדף כדי
+  // לבחור קבוצה (ראו renderTeamPick) - המסלול עצמו תמיד מתחיל בפועל
+  // בליגה הצרפתית (השלב הראשון ב-CAREER_STAGES), לא בליגה שנבחרה כאן.
+  // לכן מציגים רק את 5 הליגות הבסיסיות (לא "אירופה"/"אלופות" - אלו
+  // שלבים שעולים אליהם במהלך המסלול, לא נקודות דפדוף לקבוצה) - ראו career.js.
+  const allLeagues = getLeagueList();
+  const leagues = careerMode ? allLeagues.filter((l) => CAREER_STAGES.slice(0, 5).includes(l.id)) : allLeagues;
   return `
     <div class="screen">
       <div class="brand">
         <div class="logo">בחירת <span>ליגה</span></div>
-        <div class="tagline">בחר ליגה, ואז תוכל לבחור את הקבוצה שתנהל מתוך 14 הקבוצות בה</div>
+        <div class="tagline">
+          ${
+            careerMode
+              ? 'מסלול "ממתחיל לאגדה" תמיד מתחיל בליגה הצרפתית - אבל אפשר לבחור את הקבוצה שתנהל מכל אחת מ-5 הליגות. באיזו ליגה לבחור ממנה קבוצה?'
+              : "בחר ליגה, ואז תוכל לבחור את הקבוצה שתנהל מתוך 14 הקבוצות בה"
+          }
+        </div>
       </div>
       ${
         confirmOverwrite
