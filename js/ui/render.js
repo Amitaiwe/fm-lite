@@ -861,15 +861,19 @@ export function renderSeasonEnd({
     careerBannerHtml = `<p class="muted">נשארת ב${league.name_he} - תנסה שוב לזכות באליפות בעונה הבאה כדי לעלות.</p>`;
   }
 
-  // התקציב בתחילת העונה שזה עתה הסתיימה = התקציב בסוף העונה שלפניה
-  // (או תקציב ההתחלה של המשחק, אם זו העונה הראשונה). מחושב מ-financeHistory,
-  // ששומר endingBudget לכל עונה שהסתיימה - כולל הרשומה שנוספה כרגע לעונה הזו.
-  const history = state.financeHistory;
-  const currentEntry = history[history.length - 1];
-  const previousEntry = history.length >= 2 ? history[history.length - 2] : null;
-  const startOfSeasonBudget = previousEntry ? previousEntry.endingBudget : SETTINGS.STARTING_BUDGET;
-  const endOfSeasonBudget = currentEntry ? currentEntry.endingBudget : state.budget;
-  const netChange = endOfSeasonBudget - startOfSeasonBudget;
+  // פירוט תוצאות המשחקים (לא כולל שוק העברות) - כמות ניצחונות/תיקו/הפסדים
+  // בעונה שהסתיימה כפול הבונוס/הקנס הקבוע לכל אחד, לפי settings.js.
+  const record = summary.matchRecord || { won: 0, drawn: 0, lost: 0 };
+  const winTotal = record.won * SETTINGS.BONUS_WIN;
+  const drawTotal = record.drawn * SETTINGS.BONUS_DRAW;
+  const lossTotal = record.lost * SETTINGS.PENALTY_LOSS;
+
+  // "רווח/הפסד נטו לעונה" מחושב כאן רק מסכום השורות שמוצגות בכרטיס -
+  // משחקים, פרס, חסות, שכר, והתחייבויות מאירועים - ובכוונה לא כולל את
+  // תנועות שוק ההעברות (קניות/מכירות שחקנים), כדי שהמספר ישקף רק את
+  // הכלכלה "השוטפת" של הקבוצה ולא יתערבב עם החלטות שוק נקודתיות.
+  const commitmentsNet = summary.commitmentsApplied.reduce((sum, c) => sum + c.amount, 0);
+  const netChange = winTotal + drawTotal - lossTotal + summary.prize + (summary.baseIncome || 0) - summary.salaries + commitmentsNet;
   const netClass = netChange > 0 ? "income-amount" : netChange < 0 ? "expense-amount" : "";
   const netSign = netChange > 0 ? "+" : netChange < 0 ? "-" : "";
 
@@ -885,7 +889,10 @@ export function renderSeasonEnd({
 
       <div class="card">
         <h3>סיכום כלכלי</h3>
-        <div class="finance-line"><span>תקציב בתחילת העונה</span><span>${formatMoney(startOfSeasonBudget)}</span></div>
+        <p class="muted" style="margin-top:-4px">משחקים ובונוסי סוף עונה בלבד - לא כולל שוק העברות.</p>
+        <div class="finance-line"><span>${record.won} ניצחונות</span><span class="income-amount">+${formatMoney(winTotal)}</span></div>
+        <div class="finance-line"><span>${record.drawn} תיקו</span><span class="income-amount">+${formatMoney(drawTotal)}</span></div>
+        <div class="finance-line"><span>${record.lost} הפסדים</span><span class="expense-amount">-${formatMoney(lossTotal)}</span></div>
         <div class="finance-line"><span>פרס מיקום בטבלה</span><span class="income-amount">+${formatMoney(summary.prize)}</span></div>
         <div class="finance-line"><span>הכנסת חסות/שידור קבועה</span><span class="income-amount">+${formatMoney(summary.baseIncome || 0)}</span></div>
         <div class="finance-line"><span>שכר ששולם</span><span class="expense-amount">-${formatMoney(summary.salaries)}</span></div>
@@ -895,12 +902,11 @@ export function renderSeasonEnd({
               `<div class="finance-line"><span>${escapeHtml(c.description)}</span><span class="${c.isExpenseBucket ? "expense-amount" : "income-amount"}">${c.isExpenseBucket ? "-" : "+"}${formatMoney(Math.abs(c.amount))}</span></div>`
           )
           .join("")}
-        <div class="finance-line"><span><b>יתרת תקציב לעונה הבאה</b></span><b>${formatMoney(endOfSeasonBudget)}</b></div>
         <div class="finance-line" style="border-top:1px solid var(--border); margin-top:6px; padding-top:10px;">
           <span><b>רווח/הפסד נטו לעונה</b></span>
           <b class="${netClass}">${netSign}${formatMoney(Math.abs(netChange))}</b>
         </div>
-        <p class="muted">שכר השחקנים עודכן באינפלציה של 2% לקראת העונה הבאה.</p>
+        <p class="muted">יתרת התקציב בפועל (כולל שוק העברות): ${formatMoney(state.budget)}. שכר השחקנים עודכן באינפלציה של 2% לקראת העונה הבאה.</p>
       </div>
 
       <button class="btn" data-action="continue-flow">תחילת עונה ${state.season}</button>
