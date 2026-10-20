@@ -19,7 +19,16 @@ export function endSeason(state, teamIds, rng) {
   const finalPosition = finalTableSorted.findIndex((r) => r.teamId === state.teamId) + 1;
   const championTeamId = finalTableSorted[0]?.teamId ?? null;
 
-  const { state: afterEconomy, summary, bankrupt } = processSeasonEndEconomy(state, finalPosition);
+  // סיכום תוצאות המשחקים של הקבוצה שלנו בעונה הזו (ניצחונות/תיקו/הפסדים) -
+  // חייבים לקרוא את זה *לפני* איפוס הטבלה לעונה הבאה בהמשך הפונקציה.
+  // משמש מסך סיכום העונה להציג את בונוסי המשחקים בנפרד משוק ההעברות.
+  const userRow = state.table[state.teamId];
+  const matchRecord = userRow
+    ? { won: userRow.won, drawn: userRow.drawn, lost: userRow.lost }
+    : { won: 0, drawn: 0, lost: 0 };
+
+  const { state: afterEconomy, summary: economySummary, bankrupt } = processSeasonEndEconomy(state, finalPosition);
+  const summary = { ...economySummary, matchRecord };
 
   const financeHistory = [
     ...state.financeHistory,
