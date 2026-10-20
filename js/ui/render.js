@@ -853,7 +853,17 @@ export function renderSeasonEnd({
 
   let careerBannerHtml = "";
   if (careerWon) {
-    careerBannerHtml = `<h2 style="color:var(--gold)">אגדה! 👑 סיימת את כל מסלול "ממתחיל לאגדה"!</h2>`;
+    // state.season כבר קודם לעונה הבאה בשלב הזה (ראו seasonEnd.js) - העונה
+    // שבה בפועל זכו ב"אגדה" היא אחת פחות מזה.
+    const seasonsTaken = Math.max(1, state.season - 1);
+    const shareText = `הפכתי קבוצת כדורגל לאגדה תוך ${seasonsTaken} עונות, נסו גם אתם: https://fm-lite-ecru.vercel.app`;
+    const shareUrl = `https://wa.me/?text=${encodeURIComponent(shareText)}`;
+    careerBannerHtml = `
+      <h2 style="color:var(--gold)">אגדה! 👑 סיימת את כל מסלול "ממתחיל לאגדה"!</h2>
+      <p class="muted">עשית את זה תוך ${seasonsTaken} עונות.</p>
+      <a class="btn" style="background:#25D366; color:#fff; display:inline-block; text-decoration:none; margin-top:8px"
+         href="${shareUrl}" target="_blank" rel="noopener">שתף בווטסאפ 📲</a>
+    `;
   } else if (careerAdvanced) {
     const nextLeague = getLeague(careerNewLeagueId);
     careerBannerHtml = `<h3 style="color:var(--gold)">עלית לשלב הבא: ${nextLeague.name_he}! 🚀</h3>`;
