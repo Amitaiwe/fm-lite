@@ -2,13 +2,13 @@
 // סגל -> יצירת לוח מחזורים וטבלה ריקה לעונה הראשונה.
 
 import { SETTINGS } from "../data/settings.js";
-import { getLeague } from "../data/leagues.js";
+import { getLeague, findTeamAnywhere } from "../data/leagues.js";
 import { draftInitialSquad, buildSquadFromChoices } from "./squad.js";
 import { generateFixtures } from "./fixtures.js";
 import { initTable } from "./table.js";
 import { emptySeasonFinance } from "./economy.js";
 import { pickRandom } from "./rng.js";
-import { resolveStageTeams } from "./career.js";
+import { resolveStageTeams, CAREER_STAGES } from "./career.js";
 
 export const GAME_VERSION = 1;
 
@@ -19,14 +19,18 @@ export const GAME_VERSION = 1;
  * ניתן, מגרילים סגל אקראי לגמרי כמו קודם.
  * careerMode - אם true, זהו תחילת מסלול "ממתחיל לאגדה" (ראו career.js):
  * הקבוצה הנבחרת "תטייל" בין הליגות בכל עלייה, במקום להישאר קבועה לנצח
- * באותה ליגה כמו במשחק חופשי רגיל.
+ * באותה ליגה כמו במשחק חופשי רגיל. leagueId יכול להיות כל אחת מ-5
+ * הליגות הבסיסיות (לא רק הראשונה) - המשתמש בוחר מאיפה להתחיל את המסלול.
  */
 export function createNewGame(leagueId, allPlayers, rng, teamId = null, chosenPlayerIds = null, careerMode = false) {
   const league = getLeague(leagueId);
   if (!league) {
     throw new Error(`ליגה לא קיימת: ${leagueId}`);
   }
-  const chosenTeam = teamId ? league.teams.find((t) => t.id === teamId) : null;
+  // teamId יכול להיות קבוצה שלא טבעית ל-leagueId (למשל במסלול הקריירה,
+  // שתמיד מתחיל בצרפת אבל אפשר לבחור קבוצה מכל אחת מ-5 הליגות) - אז
+  // מחפשים אותה בכל הליגות ולא רק ברשימה הסטטית של leagueId.
+  const chosenTeam = teamId ? league.teams.find((t) => t.id === teamId) || findTeamAnywhere(teamId) : null;
   const userTeam = chosenTeam || pickRandom(rng, league.teams);
   const teamIds = resolveStageTeams(leagueId, userTeam.id).map((t) => t.id);
   const squad = chosenPlayerIds
@@ -41,7 +45,7 @@ export function createNewGame(leagueId, allPlayers, rng, teamId = null, chosenPl
     leagueId,
     teamId: userTeam.id,
     careerMode,
-    careerStageIndex: careerMode ? 0 : null,
+    careerStageIndex: careerMode ? Math.max(0, CAREER_STAGES.indexOf(leagueId)) : null,
     careerWon: false,
     season: 1,
     round: 0, // מספר המחזורים שהושלמו בעונה הנוכחית
