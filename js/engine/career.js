@@ -8,6 +8,18 @@ import { getLeague, findTeamAnywhere } from "../data/leagues.js";
 
 export const CAREER_STAGES = ["france", "germany", "italy", "england", "spain", "europa", "champions"];
 
+// מכפיל כספי עולה לפי שלב הקריירה - כך שבונוסי משחקים ופרסי סוף עונה
+// גדלים ממש בין ליגה לליגה במסלול "ממתחיל לאגדה" (ולא נשארים קבועים
+// מתחילת המסלול ועד סופו, כמו בשוק משחק חופשי רגיל - ראו economy.js).
+export const CAREER_MONEY_MULTIPLIERS = [1, 1.25, 1.55, 1.9, 2.3, 2.8, 3.4];
+
+/** מחזיר את המכפיל הכספי לשלב הקריירה הנוכחי של ה-state, או 1 במשחק חופשי. */
+export function careerMoneyMultiplier(state) {
+  if (!state.careerMode) return 1;
+  const idx = state.careerStageIndex ?? 0;
+  return CAREER_MONEY_MULTIPLIERS[idx] ?? CAREER_MONEY_MULTIPLIERS[CAREER_MONEY_MULTIPLIERS.length - 1];
+}
+
 /** מחזיר את מזהה הליגה הבאה במסלול, או null אם זה כבר השלב האחרון. */
 export function nextCareerLeagueId(currentLeagueId) {
   const idx = CAREER_STAGES.indexOf(currentLeagueId);

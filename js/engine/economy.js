@@ -2,6 +2,7 @@
 // קנסות, התחייבויות נדחות, ובדיקת פשיטת רגל.
 
 import { SETTINGS } from "../data/settings.js";
+import { careerMoneyMultiplier } from "./career.js";
 
 /** מחזיר אובייקט כספים ריק לעונה חדשה. */
 export function emptySeasonFinance() {
@@ -27,15 +28,22 @@ export function ledgerBudgetChange(state, amount, category, isExpenseBucket) {
   return { ...state, budget: newBudget, finance };
 }
 
-/** מחיל בונוס/קנס על תוצאת המשחק של קבוצת השחקן (מיד לאחר כל משחק). */
+/**
+ * מחיל בונוס/קנס על תוצאת המשחק של קבוצת השחקן (מיד לאחר כל משחק).
+ * במסלול "ממתחיל לאגדה" מוכפל לפי שלב הקריירה הנוכחי (ראו
+ * careerMoneyMultiplier ב-career.js) - כך שהבונוסים גדלים ממש ככל
+ * שעולים ליגה-ליגה; במשחק חופשי המכפיל הוא תמיד 1 (ללא שינוי).
+ */
 export function applyMatchBonusPenalty(state, outcome) {
   // outcome: "win" | "draw" | "loss"
+  const mult = careerMoneyMultiplier(state);
   if (outcome === "win") {
-    return ledgerBudgetChange(state, SETTINGS.BONUS_WIN, "matchBonuses", false);
+    return ledgerBudgetChange(state, Math.round(SETTINGS.BONUS_WIN * mult), "matchBonuses", false);
   }
   if (outcome === "draw") {
-    return ledgerBudgetChange(state, SETTINGS.BONUS_DRAW, "matchBonuses", false);
+    return ledgerBudgetChange(state, Math.round(SETTINGS.BONUS_DRAW * mult), "matchBonuses", false);
   }
+  // קנס ההפסד נשאר קבוע בכל השלבים - רק הבונוסים (ניצחון/תיקו/פרסים) גדלים.
   return ledgerBudgetChange(state, -SETTINGS.PENALTY_LOSS, "matchPenalties", true);
 }
 
@@ -70,19 +78,24 @@ export function totalSquadSalary(squad) {
  */
 export function processSeasonEndEconomy(state, finalPosition) {
   let s = { ...state };
-  const summary = { prize: 0, baseIncome: 0, commitmentsApplied: [], salaries: 0, inflationApplied: 0 };
+  // מכפיל שלב הקריירה של העונה שזה עתה הסתיימה - חייבים לקרוא את זה
+  // *לפני* כל שינוי בהמשך (ראו גם moneyMultiplier ב-summary, ששימושי
+  // למסך סיכום העונה כדי להציג סכומי בונוסי משחקים עקביים).
+  const mult = careerMoneyMultiplier(state);
+  const summary = { prize: 0, baseIncome: 0, commitmentsApplied: [], salaries: 0, inflationApplied: 0, moneyMultiplier: mult };
 
   // 1. פרס מיקום בטבלה
-  const prize = SETTINGS.SEASON_PRIZES[finalPosition] || 0;
+  const prize = Math.round((SETTINGS.SEASON_PRIZES[finalPosition] || 0) * mult);
   if (prize > 0) {
     s = ledgerBudgetChange(s, prize, "prizes", false);
     summary.prize = prize;
   }
 
   // 1ב. הכנסת חסות/שידור קבועה לעונה (רצפת הכנסה, לא תלויה בתוצאות)
-  if (SETTINGS.SEASON_BASE_INCOME > 0) {
-    s = ledgerBudgetChange(s, SETTINGS.SEASON_BASE_INCOME, "sponsorships", false);
-    summary.baseIncome = SETTINGS.SEASON_BASE_INCOME;
+  const baseIncome = Math.round(SETTINGS.SEASON_BASE_INCOME * mult);
+  if (baseIncome > 0) {
+    s = ledgerBudgetChange(s, baseIncome, "sponsorships", false);
+    summary.baseIncome = baseIncome;
   }
 
   // 2. התחייבויות נדחות שנצברו העונה (חסויות, בקשות שכר שהתקבלו וכו')
