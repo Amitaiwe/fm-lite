@@ -82,12 +82,12 @@ export const EVENTS = [
   {
     id: "sponsorship_offer",
     title_he: "הצעת חסות",
-    description_he: "חברה מציעה לחסות את הקבוצה תמורת 2,500,000€ שישולמו בסוף העונה. ניתן גם לנסות לנהל משא ומתן על סכום גבוה יותר.",
+    description_he: "חברה מציעה לחסות את הקבוצה בתשלום שישולם בסוף העונה. ניתן גם לנסות לנהל משא ומתן על סכום גבוה יותר.",
     type: "choice",
     options: [
       {
         id: "accept",
-        label_he: "לקבל את ההצעה כמות שהיא (+2,500,000€ בסוף העונה)",
+        label_he: "לקבל את ההצעה כמות שהיא (בסוף העונה)",
         effects: [{ kind: "budget", amount: 2_500_000, timing: "end_of_season" }],
       },
       {
@@ -121,13 +121,13 @@ export const EVENTS = [
   {
     id: "end_of_season_salary_request",
     title_he: "השוער דורש תוספת שכר",
-    description_he: "{playerName} (שוער) מבקש תוספת שכר של 1,000,000€ שתשולם בסוף העונה, אחרת הוא עלול לאבד ריכוז.",
+    description_he: "{playerName} (שוער) מבקש תוספת שכר שתשולם בסוף העונה, אחרת הוא עלול לאבד ריכוז.",
     type: "choice",
     targetPosition: "goalkeeper",
     options: [
       {
         id: "accept",
-        label_he: "להסכים (-1,000,000€ בסוף העונה)",
+        label_he: "להסכים (בסוף העונה)",
         effects: [{ kind: "budget", amount: -1_000_000, timing: "end_of_season" }],
       },
       {
@@ -161,7 +161,7 @@ export const EVENTS = [
     options: [
       {
         id: "withdraw_now",
-        label_he: "למשוך עכשיו (+750,000€ מיידי)",
+        label_he: "למשוך עכשיו (מיידי)",
         effects: [{ kind: "budget", amount: 750_000, timing: "immediate" }],
       },
       {
@@ -190,17 +190,17 @@ export const EVENTS = [
   {
     id: "fan_fundraiser",
     title_he: "מגבית תרומות מהאוהדים",
-    description_he: "האוהדים מציעים לערוך מגבית תרומות לקבוצה. ניתן לקבל תרומה רגילה, או לממן אירוע גדול יותר (עלות 100,000€) בהימור על תוצאה טובה יותר.",
+    description_he: "האוהדים מציעים לערוך מגבית תרומות לקבוצה. ניתן לקבל תרומה רגילה, או לממן אירוע גדול יותר (בעלות מסוימת) בהימור על תוצאה טובה יותר.",
     type: "choice",
     options: [
       {
         id: "regular",
-        label_he: "לקבל תרומה רגילה (+300,000€ מיידי)",
+        label_he: "לקבל תרומה רגילה (מיידי)",
         effects: [{ kind: "budget", amount: 300_000, timing: "immediate" }],
       },
       {
         id: "big_event",
-        label_he: "לממן אירוע גדול (-100,000€) ולהמר על התרומות",
+        label_he: "לממן אירוע גדול (בעלות מסוימת) ולהמר על התרומות",
         effects: [
           { kind: "budget", amount: -100_000, timing: "immediate" },
           {
@@ -252,7 +252,7 @@ export const EVENTS = [
       },
       {
         id: "play_through",
-        label_he: "להמשיך להעמיס עליו (כושר -8 מיידי, בטוח)",
+        label_he: "להמשיך להעמיס עליו (כושר השחקן ייפגע, מיידי, בטוח)",
         effects: [{ kind: "fitness", target: "event_player", amount: -8, timing: "immediate" }],
       },
     ],
@@ -260,13 +260,13 @@ export const EVENTS = [
   {
     id: "talent_scout_bonus",
     title_he: "דוח סקאוט חיובי",
-    description_he: "הסקאוטים מדווחים כי {playerName} מתקדם ברמתו. ניתן לממן אימון אישי נוסף (150,000€) לשיפור גדול יותר, או להסתפק בהתקדמות הטבעית.",
+    description_he: "הסקאוטים מדווחים כי {playerName} מתקדם ברמתו. ניתן לממן אימון אישי נוסף לשיפור גדול יותר, או להסתפק בהתקדמות הטבעית.",
     type: "choice",
     targetPosition: "random",
     options: [
       {
         id: "invest",
-        label_he: "לממן אימון אישי (-150,000€, יכולת +3)",
+        label_he: "לממן אימון אישי (עלות, יכולת השחקן תעלה)",
         effects: [
           { kind: "budget", amount: -150_000, timing: "immediate" },
           { kind: "ability", target: "event_player", amount: 3, timing: "immediate" },
@@ -274,7 +274,7 @@ export const EVENTS = [
       },
       {
         id: "natural",
-        label_he: "להסתפק בהתקדמות הטבעית (חינם, יכולת +1)",
+        label_he: "להסתפק בהתקדמות הטבעית (חינם, יכולת השחקן תעלה מעט)",
         effects: [{ kind: "ability", target: "event_player", amount: 1, timing: "immediate" }],
       },
     ],
@@ -287,7 +287,7 @@ export const EVENTS = [
     options: [
       {
         id: "pay_now",
-        label_he: "לשלם קנס מופחת מיד (-200,000€, בטוח)",
+        label_he: "לשלם קנס מופחת מיד (בטוח)",
         effects: [{ kind: "budget", amount: -200_000, timing: "immediate" }],
       },
       {
@@ -316,12 +316,12 @@ export const EVENTS = [
   {
     id: "equipment_upgrade",
     title_he: "שדרוג ציוד אימונים",
-    description_he: "ניתן לשדרג את ציוד האימונים תמורת 400,000€, מה שישפר מיידית את הכושר של כל השחקנים, או לדלג על כך הפעם.",
+    description_he: "ניתן לשדרג את ציוד האימונים, מה שישפר מיידית את הכושר של כל השחקנים, או לדלג על כך הפעם.",
     type: "choice",
     options: [
       {
         id: "pay",
-        label_he: "לשדרג (-400,000€, כושר כל הסגל +8)",
+        label_he: "לשדרג (כושר כל הסגל ישתפר)",
         effects: [
           { kind: "budget", amount: -400_000, timing: "immediate" },
           { kind: "fitness", target: "all", amount: 8, timing: "immediate" },
@@ -344,7 +344,7 @@ export const EVENTS = [
     options: [
       {
         id: "fine_player",
-        label_he: "לקנוס את השחקן ולדרוש התנצלות (+100,000€ לתקציב, יכולת -2)",
+        label_he: "לקנוס את השחקן ולדרוש התנצלות (קנס לתקציב, יכולת השחקן תרד)",
         effects: [
           { kind: "budget", amount: 100_000, timing: "immediate" },
           { kind: "ability", target: "event_player", amount: -2, timing: "immediate" },
@@ -387,7 +387,7 @@ export const EVENTS = [
     options: [
       {
         id: "invest_heavy",
-        label_he: "להשקיע בתוכנית פיתוח אישית (-300,000€, הימור על פריצת דרך)",
+        label_he: "להשקיע בתוכנית פיתוח אישית (עלות, הימור על פריצת דרך)",
         effects: [
           { kind: "budget", amount: -300_000, timing: "immediate" },
           {
@@ -409,7 +409,7 @@ export const EVENTS = [
       },
       {
         id: "standard_track",
-        label_he: "לקדם בקצב רגיל (חינם, יכולת +1)",
+        label_he: "לקדם בקצב רגיל (חינם, יכולת השחקן תעלה מעט)",
         effects: [{ kind: "ability", target: "event_player", amount: 1, timing: "immediate" }],
       },
     ],
@@ -422,7 +422,7 @@ export const EVENTS = [
     options: [
       {
         id: "premium_turf",
-        label_he: "להתקין משטח דשא מתקדם (-500,000€, כושר כל הסגל +7)",
+        label_he: "להתקין משטח דשא מתקדם (כושר כל הסגל ישתפר משמעותית)",
         effects: [
           { kind: "budget", amount: -500_000, timing: "immediate" },
           { kind: "fitness", target: "all", amount: 7, timing: "immediate" },
@@ -430,7 +430,7 @@ export const EVENTS = [
       },
       {
         id: "patch_work",
-        label_he: "תיקון נקודתי בלבד (-100,000€, כושר כל הסגל +2)",
+        label_he: "תיקון נקודתי בלבד (כושר כל הסגל ישתפר מעט)",
         effects: [
           { kind: "budget", amount: -100_000, timing: "immediate" },
           { kind: "fitness", target: "all", amount: 2, timing: "immediate" },
@@ -451,7 +451,7 @@ export const EVENTS = [
     options: [
       {
         id: "accept_match",
-        label_he: "לטוס למשחק (+850,000€ מיידי, עומס כושר -6 לכל הסגל)",
+        label_he: "לטוס למשחק (הכנסה מיידית, עומס על כושר כל הסגל)",
         effects: [
           { kind: "budget", amount: 850_000, timing: "immediate" },
           { kind: "fitness", target: "all", amount: -6, timing: "immediate" },
@@ -459,7 +459,7 @@ export const EVENTS = [
       },
       {
         id: "decline_match",
-        label_he: "לסרב ולהעניק ימי מנוחה לסגל (כושר כל הסגל +3)",
+        label_he: "לסרב ולהעניק ימי מנוחה לסגל (כושר כל הסגל ישתפר)",
         effects: [{ kind: "fitness", target: "all", amount: 3, timing: "immediate" }],
       },
     ],
@@ -473,7 +473,7 @@ export const EVENTS = [
     options: [
       {
         id: "launch_merch",
-        label_he: "להשקיע בייצור מרצ'נדייז (-200,000€, הימור על מכירות)",
+        label_he: "להשקיע בייצור מרצ'נדייז (עלות, הימור על מכירות)",
         effects: [
           { kind: "budget", amount: -200_000, timing: "immediate" },
           {
@@ -509,7 +509,7 @@ export const EVENTS = [
     options: [
       {
         id: "fund_mentorship",
-        label_he: "לממן מענק הדרכה לוותיק (-150,000€, יכולת +3 לשחקן נבחר)",
+        label_he: "לממן מענק הדרכה לוותיק (עלות, יכולת השחקן הנבחר תעלה)",
         effects: [
           { kind: "budget", amount: -150_000, timing: "immediate" },
           { kind: "ability", target: "event_player", amount: 3, timing: "immediate" },
@@ -530,12 +530,12 @@ export const EVENTS = [
     options: [
       {
         id: "quick_repair",
-        label_he: "תיקון חירום מהיר (-300,000€ מיידי)",
+        label_he: "תיקון חירום מהיר (מיידי)",
         effects: [{ kind: "budget", amount: -300_000, timing: "immediate" }],
       },
       {
         id: "delay_repair",
-        label_he: "לדחות את התיקון ולהתאמן במגרש חלופי (כושר כל הסגל -5)",
+        label_he: "לדחות את התיקון ולהתאמן במגרש חלופי (כושר כל הסגל ייפגע)",
         effects: [{ kind: "fitness", target: "all", amount: -5, timing: "immediate" }],
       },
     ],
@@ -582,7 +582,7 @@ export const EVENTS = [
     options: [
       {
         id: "hire_nutritionist",
-        label_he: "להעסיק את התזונאי (-220,000€, כושר כל הסגל +6)",
+        label_he: "להעסיק את התזונאי (עלות, כושר כל הסגל ישתפר)",
         effects: [
           { kind: "budget", amount: -220_000, timing: "immediate" },
           { kind: "fitness", target: "all", amount: 6, timing: "immediate" },
@@ -604,7 +604,7 @@ export const EVENTS = [
     options: [
       {
         id: "fly_family",
-        label_he: "לממן טיסות ואירוח למשפחתו (-140,000€, יכולת +3)",
+        label_he: "לממן טיסות ואירוח למשפחתו (עלות, יכולת השחקן תעלה)",
         effects: [
           { kind: "budget", amount: -140_000, timing: "immediate" },
           { kind: "ability", target: "event_player", amount: 3, timing: "immediate" },
@@ -641,7 +641,7 @@ export const EVENTS = [
     options: [
       {
         id: "hire_tax_lawyers",
-        label_he: "לשכור עורכי דין מומחים (-250,000€, מניעת קנסות בטוחה)",
+        label_he: "לשכור עורכי דין מומחים (עלות, מניעת קנסות בטוחה)",
         effects: [{ kind: "budget", amount: -250_000, timing: "immediate" }],
       },
       {
@@ -675,7 +675,7 @@ export const EVENTS = [
     options: [
       {
         id: "lower_ticket_prices",
-        label_he: "להוזיל כרטיסים (-350,000€ בסוף העונה, כושר מוראלי לכל הסגל +4)",
+        label_he: "להוזיל כרטיסים (בסוף העונה, כושר מוראלי לכל הסגל ישתפר)",
         effects: [
           { kind: "budget", amount: -350_000, timing: "end_of_season" },
           { kind: "fitness", target: "all", amount: 4, timing: "immediate" },
@@ -712,7 +712,7 @@ export const EVENTS = [
     options: [
       {
         id: "lease_cryo",
-        label_he: "לשכור את המערכת (-450,000€, כושר כל הסגל +9)",
+        label_he: "לשכור את המערכת (עלות, כושר כל הסגל ישתפר משמעותית)",
         effects: [
           { kind: "budget", amount: -450_000, timing: "immediate" },
           { kind: "fitness", target: "all", amount: 9, timing: "immediate" },
@@ -733,7 +733,7 @@ export const EVENTS = [
     options: [
       {
         id: "settle_out_of_court",
-        label_he: "להגיע להסדר טיעון מהיר (-200,000€)",
+        label_he: "להגיע להסדר טיעון מהיר (עלות)",
         effects: [{ kind: "budget", amount: -200_000, timing: "immediate" }],
       },
       {
@@ -767,7 +767,7 @@ export const EVENTS = [
     options: [
       {
         id: "host_gala",
-        label_he: "לארגן גאלה יוצרת תדמית (-120,000€, הימור על גיוס תרומות וחסויות)",
+        label_he: "לארגן גאלה יוצרת תדמית (עלות, הימור על גיוס תרומות וחסויות)",
         effects: [
           { kind: "budget", amount: -120_000, timing: "immediate" },
           {
@@ -789,7 +789,7 @@ export const EVENTS = [
       },
       {
         id: "decline_gala",
-        label_he: "לתרום סכום סמלי בלבד (-40,000€)",
+        label_he: "לתרום סכום סמלי בלבד (עלות קטנה)",
         effects: [{ kind: "budget", amount: -40_000, timing: "immediate" }],
       },
     ],
@@ -803,7 +803,7 @@ export const EVENTS = [
     options: [
       {
         id: "pay_agent",
-        label_he: "לשלם את עמלת הסוכן (-350,000€, יכולת +2)",
+        label_he: "לשלם את עמלת הסוכן (עלות, יכולת השחקן תעלה)",
         effects: [
           { kind: "budget", amount: -350_000, timing: "immediate" },
           { kind: "ability", target: "event_player", amount: 2, timing: "immediate" },
@@ -841,12 +841,12 @@ export const EVENTS = [
     options: [
       {
         id: "compensate_brand",
-        label_he: "לשלם פיצוי לפשרה בחוזה (-160,000€)",
+        label_he: "לשלם פיצוי לפשרה בחוזה (עלות)",
         effects: [{ kind: "budget", amount: -160_000, timing: "immediate" }],
       },
       {
         id: "force_club_gear",
-        label_he: "לחייב את השחקן לנעול את ציוד המועדון (כושר -5 לשחקן)",
+        label_he: "לחייב את השחקן לנעול את ציוד המועדון (כושר השחקן ייפגע)",
         effects: [{ kind: "fitness", target: "event_player", amount: -5, timing: "immediate" }],
       },
     ],
@@ -859,7 +859,7 @@ export const EVENTS = [
     options: [
       {
         id: "resort_retreat",
-        label_he: "יומיים במלון יוקרה (-280,000€, כושר כל הסגל +7)",
+        label_he: "יומיים במלון יוקרה (עלות גבוהה, כושר כל הסגל ישתפר משמעותית)",
         effects: [
           { kind: "budget", amount: -280_000, timing: "immediate" },
           { kind: "fitness", target: "all", amount: 7, timing: "immediate" },
@@ -867,7 +867,7 @@ export const EVENTS = [
       },
       {
         id: "nature_camp",
-        label_he: "מסע גיבוש בטבע (-90,000€, כושר כל הסגל +3)",
+        label_he: "מסע גיבוש בטבע (עלות נמוכה, כושר כל הסגל ישתפר מעט)",
         effects: [
           { kind: "budget", amount: -90_000, timing: "immediate" },
           { kind: "fitness", target: "all", amount: 3, timing: "immediate" },
@@ -889,7 +889,7 @@ export const EVENTS = [
     options: [
       {
         id: "suspend_and_investigate",
-        label_he: "להשעות את השחקן ולשכור חוקר פרטי (-180,000€, כושר -10 לשחקן)",
+        label_he: "להשעות את השחקן ולשכור חוקר פרטי (עלות, כושר השחקן ייפגע)",
         effects: [
           { kind: "budget", amount: -180_000, timing: "immediate" },
           { kind: "fitness", target: "event_player", amount: -10, timing: "immediate" },
@@ -926,7 +926,7 @@ export const EVENTS = [
     options: [
       {
         id: "flagship_store",
-        label_he: "לפתוח חנות דגל (-750,000€ מיידי, +1,700,000€ בסוף העונה)",
+        label_he: "לפתוח חנות דגל (עלות מיידית, הכנסה בסוף העונה)",
         effects: [
           { kind: "budget", amount: -750_000, timing: "immediate" },
           { kind: "budget", amount: 1_700_000, timing: "end_of_season" },
@@ -934,7 +934,7 @@ export const EVENTS = [
       },
       {
         id: "online_store_only",
-        label_he: "לשדרג את החנות הדיגיטלית בלבד (-200,000€ מיידי, +550,000€ בסוף העונה)",
+        label_he: "לשדרג את החנות הדיגיטלית בלבד (עלות מיידית קטנה יותר, הכנסה בסוף העונה)",
         effects: [
           { kind: "budget", amount: -200_000, timing: "immediate" },
           { kind: "budget", amount: 550_000, timing: "end_of_season" },
@@ -955,12 +955,12 @@ export const EVENTS = [
     options: [
       {
         id: "charter_flight",
-        label_he: "להזמין טיסת צ'ארטר חלופית (-180,000€, הסגל מגיע בזמן)",
+        label_he: "להזמין טיסת צ'ארטר חלופית (עלות, הסגל מגיע בזמן)",
         effects: [{ kind: "budget", amount: -180_000, timing: "immediate" }],
       },
       {
         id: "wait_commercial",
-        label_he: "להמתין לטיסה הרגילה (כושר כל הסגל -5 מעייפות)",
+        label_he: "להמתין לטיסה הרגילה (כושר כל הסגל ייפגע מעייפות)",
         effects: [{ kind: "fitness", target: "all", amount: -5, timing: "immediate" }],
       },
     ],
@@ -974,7 +974,7 @@ export const EVENTS = [
     options: [
       {
         id: "buy_full_suite",
-        label_he: " לרכוש את החבילה המלאה (-320,000€, יכולת +4 לשחקן)",
+        label_he: " לרכוש את החבילה המלאה (עלות, יכולת השחקן תעלה משמעותית)",
         effects: [
           { kind: "budget", amount: -320_000, timing: "immediate" },
           { kind: "ability", target: "event_player", amount: 4, timing: "immediate" },
@@ -982,7 +982,7 @@ export const EVENTS = [
       },
       {
         id: "basic_trial",
-        label_he: "לנסות גרסת ניסיון בסיסית (-100,000€, יכולת +1 לשחקן)",
+        label_he: "לנסות גרסת ניסיון בסיסית (עלות נמוכה, יכולת השחקן תעלה מעט)",
         effects: [
           { kind: "budget", amount: -100_000, timing: "immediate" },
           { kind: "ability", target: "event_player", amount: 1, timing: "immediate" },
@@ -1003,7 +1003,7 @@ export const EVENTS = [
     options: [
       {
         id: "sell_naming_rights",
-        label_he: "למכור את זכויות השם (+3,800,000€ בסוף העונה)",
+        label_he: "למכור את זכויות השם (בסוף העונה)",
         effects: [{ kind: "budget", amount: 3_800_000, timing: "end_of_season" }],
       },
       {
@@ -1022,7 +1022,7 @@ export const EVENTS = [
     options: [
       {
         id: "strict_fine",
-        label_he: "להטיל קנס כספי משמעותי (+80,000€ לתקציב, כושר השחקן -6)",
+        label_he: "להטיל קנס כספי משמעותי (קנס לתקציב, כושר השחקן ייפגע)",
         effects: [
           { kind: "budget", amount: 80_000, timing: "immediate" },
           { kind: "fitness", target: "event_player", amount: -6, timing: "immediate" },
@@ -1060,7 +1060,7 @@ export const EVENTS = [
     options: [
       {
         id: "fund_scout_tour",
-        label_he: "לממן את מסע הסקאוטינג (-400,000€, הימור על מציאת תגלית)",
+        label_he: "לממן את מסע הסקאוטינג (עלות, הימור על מציאת תגלית)",
         effects: [
           { kind: "budget", amount: -400_000, timing: "immediate" },
           {
