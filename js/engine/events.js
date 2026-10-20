@@ -11,10 +11,65 @@
 
 import { EVENTS, getEventById } from "../data/events.js";
 import { SETTINGS, POSITION_LABELS_HE } from "../data/settings.js";
-import { pickRandom } from "./rng.js";
+import { pickRandom, randInt } from "./rng.js";
 import { findById } from "./playersRepo.js";
 import { getSlotByPosition, clampFitness, clampAbility } from "./squad.js";
 import { ledgerBudgetChange, addCommitment } from "./economy.js";
+
+// --- הגרלת טווחים סביב המספרים הקבועים שמוגדרים באירועים (events.js) ---
+//
+// כל מספר "קבוע" באירוע (סכום כסף / שינוי יכולת / שינוי כושר) מוגרל
+// פעם אחת, מחדש בכל אירוע, לטווח קטן סביב הערך המקורי שבקובץ הנתונים:
+//  - יכולת/כושר: ±2 (בקפיצות של 1)
+//  - כסף: ±500,000€ (בקפיצות של 250,000€)
+// בשני המקרים הטווח "נדחס" כך שלעולם לא יחצה אפס ולא יהפוך סימן (למשל
+// עלות של -200,000€ לעולם לא תצא כרווח) - מרחק מינימלי מאפס הוא קפיצה
+// אחת (1 ליכולת/כושר, 250,000€ לכסף), בדיוק כמו ש"+1" הוא המינימום
+// לשינויי יכולת/כושר קטנים.
+//
+// ההגרלה מתבצעת פעם אחת בלבד לכל אירוע (ב-triggerEvent), והתוצאה
+// המוגרלת היא מה שמוצג למשתמש *לפני* הבחירה ומה שבאמת מוחל אם יבחר
+// באופציה הזו - אין הגרלה חוזרת בזמן הבחירה עצמה.
+const MONEY_STEP = 250_000;
+const DELTA_STEP = 1;
+
+function clampSameSign(value, base, step) {
+  if (base > 0) return Math.max(step, value);
+  if (base < 0) return Math.min(-step, value);
+  return value;
+}
+
+function randomizeAroundBase(rng, base, step) {
+  if (typeof base !== "number") return base;
+  const k = randInt(rng, -2, 2);
+  const raw = base + k * step;
+  return clampSameSign(raw, base, step);
+}
+
+/** מגריל (פעם אחת) effect בודד אם מדובר במספר קבוע בר-הגרלה; משכפל אחרת. */
+function randomizeEffect(eff, rng) {
+  if (eff.kind === "budget" && !eff.amountFormula && typeof eff.amount === "number") {
+    return { ...eff, amount: randomizeAroundBase(rng, eff.amount, MONEY_STEP) };
+  }
+  if (eff.kind === "salary_commitment" && !eff.amountFormula && typeof eff.amount === "number") {
+    return { ...eff, amount: randomizeAroundBase(rng, eff.amount, MONEY_STEP) };
+  }
+  if ((eff.kind === "ability" || eff.kind === "fitness") && typeof eff.amount === "number") {
+    return { ...eff, amount: randomizeAroundBase(rng, eff.amount, DELTA_STEP) };
+  }
+  if (eff.kind === "random_outcome") {
+    return {
+      ...eff,
+      branches: (eff.branches || []).map((b) => ({ ...b, effects: resolveEffectsRandomization(b.effects, rng) })),
+    };
+  }
+  return { ...eff };
+}
+
+/** מגריל (פעם אחת) רצף effects שלם - כולל branches מקוננים של random_outcome. */
+function resolveEffectsRandomization(effects, rng) {
+  return (effects || []).map((e) => randomizeEffect(e, rng));
+}
 
 function pickEventDefinition(rng, lastEventId) {
   const pool = lastEventId ? EVENTS.filter((e) => e.id !== lastEventId) : EVENTS;
@@ -267,17 +322,34 @@ function extractGamble(effects, ctx) {
 export function triggerEvent(state, allPlayers, rng) {
   const def = pickEventDefinition(rng, state.lastEventId);
   const ctx = buildEventContext(def, state, allPlayers, rng);
+
+  // מגרילים טווח אקראי פעם אחת לכל מספר קבוע (תקציב/יכולת/כושר) בכל
+  // האופציות של האירוע הזה - אותה הגרלה מוצגת למשתמש *לפני* הבחירה
+  // ומוחלת בפועל אם הוא יבחר באופציה הזו (ראו resolveEffectsRandomization).
+  const resolvedOptionEffects = def.options.map((o) => resolveEffectsRandomization(o.effects, rng));
+
+  // סנכרון {cost} של "טיפול רפואי" עם הסכום שהוגרל בפועל לאופציית "pay",
+  // כדי שהטקסט המוצג (description + label) יתאים למה שבאמת יוחל.
+  if (def.id === "medical_treatment") {
+    const payIdx = def.options.findIndex((o) => o.id === "pay");
+    if (payIdx !== -1) {
+      const budgetEff = resolvedOptionEffects[payIdx].find((e) => e.kind === "budget");
+      if (budgetEff) ctx.cost = Math.abs(budgetEff.amount);
+    }
+  }
+
   const description = formatText(def.description_he, ctx);
 
   const pendingEvent = {
     eventId: def.id,
     title: def.title_he ? formatText(def.title_he, ctx) : description,
     description,
-    options: def.options.map((o) => ({
+    options: def.options.map((o, i) => ({
       id: o.id,
       label: formatText(o.label_he, ctx),
-      summaryLines: describeEffects(o.effects, ctx),
-      gamble: extractGamble(o.effects, ctx),
+      summaryLines: describeEffects(resolvedOptionEffects[i], ctx),
+      gamble: extractGamble(resolvedOptionEffects[i], ctx),
+      effects: resolvedOptionEffects[i],
     })),
     ctx,
   };
@@ -292,7 +364,9 @@ export function triggerEvent(state, allPlayers, rng) {
 export function resolveEventChoice(state, allPlayers, optionId, rng) {
   if (!state.pendingEvent) return state;
   const def = getEventById(state.pendingEvent.eventId);
-  const option = def.options.find((o) => o.id === optionId);
+  // משתמשים בהשפעות שכבר הוגרלו ב-triggerEvent (state.pendingEvent.options),
+  // לא בהגדרה הסטטית מ-def - כדי שמה שמוחל יהיה בדיוק מה שהוצג למשתמש.
+  const option = state.pendingEvent.options.find((o) => o.id === optionId);
   if (!option) return state;
 
   const ctx = state.pendingEvent.ctx;
@@ -303,8 +377,8 @@ export function resolveEventChoice(state, allPlayers, optionId, rng) {
     title: state.pendingEvent.title,
     description: state.pendingEvent.description,
     optionId: option.id,
-    optionLabel: state.pendingEvent.options.find((o) => o.id === optionId)?.label || optionId,
-    gamble: state.pendingEvent.options.find((o) => o.id === optionId)?.gamble || null,
+    optionLabel: option.label,
+    gamble: option.gamble,
     notes,
     randomOutcome,
   };
