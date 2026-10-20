@@ -1132,16 +1132,40 @@ table.league-table tr.champion-row td.team-cell::before {
 }
 
 .reel-chip.tone-positive {
-  background: var(--accent-soft);
+  background: rgba(53, 201, 122, 0.4);
+  border-bottom: 4px solid var(--accent);
+}
+
+.reel-chip.tone-positive .reel-chip-pct {
+  color: var(--accent);
+}
+
+.reel-chip.tone-positive .reel-chip-label {
+  color: #d8ffe9;
 }
 
 .reel-chip.tone-negative {
-  background: var(--red-soft);
+  background: rgba(229, 85, 106, 0.4);
+  border-bottom: 4px solid var(--red);
+}
+
+.reel-chip.tone-negative .reel-chip-pct {
+  color: var(--red);
+}
+
+.reel-chip.tone-negative .reel-chip-label {
+  color: #ffdde1;
 }
 
 .reel-chip.tone-neutral,
 .reel-chip.tone-mixed {
-  background: rgba(231, 182, 73, 0.14);
+  background: rgba(240, 193, 75, 0.3);
+  border-bottom: 4px solid var(--gold);
+}
+
+.reel-chip.tone-neutral .reel-chip-pct,
+.reel-chip.tone-mixed .reel-chip-pct {
+  color: var(--gold);
 }
 
 /* מסך סקאוטינג (renderScouting) - השוואת עוצמות ובר קושי */
