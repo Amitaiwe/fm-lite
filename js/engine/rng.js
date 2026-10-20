@@ -27,6 +27,16 @@ export function pickRandom(rng, array) {
   return array[Math.floor(rng() * array.length)];
 }
 
+/** מערבב מערך (Fisher-Yates) ומחזיר עותק חדש - לא נוגע במקור. */
+export function shuffle(rng, array) {
+  const result = array.slice();
+  for (let i = result.length - 1; i > 0; i--) {
+    const j = Math.floor(rng() * (i + 1));
+    [result[i], result[j]] = [result[j], result[i]];
+  }
+  return result;
+}
+
 // בוחר N פריטים שונים (ללא חזרות) ממערך
 export function pickRandomN(rng, array, n) {
   const pool = array.slice();

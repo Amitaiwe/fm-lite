@@ -36,7 +36,7 @@ export function createNewGame(leagueId, allPlayers, rng, teamId = null, chosenPl
   const squad = chosenPlayerIds
     ? buildSquadFromChoices(allPlayers, rng, chosenPlayerIds)
     : draftInitialSquad(allPlayers, rng);
-  const fixtures = generateFixtures(teamIds);
+  const fixtures = generateFixtures(teamIds, rng);
   const table = initTable(teamIds);
 
   return {

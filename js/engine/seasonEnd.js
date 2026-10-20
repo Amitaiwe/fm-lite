@@ -93,7 +93,7 @@ export function endSeason(state, teamIds, rng) {
   // הייתה זמנית לעונה אחת בלבד, כדי ששוק ההעברות יישאר רלוונטי.
   const squadWithResetAbility = resetAbilityToBase(afterEconomy.squad);
   const refreshedSquad = applySeasonFitnessSwing(squadWithResetAbility, rng);
-  const newFixtures = generateFixtures(effectiveTeamIds);
+  const newFixtures = generateFixtures(effectiveTeamIds, rng);
   const newTable = initTable(effectiveTeamIds);
 
   const newState = {

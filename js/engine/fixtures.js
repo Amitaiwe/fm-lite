@@ -6,13 +6,19 @@
 // ב-settings.js. המימוש משתמש בשיטת "המעגל" (circle method) הקלאסית
 // לבניית round robin.
 
+import { shuffle } from "./rng.js";
+
 /**
- * בונה לוח מחזורים מתוך רשימת מזהי קבוצות.
+ * בונה לוח מחזורים מתוך רשימת מזהי קבוצות. אם מועבר rng, סדר הקבוצות
+ * מעורבב אקראית *לפני* בניית הסבב (כך שגם מי-נגד-מי בכל מחזור וגם
+ * הסדר הכולל של המחזורים משתנים בכל עונה - לא אותו לוח קבוע כל פעם),
+ * בלי לפגוע בעקרון שכל קבוצה משחקת נגד כל אחת מהאחרות פעם אחת בדיוק.
+ * בלי rng (ברירת מחדל) מתנהג כמו קודם - דטרמיניסטי לפי סדר הקלט.
  * מחזיר מערך של מחזורים; כל מחזור הוא מערך של זוגות [teamIdA, teamIdB].
  * קבוצה שנחה במחזור מסוים פשוט לא תופיע באף זוג באותו מחזור.
  */
-export function generateFixtures(teamIds) {
-  const list = teamIds.slice();
+export function generateFixtures(teamIds, rng = null) {
+  const list = rng ? shuffle(rng, teamIds) : teamIds.slice();
   if (list.length % 2 !== 0) list.push(null); // BYE placeholder
   const n = list.length;
   const fixed = list[0];
