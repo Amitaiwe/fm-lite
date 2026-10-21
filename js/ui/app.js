@@ -16,6 +16,7 @@ import {
   renderSquadDraft,
   renderHome,
   renderTable,
+  renderPlayerStats,
   renderFinances,
   renderTransferWindow,
   renderEvent,
@@ -105,6 +106,9 @@ function render() {
       break;
     case "finances":
       html = renderFinances({ state: controller.state });
+      break;
+    case "stats":
+      html = renderPlayerStats({ state: controller.state, allPlayers });
       break;
     case "transferWindow":
       html = renderTransferWindow({ state: controller.state, allPlayers, feedback: ui.transferFeedback });

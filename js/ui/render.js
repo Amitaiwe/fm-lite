@@ -41,6 +41,7 @@ function navTabsHtml(active, { hasTransferWindow = false } = {}) {
     { id: "home", label: "סגל" },
     { id: "table", label: "טבלה" },
     { id: "finances", label: "כספים" },
+    { id: "stats", label: "⚽ שערים" },
   ];
   if (hasTransferWindow) tabs.push({ id: "transferWindow", label: "🔄 שוק" });
   return `
@@ -468,6 +469,67 @@ export function renderTable({ state }) {
           </tbody>
         </table>
       </div>
+    </div>
+  `;
+}
+
+/**
+ * מסך "⚽ מלך שערי העונה / מלך הבישולים" - טבלת כובשים ומבשלים לכל
+ * הליגה הנוכחית (לא רק הסגל שלך - ראו playerStats.js), ממוינת מהגבוה
+ * לנמוך. מתאפסת כל עונה חדשה (אין היסטוריה חוצת-עונות).
+ */
+export function renderPlayerStats({ state, allPlayers }) {
+  const league = getLeague(state.leagueId);
+  const statsRows = Object.entries(state.playerStats || {}).map(([playerIdStr, s]) => {
+    const player = findById(allPlayers, Number(playerIdStr));
+    return {
+      name: player ? player.name_he : "?",
+      nationality: player ? player.nationality : null,
+      teamId: s.teamId,
+      goals: s.goals || 0,
+      assists: s.assists || 0,
+    };
+  });
+
+  const topScorers = statsRows
+    .filter((r) => r.goals > 0)
+    .sort((a, b) => b.goals - a.goals || b.assists - a.assists)
+    .slice(0, 20);
+  const topAssisters = statsRows
+    .filter((r) => r.assists > 0)
+    .sort((a, b) => b.assists - a.assists || b.goals - a.goals)
+    .slice(0, 20);
+
+  const rowHtml = (r, valueKey) => `
+    <tr class="${r.teamId === state.teamId ? "user-row" : ""}">
+      <td class="team-cell"><span class="team-cell-inner">${r.nationality ? `<span class="player-flag">${flagEmoji(r.nationality)}</span>` : ""}${escapeHtml(r.name)}</span></td>
+      <td class="team-cell"><span class="team-cell-inner">${teamCrestSvg(r.teamId, 18)}${teamName(state.leagueId, r.teamId)}</span></td>
+      <td><b>${r[valueKey]}</b></td>
+    </tr>`;
+
+  const tableHtml = (rows, valueKey, valueLabel, emptyText) =>
+    rows.length
+      ? `
+      <div class="card" style="overflow-x:auto">
+        <table class="league-table">
+          <thead><tr><th>שחקן</th><th>קבוצה</th><th>${valueLabel}</th></tr></thead>
+          <tbody>${rows.map((r) => rowHtml(r, valueKey)).join("")}</tbody>
+        </table>
+      </div>`
+      : `<p class="muted">${emptyText}</p>`;
+
+  return `
+    <div class="screen">
+      <div class="top-bar">
+        <h2>⚽ מלך שערי העונה - ${league.name_he}</h2>
+      </div>
+      ${navTabsHtml("stats", { hasTransferWindow: !!state.transferWindow })}
+
+      <h3>מלך שערי העונה</h3>
+      ${tableHtml(topScorers, "goals", "שערים", "עדיין לא נקלעו שערים העונה.")}
+
+      <h3 style="margin-top:18px">מלך הבישולים</h3>
+      ${tableHtml(topAssisters, "assists", "בישולים", "עדיין לא נרשמו בישולים העונה.")}
     </div>
   `;
 }
