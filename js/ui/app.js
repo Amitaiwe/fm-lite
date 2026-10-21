@@ -138,6 +138,7 @@ function render() {
         state: controller.state,
         leagueId: controller.state.leagueId,
         teamId: controller.state.teamId,
+        allPlayers,
         ...ui.lastSeasonEndData,
       });
       break;

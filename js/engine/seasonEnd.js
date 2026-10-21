@@ -1,12 +1,13 @@
 // טיפול בסיום עונה: פרסים, התחייבויות, שכר, אינפלציה, בדיקת פשיטת רגל,
 // ופתיחת עונה חדשה (אותה ליגה וקבוצה, סגל זהה, כושר מתאפס, טבלה ולוח חדשים).
 
+import { SETTINGS } from "../data/settings.js";
 import { sortedTable, initTable } from "./table.js";
-import { processSeasonEndEconomy, emptySeasonFinance } from "./economy.js";
+import { processSeasonEndEconomy, emptySeasonFinance, ledgerBudgetChange } from "./economy.js";
 import { applySeasonFitnessSwing, resetAbilityToBase } from "./squad.js";
 import { generateFixtures } from "./fixtures.js";
-import { nextCareerLeagueId, resolveStageTeams } from "./career.js";
-import { assignSeasonRosters } from "./playerStats.js";
+import { nextCareerLeagueId, resolveStageTeams, careerMoneyMultiplier } from "./career.js";
+import { assignSeasonRosters, topTwoScorers } from "./playerStats.js";
 
 /**
  * מבצע את כל שלבי סיום העונה. מחזיר { state, summary, bankrupt, championTeamId,
@@ -30,8 +31,25 @@ export function endSeason(state, teamIds, allPlayers, rng) {
     ? { won: userRow.won, drawn: userRow.drawn, lost: userRow.lost }
     : { won: 0, drawn: 0, lost: 0 };
 
-  const { state: afterEconomy, summary: economySummary, bankrupt } = processSeasonEndEconomy(state, finalPosition);
-  const summary = { ...economySummary, matchRecord };
+  // בונוס מלך השערים וסגנו - משולם רק אם הם שחקני הסגל של המשתמש.
+  // מחושב לפני הכלכלה כדי שייכנס לבדיקת פשיטת הרגל. הסטטיסטיקה עוד לא אופסה.
+  const scorerMult = careerMoneyMultiplier(state);
+  const scorerBonusAmounts = [SETTINGS.TOP_SCORER_BONUS, SETTINGS.RUNNER_UP_SCORER_BONUS];
+  const topScorers = topTwoScorers(state.playerStats).map((r, i) => ({
+    rank: i + 1,
+    playerId: r.playerId,
+    goals: r.goals,
+    teamId: r.teamId,
+    isUser: r.teamId === state.teamId,
+    bonus: r.teamId === state.teamId ? Math.round(scorerBonusAmounts[i] * scorerMult) : 0,
+  }));
+  let stateForEconomy = state;
+  for (const t of topScorers) {
+    if (t.bonus > 0) stateForEconomy = ledgerBudgetChange(stateForEconomy, t.bonus, "scorerBonuses", false);
+  }
+
+  const { state: afterEconomy, summary: economySummary, bankrupt } = processSeasonEndEconomy(stateForEconomy, finalPosition);
+  const summary = { ...economySummary, matchRecord, topScorers };
 
   const financeHistory = [
     ...state.financeHistory,

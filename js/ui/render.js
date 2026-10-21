@@ -544,6 +544,7 @@ export function renderFinances({ state }) {
   const expenseTotal = Object.values(f.expenses).reduce((a, b) => a + b, 0);
   const incomeLabels = {
     matchBonuses: "בונוסים על ניצחון/תיקו",
+    scorerBonuses: "בונוס מלך שערים",
     sponsorships: "חסויות",
     eventIncome: "הכנסות מאירועים",
     prizes: "פרסים",
@@ -967,6 +968,7 @@ export function renderSeasonEnd({
   careerAdvanced = false,
   careerNewLeagueId = null,
   careerWon = false,
+  allPlayers = [],
 }) {
   const league = getLeague(leagueId);
   const isChampion = championTeamId === teamId;
@@ -1008,7 +1010,9 @@ export function renderSeasonEnd({
   // תנועות שוק ההעברות (קניות/מכירות שחקנים), כדי שהמספר ישקף רק את
   // הכלכלה "השוטפת" של הקבוצה ולא יתערבב עם החלטות שוק נקודתיות.
   const commitmentsNet = summary.commitmentsApplied.reduce((sum, c) => sum + c.amount, 0);
-  const netChange = winTotal + drawTotal - lossTotal + summary.prize + (summary.baseIncome || 0) - summary.salaries + commitmentsNet;
+  const topScorers = summary.topScorers || [];
+  const scorerBonusTotal = topScorers.reduce((sum, t) => sum + t.bonus, 0);
+  const netChange = scorerBonusTotal + winTotal + drawTotal - lossTotal + summary.prize + (summary.baseIncome || 0) - summary.salaries + commitmentsNet;
   const netClass = netChange > 0 ? "income-amount" : netChange < 0 ? "expense-amount" : "";
   const netSign = netChange > 0 ? "+" : netChange < 0 ? "-" : "";
 
@@ -1028,6 +1032,15 @@ export function renderSeasonEnd({
         <div class="finance-line"><span>${record.won} ניצחונות</span><span class="income-amount">+${formatMoney(winTotal)}</span></div>
         <div class="finance-line"><span>${record.drawn} תיקו</span><span class="income-amount">+${formatMoney(drawTotal)}</span></div>
         <div class="finance-line"><span>${record.lost} הפסדים</span><span class="expense-amount">-${formatMoney(lossTotal)}</span></div>
+        ${topScorers
+          .filter((t) => t.isUser)
+          .map((t) => {
+            const p = findById(allPlayers, t.playerId);
+            const title = t.rank === 1 ? "👑 מלך השערים" : "🥈 סגן מלך השערים";
+            const who = `${p ? escapeHtml(playerDisplayName(p)) : "?"} (${t.goals} שערים, ${teamName(leagueId, t.teamId)})`;
+            return `<div class="finance-line"><span>${title}: ${who}</span>${t.bonus > 0 ? `<span class="income-amount">+${formatMoney(t.bonus)}</span>` : ""}</div>`;
+          })
+          .join("")}
         <div class="finance-line"><span>פרס מיקום בטבלה</span><span class="income-amount">+${formatMoney(summary.prize)}</span></div>
         <div class="finance-line"><span>הכנסת חסות/שידור קבועה</span><span class="income-amount">+${formatMoney(summary.baseIncome || 0)}</span></div>
         <div class="finance-line"><span>שכר ששולם</span><span class="expense-amount">-${formatMoney(summary.salaries)}</span></div>

@@ -7,7 +7,7 @@ import { careerMoneyMultiplier } from "./career.js";
 /** מחזיר אובייקט כספים ריק לעונה חדשה. */
 export function emptySeasonFinance() {
   return {
-    income: { matchBonuses: 0, sponsorships: 0, eventIncome: 0, prizes: 0 },
+    income: { matchBonuses: 0, scorerBonuses: 0, sponsorships: 0, eventIncome: 0, prizes: 0 },
     expenses: { matchPenalties: 0, salaries: 0, eventExpense: 0, transfersNet: 0 },
   };
 }

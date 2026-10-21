@@ -127,3 +127,15 @@ export function assignGoalMinutes(goals, rng) {
     .map((g) => ({ ...g, minute: randInt(rng, 1, 90) }))
     .sort((a, b) => a.minute - b.minute);
 }
+
+/**
+ * מלך השערים וסגנו בליגה לפי playerStats: [ראשון, שני] (או פחות אם אין
+ * מספיק כובשים). שוויון נשבר לפי בישולים ואז לפי מזהה שחקן (יציב).
+ */
+export function topTwoScorers(playerStats) {
+  return Object.entries(playerStats || {})
+    .map(([id, s]) => ({ playerId: Number(id), teamId: s.teamId, goals: s.goals || 0, assists: s.assists || 0 }))
+    .filter((r) => r.goals > 0)
+    .sort((a, b) => b.goals - a.goals || b.assists - a.assists || a.playerId - b.playerId)
+    .slice(0, 2);
+}
