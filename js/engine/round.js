@@ -12,7 +12,7 @@ import { shouldTriggerEvent, triggerEvent } from "./events.js";
 import { applyMatchFitnessSwing } from "./squad.js";
 import { endSeason } from "./seasonEnd.js";
 import { resolveStageTeams } from "./career.js";
-import { teamScorerRoster, recordGoal } from "./playerStats.js";
+import { teamScorerRoster, recordGoalDetailed, assignGoalMinutes } from "./playerStats.js";
 
 export function needsTransferWindow(state) {
   return (
@@ -95,6 +95,7 @@ export function playNextRound(state, allPlayers, rng) {
   const allMatches = [];
   let userMatch = null;
   let userOutcome = null;
+  let userMatchGoals = [];
   let economyState = state;
   // מצבר "מלך שערי העונה" - עובר על *כל* משחקי המחזור (לא רק שלך), כי
   // המנוע ממילא מסמלץ את כולם לצורך הטבלה. roster נלקח מ-state המקורי
@@ -111,13 +112,24 @@ export function playNextRound(state, allPlayers, rng) {
     applyMatchResult(table, match);
     allMatches.push(match);
 
+    const matchGoals = [];
     const rosterA = teamScorerRoster(teamA, state);
-    for (let i = 0; i < teamAGoals; i++) playerStats = recordGoal(playerStats, teamA, rosterA, rng);
+    for (let i = 0; i < teamAGoals; i++) {
+      const r = recordGoalDetailed(playerStats, teamA, rosterA, rng);
+      playerStats = r.stats;
+      matchGoals.push({ teamId: teamA, playerId: r.scorerId });
+    }
     const rosterB = teamScorerRoster(teamB, state);
-    for (let i = 0; i < teamBGoals; i++) playerStats = recordGoal(playerStats, teamB, rosterB, rng);
+    for (let i = 0; i < teamBGoals; i++) {
+      const r = recordGoalDetailed(playerStats, teamB, rosterB, rng);
+      playerStats = r.stats;
+      matchGoals.push({ teamId: teamB, playerId: r.scorerId });
+    }
 
     if (isUserMatchA || isUserMatchB) {
       userMatch = match;
+      // כובשים ודקות אקראיות למשחק של המשתמש (לתצוגה בכרטיס התוצאה)
+      userMatchGoals = assignGoalMinutes(matchGoals, rng);
       const userGoals = isUserMatchA ? teamAGoals : teamBGoals;
       const oppGoals = isUserMatchA ? teamBGoals : teamAGoals;
       userOutcome = userGoals > oppGoals ? "win" : userGoals < oppGoals ? "loss" : "draw";
@@ -151,6 +163,7 @@ export function playNextRound(state, allPlayers, rng) {
   const roundSummary = {
     roundIndex,
     userMatch,
+    userMatchGoals, // [{ teamId, playerId, minute }] ממוין לפי דקה (ריק אם נחנו)
     userOutcome, // null אם הקבוצה נחה במחזור זה
     standings: standingsAfter,
     positionDeltas, // teamId -> שינוי מיקום לעומת המחזור הקודם (חיובי=עלייה, שלילי=ירידה)

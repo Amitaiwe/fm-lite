@@ -1294,3 +1294,32 @@ table.league-table tr.champion-row td.team-cell::before {
 .crest-img {
   filter: drop-shadow(0 0 1.5px rgba(255, 255, 255, 0.75));
 }
+
+/* סיכום כובשים מתחת לתוצאה - חצי רוחב, בצד הקבוצה של המשתמש (ימין ב-RTL) */
+.match-scorers {
+  width: 50%;
+  margin: 16px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  text-align: start;
+}
+.scorers-col { flex: 1; min-width: 0; }
+.scorers-team {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  margin-bottom: 6px;
+  opacity: 0.85;
+}
+.scorer-line {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  padding: 3px 0;
+  border-bottom: 1px dashed var(--border);
+}
+.scorer-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.scorer-min { font-variant-numeric: tabular-nums; opacity: 0.75; font-size: 0.8rem; }

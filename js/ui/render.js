@@ -853,6 +853,32 @@ function positionDeltaHtml(delta) {
   return `<span class="pos-delta down">▼${Math.abs(delta)}</span>`;
 }
 
+/** טבלת סיכום כובשים (כמו סיכום משחק אמיתי) מתחת לתוצאה. */
+function matchScorersHtml(state, allPlayers, um, goals) {
+  if (!um || !goals || !goals.some((g) => g.teamId === state.teamId)) return "";
+  const lines = (teamId) => {
+    const byPlayer = new Map();
+    for (const g of goals.filter((x) => x.teamId === teamId)) {
+      const key = g.playerId ?? "?";
+      if (!byPlayer.has(key)) byPlayer.set(key, { playerId: g.playerId, minutes: [] });
+      byPlayer.get(key).minutes.push(g.minute);
+    }
+    return [...byPlayer.values()]
+      .sort((a, b) => a.minutes[0] - b.minutes[0])
+      .map((p) => {
+        const player = p.playerId != null ? findById(allPlayers, p.playerId) : null;
+        const name = player ? escapeHtml(playerDisplayName(player)) : "שחקן";
+        return `<div class="scorer-line"><span class="scorer-ball">⚽</span><span class="scorer-name">${name}</span><span class="scorer-min" dir="ltr">${p.minutes.map((m) => `${m}'`).join(" ")}</span></div>`;
+      })
+      .join("");
+  };
+  const col = (teamId) => `<div class="scorers-col"><div class="scorers-team">${teamCrestSvg(teamId, 16)}<span>${teamName(state.leagueId, teamId)}</span></div>${lines(teamId) || '<div class="scorer-line muted">-</div>'}</div>`;
+  // רק הכובשים של הקבוצה של המשתמש
+  // כותרת התוצאה תמיד מציגה את הקבוצה של המשתמש ראשונה (ימין ב-RTL), בין אם בית ובין אם חוץ,
+  // ולכן הבלוק תמיד בצד ההתחלה (ימין), חצי רוחב.
+  return `<div class="match-scorers">${col(state.teamId)}</div>`;
+}
+
 export function renderRoundResult({ state, allPlayers, roundSummary, fitnessDiffs }) {
   const league = getLeague(state.leagueId);
   const um = roundSummary.userMatch;
@@ -873,6 +899,7 @@ export function renderRoundResult({ state, allPlayers, roundSummary, fitnessDiff
         <div class="badge ${outcomeClass}" style="background:transparent">${outcomeLabel}</div>
         <div class="teams-crests">${teamCrestSvg(state.teamId, 34)}<span class="teams">${teamName(state.leagueId, state.teamId)} נגד ${teamName(state.leagueId, oppTeam)}</span>${teamCrestSvg(oppTeam, 34)}</div>
         <div class="score score-reveal ${outcomeClass}">${myGoals} - ${oppGoals}</div>
+        ${matchScorersHtml(state, allPlayers, um, roundSummary.userMatchGoals)}
       </div>
     `;
   }

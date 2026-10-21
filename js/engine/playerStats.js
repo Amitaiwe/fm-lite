@@ -99,6 +99,11 @@ export function drawGoalContributors(roster, rng) {
  * בלי לנחש אותו מחדש.
  */
 export function recordGoal(playerStats, teamId, roster, rng) {
+  return recordGoalDetailed(playerStats, teamId, roster, rng).stats;
+}
+
+/** כמו recordGoal, אבל מחזיר גם את מזהה הכובש: { stats, scorerId }. */
+export function recordGoalDetailed(playerStats, teamId, roster, rng) {
   const { scorerId, assistId } = drawGoalContributors(roster, rng);
   let stats = playerStats;
 
@@ -110,5 +115,15 @@ export function recordGoal(playerStats, teamId, roster, rng) {
     const prev = stats[assistId] || { goals: 0, assists: 0, teamId };
     stats = { ...stats, [assistId]: { ...prev, assists: prev.assists + 1, teamId } };
   }
-  return stats;
+  return { stats, scorerId };
+}
+
+/**
+ * מגריל דקות אקראיות (1-90, ממוינות) לרשימת שערים של משחק אחד.
+ * goals: [{ teamId, playerId }] -> אותו מערך עם minute, ממוין לפי דקה.
+ */
+export function assignGoalMinutes(goals, rng) {
+  return goals
+    .map((g) => ({ ...g, minute: randInt(rng, 1, 90) }))
+    .sort((a, b) => a.minute - b.minute);
 }
