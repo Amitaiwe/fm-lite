@@ -513,6 +513,11 @@ p {
   text-overflow: ellipsis;
 }
 
+.player-flag {
+  font-size: 0.95em;
+  margin-left: 2px;
+}
+
 .fut-stats {
   display: flex;
   justify-content: center;
