@@ -56,7 +56,9 @@ export function teamScorerRoster(teamId, state) {
     for (const slot of state.squad) byPos[slot.position] = slot.playerId;
     return { defender: byPos.defender, midfielder: byPos.midfielder, striker: byPos.striker };
   }
-  return state.teamRosters[teamId] || {};
+  // שמירות ישנות (מלפני פיצ'ר "מלך שערי העונה") לא מכילות teamRosters - מוגן
+  // גם כאן, בנוסף למיגרציה ב-loadSavedGame, כדי שלא תהיה קריסה על state חסר.
+  return (state.teamRosters || {})[teamId] || {};
 }
 
 function pickScorerPosition(rng) {

@@ -8,6 +8,35 @@ import { resolveEventChoice } from "./events.js";
 import { saveGame, loadGame, clearSavedGame, hasSavedGame } from "./save.js";
 import { defaultRng } from "./rng.js";
 import { draftCandidatePairs } from "./squad.js";
+import { resolveStageTeams, CAREER_STAGES } from "./career.js";
+import { assignSeasonRosters } from "./playerStats.js";
+
+/**
+ * מעדכן שמירה שנטענה מהמכשיר למבנה/לכללים הנוכחיים, בלי לגעת בהתקדמות:
+ * 1. משחק חופשי בוטל - שמירה במצב חופשי (careerMode=false, או בלי השדה
+ *    בכלל כמו בשמירות מוקדמות) הופכת למסלול "ממתחיל לאגדה", כשהשלב הוא
+ *    הליגה שבה השמירה נמצאת כרגע. מאותו רגע חלים עליה כללי הקריירה
+ *    (עליית שלב באליפות, מכפיל כספי שלב).
+ * 2. שמירות מלפני פיצ'ר "מלך שערי העונה" חסרות teamRosters - בונים אותו
+ *    מחדש, אחרת "שחק מחזור הבא" קורס (ראו playerStats.js).
+ */
+function migrateLoadedState(state, allPlayers, rng) {
+  let s = state;
+  if (!s.careerMode) {
+    s = {
+      ...s,
+      careerMode: true,
+      careerStageIndex: Math.max(0, CAREER_STAGES.indexOf(s.leagueId)),
+      careerWon: !!s.careerWon,
+    };
+  }
+  if (!s.teamRosters) {
+    const teamIds = resolveStageTeams(s.leagueId, s.teamId).map((t) => t.id);
+    s = { ...s, teamRosters: assignSeasonRosters(teamIds, s.teamId, s.squad, allPlayers, rng) };
+  }
+  if (!s.playerStats) s = { ...s, playerStats: {} };
+  return s;
+}
 
 export class GameController {
   constructor(allPlayers, rng = defaultRng) {
@@ -22,11 +51,16 @@ export class GameController {
 
   loadSavedGame() {
     const state = loadGame();
-    if (state) this.state = state;
-    return state;
+    if (state) {
+      this.state = migrateLoadedState(state, this.allPlayers, this.rng);
+      // שומרים מיד את המצב הממוגר, כדי שהשמירה במכשיר תהיה תקינה גם אם
+      // המשתמש לא יבצע שום פעולה אחרי הטעינה.
+      saveGame(this.state);
+    }
+    return this.state;
   }
 
-  startNewGame(leagueId, teamId = null, chosenPlayerIds = null, careerMode = false) {
+  startNewGame(leagueId, teamId = null, chosenPlayerIds = null, careerMode = true) {
     this.state = createNewGame(leagueId, this.allPlayers, this.rng, teamId, chosenPlayerIds, careerMode);
     saveGame(this.state);
     return this.state;

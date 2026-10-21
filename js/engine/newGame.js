@@ -18,12 +18,12 @@ export const GAME_VERSION = 1;
  * teamId אופציונלי - אם ניתן (ותקף לליגה), הקבוצה הזו תנוהל במקום הגרלה אקראית.
  * chosenPlayerIds אופציונלי - מזהה שחקן לכל עמדה, ממסך בחירת הסגל; אם לא
  * ניתן, מגרילים סגל אקראי לגמרי כמו קודם.
- * careerMode - אם true, זהו תחילת מסלול "ממתחיל לאגדה" (ראו career.js):
- * הקבוצה הנבחרת "תטייל" בין הליגות בכל עלייה, במקום להישאר קבועה לנצח
- * באותה ליגה כמו במשחק חופשי רגיל. leagueId יכול להיות כל אחת מ-5
- * הליגות הבסיסיות (לא רק הראשונה) - המשתמש בוחר מאיפה להתחיל את המסלול.
+ * careerMode - מסלול "ממתחיל לאגדה" (ראו career.js): הקבוצה הנבחרת
+ * "מטיילת" בין הליגות בכל עלייה. מאז ביטול המשחק החופשי זהו מצב המשחק
+ * היחיד, ולכן ברירת המחדל היא true; הפרמטר נשאר למען תאימות מבנה
+ * השמירה (state.careerMode קיים בכל שמירה ישנה).
  */
-export function createNewGame(leagueId, allPlayers, rng, teamId = null, chosenPlayerIds = null, careerMode = false) {
+export function createNewGame(leagueId, allPlayers, rng, teamId = null, chosenPlayerIds = null, careerMode = true) {
   const league = getLeague(leagueId);
   if (!league) {
     throw new Error(`ליגה לא קיימת: ${leagueId}`);

@@ -72,35 +72,39 @@ export function renderStartScreen({ hasSave }) {
         <div class="tagline">משחק ניהול כדורגל - בחר, נהל, נצח</div>
       </div>
       <div class="card center-col">
-        <button class="btn" data-action="goto-new-game">משחק חדש</button>
-        <button class="btn btn-secondary" data-action="start-career">🏆 ממתחיל לאגדה</button>
+        <button class="btn" data-action="goto-new-game">🏆 ממתחיל לאגדה</button>
         <button class="btn btn-secondary" data-action="continue-game" ${hasSave ? "" : "disabled"}>
           המשך משחק שמור
         </button>
-        ${!hasSave ? '<p class="muted">אין משחק שמור כרגע</p>' : ""}
+        ${
+          !hasSave
+            ? `<div class="muted" style="text-align:right; line-height:1.6; margin-top:10px">
+                 <b>איך משחקים?</b><br>
+                 בוחרים קבוצה ומתחילים מהליגה הצרפתית. משחקים מחזור אחר מחזור,
+                 קונים ומוכרים שחקנים ומנהלים את התקציב. זוכים באליפות כדי לעלות
+                 ליגה: גרמניה, איטליה, אנגליה, ספרד, הליגה האירופית וליגת האלופות.
+                 מנצחים את כל 7 השלבים - והופכים לאגדה 👑
+               </div>`
+            : ""
+        }
       </div>
     </div>
   `;
 }
 
-export function renderLeaguePick({ confirmOverwrite, careerMode = false }) {
-  // במסלול "ממתחיל לאגדה" מסך זה משמש רק לבחירת *מאיזו ליגה* לדפדף כדי
-  // לבחור קבוצה (ראו renderTeamPick) - המסלול עצמו תמיד מתחיל בפועל
-  // בליגה הצרפתית (השלב הראשון ב-CAREER_STAGES), לא בליגה שנבחרה כאן.
-  // לכן מציגים רק את 5 הליגות הבסיסיות (לא "אירופה"/"אלופות" - אלו
+export function renderLeaguePick({ confirmOverwrite }) {
+  // מסך זה משמש רק לבחירת *מאיזו ליגה* לדפדף כדי לבחור קבוצה (ראו
+  // renderTeamPick) - מסלול "ממתחיל לאגדה" (מצב המשחק היחיד) תמיד מתחיל
+  // בפועל בליגה הצרפתית (השלב הראשון ב-CAREER_STAGES), לא בליגה שנבחרה
+  // כאן. לכן מציגים רק את 5 הליגות הבסיסיות (לא "אירופה"/"אלופות" - אלו
   // שלבים שעולים אליהם במהלך המסלול, לא נקודות דפדוף לקבוצה) - ראו career.js.
-  const allLeagues = getLeagueList();
-  const leagues = careerMode ? allLeagues.filter((l) => CAREER_STAGES.slice(0, 5).includes(l.id)) : allLeagues;
+  const leagues = getLeagueList().filter((l) => CAREER_STAGES.slice(0, 5).includes(l.id));
   return `
     <div class="screen">
       <div class="brand">
         <div class="logo">בחירת <span>ליגה</span></div>
         <div class="tagline">
-          ${
-            careerMode
-              ? 'מסלול "ממתחיל לאגדה" תמיד מתחיל בליגה הצרפתית - אבל אפשר לבחור את הקבוצה שתנהל מכל אחת מ-5 הליגות. באיזו ליגה לבחור ממנה קבוצה?'
-              : "בחר ליגה, ואז תוכל לבחור את הקבוצה שתנהל מתוך 14 הקבוצות בה"
-          }
+          מסלול "ממתחיל לאגדה" תמיד מתחיל בליגה הצרפתית - אבל אפשר לבחור את הקבוצה שתנהל מכל אחת מ-5 הליגות. באיזו ליגה לבחור ממנה קבוצה?
         </div>
       </div>
       ${
@@ -125,7 +129,7 @@ export function renderLeaguePick({ confirmOverwrite, careerMode = false }) {
   `;
 }
 
-export function renderTeamPick({ leagueId, careerMode = false }) {
+export function renderTeamPick({ leagueId }) {
   const league = getLeague(leagueId);
   // ממוינות לפי כוח בסיס יורד, כדי שתהיה תחושה ברורה של "מי הכי חזקה"
   const teams = [...league.teams].sort((a, b) => b.baseStrength - a.baseStrength);
@@ -135,7 +139,7 @@ export function renderTeamPick({ leagueId, careerMode = false }) {
         <div class="logo">בחירת <span>קבוצה</span></div>
         <div class="tagline">
           ${league.name_he} - באיזו קבוצה תרצה לנהל?
-          ${careerMode ? '<br><b>מסלול "ממתחיל לאגדה"</b>: הקבוצה שתבחר תטייל איתך בין 7 הליגות ככל שתעלה.' : ""}
+          <br><b>מסלול "ממתחיל לאגדה"</b>: הקבוצה שתבחר תטייל איתך בין 7 הליגות ככל שתעלה.
         </div>
       </div>
       <div class="team-pick-grid">
@@ -152,7 +156,7 @@ export function renderTeamPick({ leagueId, careerMode = false }) {
       </div>
       <div class="btn-row">
         <button class="btn btn-secondary" data-action="pick-team-random" data-league="${leagueId}">הגרל לי קבוצה</button>
-        <button class="btn btn-secondary" data-action="goto-new-game">חזרה לליגות</button>
+        <button class="btn btn-secondary" data-action="back-to-leagues">חזרה לליגות</button>
       </div>
     </div>
   `;

@@ -40,7 +40,6 @@ const ui = {
   confirmOverwrite: false,
   pickedLeagueId: null,
   transferFeedback: null,
-  pendingCareer: false, // true אם המשתמש לחץ "ממתחיל לאגדה" ועדיין בתהליך בחירת קבוצה/סגל
   draftLeagueId: null,
   draftTeamId: null,
   draftCandidates: null, // { [position]: [playerRecord, playerRecord] } - מוגרל פעם אחת בתחילת הבחירה
@@ -84,10 +83,10 @@ function render() {
       html = renderStartScreen({ hasSave: controller.hasSavedGame() });
       break;
     case "leaguePick":
-      html = renderLeaguePick({ confirmOverwrite: ui.confirmOverwrite, careerMode: ui.pendingCareer });
+      html = renderLeaguePick({ confirmOverwrite: ui.confirmOverwrite });
       break;
     case "teamPick":
-      html = renderTeamPick({ leagueId: ui.pickedLeagueId, careerMode: ui.pendingCareer });
+      html = renderTeamPick({ leagueId: ui.pickedLeagueId });
       break;
     case "squadDraft": {
       const position = ui.draftPositions[ui.draftStepIndex];
@@ -337,7 +336,6 @@ async function onStartNewGame(leagueId, teamId = null, chosenPlayerIds = null, c
   controller.startNewGame(leagueId, teamId, chosenPlayerIds, careerMode);
   ui.confirmOverwrite = false;
   ui.pickedLeagueId = null;
-  ui.pendingCareer = false;
   ui.draftLeagueId = null;
   ui.draftTeamId = null;
   ui.draftCandidates = null;
@@ -371,11 +369,10 @@ function onPickDraftPlayer(playerId) {
     ui.draftStepIndex += 1;
     render();
   } else {
-    // במסלול הקריירה תמיד מתחילים בפועל בליגה הצרפתית (השלב הראשון),
-    // גם אם הקבוצה שנבחרה "מגוייסת" מליגה אחרת (ui.draftLeagueId שימש
-    // רק כדי לדפדף/לבחור ממנה קבוצה - ראו onStartSquadDraft).
-    const actualLeagueId = ui.pendingCareer ? CAREER_STAGES[0] : ui.draftLeagueId;
-    onStartNewGame(actualLeagueId, ui.draftTeamId, ui.draftChoices, ui.pendingCareer);
+    // מסלול "ממתחיל לאגדה" (מצב המשחק היחיד) תמיד מתחיל בפועל בליגה
+    // הצרפתית (השלב הראשון), גם אם הקבוצה שנבחרה "מגוייסת" מליגה אחרת
+    // (ui.draftLeagueId שימש רק כדי לדפדף/לבחור ממנה קבוצה).
+    onStartNewGame(CAREER_STAGES[0], ui.draftTeamId, ui.draftChoices, true);
   }
 }
 
@@ -387,17 +384,14 @@ function wireEvents() {
 
     switch (action) {
       case "goto-new-game":
-        ui.pendingCareer = false;
+        // משחק חדש = תמיד מסלול "ממתחיל לאגדה" (המשחק החופשי בוטל).
         ui.confirmOverwrite = controller.hasSavedGame();
         ui.screen = "leaguePick";
         render();
         break;
-      case "start-career":
-        // מסלול "ממתחיל לאגדה" - המשתמש בוחר מאיזו מ-5 הליגות הבסיסיות
-        // להתחיל (ראו renderLeaguePick עם careerMode), ומשם ממשיכים
-        // במסלול הרגיל (CAREER_STAGES) לפי הליגה שנבחרה.
-        ui.pendingCareer = true;
-        ui.confirmOverwrite = controller.hasSavedGame();
+      case "back-to-leagues":
+        // חזרה ממסך בחירת הקבוצה למסך הליגות בלי לגעת ב-confirmOverwrite
+        // (בניגוד ל-"goto-new-game", שלא מתאים לניווט פנימי אחורה).
         ui.screen = "leaguePick";
         render();
         break;
@@ -425,7 +419,6 @@ function wireEvents() {
         render();
         break;
       case "cancel-new-game":
-        ui.pendingCareer = false;
         ui.screen = "start";
         render();
         break;
@@ -434,9 +427,8 @@ function wireEvents() {
         render();
         break;
       case "pick-league":
-        // ui.pendingCareer נשאר כמו שהוא: true אם הגענו דרך "ממתחיל
-        // לאגדה" (ואז הליגות המוצגות כבר מסוננות ל-5 הבסיסיות), false
-        // אם זה משחק חדש רגיל.
+        // הליגה הנבחרת משמשת רק לדפדוף ולבחור ממנה קבוצה - מסלול
+        // "ממתחיל לאגדה" עצמו תמיד מתחיל בצרפת (השלב הראשון).
         ui.pickedLeagueId = el.dataset.league;
         ui.screen = "teamPick";
         render();
