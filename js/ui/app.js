@@ -265,37 +265,39 @@ function onCloseTransferWindow() {
 }
 
 /**
- * מפעיל את אנימציית ה"הגרלה" (סרט פלחים שזז ונעצר) על מסך eventSpin:
- * הפוקוס האמיתי (RNG) כבר הוכרע בשלב onResolveEvent, כך שהאנימציה כאן
- * היא ויזואלית בלבד - 3 שניות, מתחילה מהר ומאטה לקראת הסוף (סגנון
- * מחוג רולטה), ונעצרת בדיוק על הפריט האחרון בסרט (שהוא תמיד תוצאת
- * הניצחון בפועל - ראו buildReelItems ב-render.js). דורשת מדידת DOM
- * אמיתית (offsetLeft/clientWidth), ולכן מופעלת רק אחרי שהמסך צויר.
+ * מפעיל את אנימציית גלגל המזל על מסך eventSpin: התוצאה כבר הוכרעה
+ * ב-RNG של המנוע בשלב onResolveEvent, וזווית העצירה המדויקת (שמניחה
+ * את המחוג בתוך הפלח הזוכה) חושבה ונאפה ב-renderEventSpin לתוך
+ * data-rotation. כאן רק מפעילים את ה-transform: סיבוב של 2 שניות
+ * שמתחיל מהר ובולם לקראת הסוף, הבזק זוהר בצבע התוצאה ברגע הנחיתה,
+ * ומעבר למסך התוצאה. הכל transform/opacity בלבד (GPU, מובייל).
  */
 function startEventSpin() {
-  const track = document.getElementById("reel-track");
-  const viewport = document.getElementById("reel-viewport");
-  if (!track || !viewport || !track.lastElementChild) {
+  const wheel = document.getElementById("spin-wheel");
+  const stage = document.getElementById("wheel-stage");
+  if (!wheel || !stage) {
     ui.screen = "eventOutcome";
     render();
     return;
   }
-  const target = track.lastElementChild;
-  track.style.transition = "none";
-  track.style.transform = "translateX(0px)";
+  const rotation = parseFloat(wheel.dataset.rotation || "1440");
+  wheel.style.transition = "none";
+  wheel.style.transform = "rotate(0deg)";
   // "זריקת" reflow כדי שהדפדפן יקליט את מצב ההתחלה לפני שמתחילים לאנימץ
-  void track.offsetWidth;
-  const targetCenter = target.offsetLeft + target.offsetWidth / 2;
-  const viewportCenter = viewport.clientWidth / 2;
-  const offset = targetCenter - viewportCenter;
+  void wheel.offsetWidth;
   requestAnimationFrame(() => {
-    track.style.transition = "transform 3s cubic-bezier(0.1, 0.72, 0.16, 1)";
-    track.style.transform = `translateX(${-offset}px)`;
+    wheel.style.transition = "transform 2s cubic-bezier(0.15, 0.65, 0.2, 1)";
+    wheel.style.transform = `rotate(${rotation}deg)`;
   });
+  setTimeout(() => {
+    stage.classList.add("landed");
+    const hitItem = stage.parentElement.querySelector('.odds-legend-item[data-hit="true"]');
+    if (hitItem) hitItem.classList.add("hit");
+  }, 1950);
   setTimeout(() => {
     ui.screen = "eventOutcome";
     render();
-  }, 3150);
+  }, 2300);
 }
 
 function onResolveEvent(optionId) {

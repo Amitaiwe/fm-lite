@@ -755,52 +755,91 @@ export function renderEvent({ state }) {
 }
 
 /**
- * בונה רצף "פלחים" (חוזרים לפי משקל ההסתברות, כדי שתחושת ההגרלה
- * תשקף את האחוזים האמיתיים) לסרט ההגרלה - ואת פלח הניצחון כפריט
- * האחרון ברשימה, שהוא בדיוק מה ש-startEventSpin (ב-app.js) מעצור
- * עליו תחת המחוג המרכזי, אחרי שה-RNG כבר הכריע בפועל במנוע.
+ * גלגל המזל של ההגרלה: צבעי הפלחים על הגלגל לפי ה-tone של כל branch,
+ * כך שהשטח של כל פלח משקף את ההסתברות האמיתית. הפלחים מסודרים
+ * עם השעון החל מזווית 0 (למעלה), בדיוק כמו conic-gradient.
  */
-function buildReelItems(branches, winningLabel) {
-  const LOOPS = 6;
-  const weighted = [];
-  branches.forEach((b) => {
-    const count = Math.max(1, Math.round(b.probability * 10));
-    for (let i = 0; i < count; i++) weighted.push(b);
-  });
-  const items = [];
-  for (let l = 0; l < LOOPS; l++) items.push(...weighted);
-  const winningBranch = branches.find((b) => b.label === winningLabel) || branches[0];
-  items.push(winningBranch);
-  return items;
-}
+const WHEEL_TONE_COLORS = {
+  positive: "#1f8a52",
+  negative: "#8e2f42",
+  neutral: "#8a6d1f",
+  mixed: "#8a6d1f",
+};
 
-function reelChipHtml(branch) {
-  return `
-    <div class="reel-chip tone-${branch.tone}">
-      <div class="reel-chip-pct">${(branch.probability * 100).toFixed(0)}%</div>
-      <div class="reel-chip-label">${escapeHtml(branch.label)}</div>
-    </div>`;
+const WHEEL_TONE_VARS = {
+  positive: "var(--accent)",
+  negative: "var(--red)",
+  neutral: "var(--gold)",
+  mixed: "var(--gold)",
+};
+
+/**
+ * מחשב את גאומטריית הגלגל: גבולות הפלחים (במעלות, עם השעון מ-0=למעלה)
+ * וזווית הסיבוב הסופית שתנחית את המחוג בתוך פלח הזכייה. התוצאה עצמה
+ * כבר הוכרעה במנוע (winningLabel) - כאן רק בוחרים נקודת נחיתה אקראית
+ * בטווח 60% המרכזיים של הפלח הזוכה, כדי שהמחוג לא יעצור על קו גבול.
+ */
+function wheelGeometry(branches, winningLabel) {
+  let acc = 0;
+  const segs = branches.map((b) => {
+    const start = acc;
+    acc += b.probability;
+    return { branch: b, startDeg: start * 360, endDeg: acc * 360 };
+  });
+  const win = segs.find((s) => s.branch.label === winningLabel) || segs[0];
+  const width = win.endDeg - win.startDeg;
+  const mid = (win.startDeg + win.endDeg) / 2;
+  const jitter = (Math.random() - 0.5) * 0.6 * width;
+  const landAngle = mid + jitter;
+  const TURNS = 4;
+  const rotation = 360 * TURNS - landAngle;
+  return { segs, win, rotation };
 }
 
 /**
- * מסך "מגרילים..." - סרט אופקי (כמו מכונת סלוט) שזז ונעצר על התוצאה
- * שכבר הוכרעה בפועל במנוע (לא כאן - רק האנימציה מוצגת כאן). האנימציה
- * עצמה (קביעת transform בפועל לאורך 3 שניות) מופעלת מ-app.js מיד
- * אחרי שהמסך הזה מצויר, כי היא דורשת מדידת פיקסלים אמיתית מה-DOM.
+ * מסך "מגרילים..." - גלגל מזל שמסתובב ~2 שניות ונעצר כשהמחוג על הפלח
+ * של התוצאה שכבר הוכרעה בפועל במנוע (לא כאן - רק האנימציה מוצגת כאן).
+ * זווית העצירה מוטבעת ב-data-rotation, ו-startEventSpin (ב-app.js)
+ * מפעיל את ה-transform מיד אחרי שהמסך צויר. אי אפשר לדעת את התוצאה
+ * לפני העצירה: פריט המקרא המסומן מודגש רק כשמתווספת הקלאס landed.
  */
 export function renderEventSpin({ title, optionLabel, branches, winningLabel }) {
-  const items = buildReelItems(branches, winningLabel);
+  const { segs, win, rotation } = wheelGeometry(branches, winningLabel);
+  const stops = segs
+    .map(
+      (s) =>
+        `${WHEEL_TONE_COLORS[s.branch.tone] || WHEEL_TONE_COLORS.neutral} ${s.startDeg.toFixed(1)}deg ${s.endDeg.toFixed(1)}deg`
+    )
+    .join(", ");
   return `
     <div class="screen">
       <div class="card center-col">
-        <div style="font-size:2rem">🎰</div>
+        <div style="font-size:2rem">🎡</div>
         <h2>${escapeHtml(title)}</h2>
         <p class="muted">בחרת: ${escapeHtml(optionLabel)} · מגרילים...</p>
-        <div class="reel-viewport" id="reel-viewport">
-          <div class="reel-pointer"></div>
-          <div class="reel-track" id="reel-track">
-            ${items.map(reelChipHtml).join("")}
+        <div class="wheel-stage" id="wheel-stage" style="--win-color:${WHEEL_TONE_VARS[win.branch.tone] || WHEEL_TONE_VARS.neutral}">
+          <div class="wheel-pointer"></div>
+          <div class="spin-wheel" id="spin-wheel" data-rotation="${rotation.toFixed(1)}" style="background:conic-gradient(${stops})">
+            ${segs
+              .map((s) => {
+                const mid = ((s.startDeg + s.endDeg) / 2).toFixed(1);
+                return `<div class="wheel-pct" style="transform:translate(-50%,-50%) rotate(${mid}deg) translateY(-64px)">${(s.branch.probability * 100).toFixed(0)}%</div>`;
+              })
+              .join("")}
+            <div class="wheel-hub">⚽</div>
           </div>
+          <div class="wheel-win-ring"></div>
+        </div>
+        <div class="odds-legend">
+          ${branches
+            .map(
+              (b) =>
+                `<div class="odds-legend-item" data-hit="${b.label === winningLabel}">
+                  <span class="odds-dot tone-${b.tone}"></span>
+                  <span>${escapeHtml(b.label)}</span>
+                </div>`
+            )
+            .join("")}
         </div>
       </div>
     </div>

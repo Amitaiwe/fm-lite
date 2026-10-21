@@ -1086,91 +1086,82 @@ table.league-table tr.champion-row td.team-cell::before {
 
 /* מסך "מגרילים" - סרט פלחים אופקי שזז ונעצר על התוצאה (ראו
    renderEventSpin ב-render.js והפעלת האנימציה ב-app.js). */
-.reel-viewport {
+/* גלגל מזל להגרלת אירועים (מסך eventSpin) */
+.wheel-stage {
   position: relative;
-  width: 100%;
-  height: 66px;
+  width: 220px;
+  height: 220px;
   margin: 14px 0 6px;
-  overflow: hidden;
-  border-radius: 12px;
-  background: var(--bg-elevated);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
-  border: 1px solid var(--border);
   direction: ltr;
 }
 
-.reel-track {
-  display: flex;
-  height: 100%;
-  align-items: center;
+.wheel-pointer {
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  width: 0;
+  height: 0;
+  border-left: 11px solid transparent;
+  border-right: 11px solid transparent;
+  border-top: 18px solid var(--gold);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.6));
+}
+
+.spin-wheel {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  border: 7px solid #16233f;
+  box-shadow:
+    inset 0 0 26px rgba(0, 0, 0, 0.55),
+    0 0 30px rgba(53, 201, 122, 0.12);
   will-change: transform;
 }
 
-.reel-chip {
-  flex: 0 0 104px;
-  width: 104px;
-  height: 100%;
+.wheel-hub {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 35% 30%, #2a3c64, #101c36);
+  border: 2px solid var(--border);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 2px;
-  border-left: 1px solid var(--border);
-  direction: rtl;
+  font-size: 1.1rem;
 }
 
-.reel-chip-pct {
+.wheel-pct {
+  position: absolute;
+  top: 50%;
+  left: 50%;
   font-weight: 900;
-  font-size: 1rem;
-  color: var(--text);
+  font-size: 0.95rem;
+  color: #fff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6);
 }
 
-.reel-chip-label {
-  font-size: 0.6rem;
-  max-width: 94px;
-  text-align: center;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: var(--text-dim);
+.wheel-win-ring {
+  position: absolute;
+  inset: -7px;
+  border-radius: 50%;
+  border: 4px solid var(--win-color, var(--accent));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  box-shadow:
+    0 0 30px var(--win-color, var(--accent)),
+    inset 0 0 20px var(--win-color, var(--accent));
 }
 
-.reel-chip.tone-positive {
-  background: rgba(53, 201, 122, 0.4);
-  border-bottom: 4px solid var(--accent);
-}
-
-.reel-chip.tone-positive .reel-chip-pct {
-  color: var(--accent);
-}
-
-.reel-chip.tone-positive .reel-chip-label {
-  color: #d8ffe9;
-}
-
-.reel-chip.tone-negative {
-  background: rgba(229, 85, 106, 0.4);
-  border-bottom: 4px solid var(--red);
-}
-
-.reel-chip.tone-negative .reel-chip-pct {
-  color: var(--red);
-}
-
-.reel-chip.tone-negative .reel-chip-label {
-  color: #ffdde1;
-}
-
-.reel-chip.tone-neutral,
-.reel-chip.tone-mixed {
-  background: rgba(240, 193, 75, 0.3);
-  border-bottom: 4px solid var(--gold);
-}
-
-.reel-chip.tone-neutral .reel-chip-pct,
-.reel-chip.tone-mixed .reel-chip-pct {
-  color: var(--gold);
+.wheel-stage.landed .wheel-win-ring {
+  opacity: 1;
 }
 
 /* מסך סקאוטינג (renderScouting) - השוואת עוצמות ובר קושי */
