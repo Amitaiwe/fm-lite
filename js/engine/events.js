@@ -328,18 +328,106 @@ function branchTone(effects, ctx) {
   return "neutral";
 }
 
+/**
+ * מסכם את הערכים המספריים של רצף effects לפי סוג (כסף / יכולת / כושר).
+ * משמש לחישוב הטון של תוצאות הימור (ראו gambleBranchTone).
+ */
+function sumEffectsByKind(effects, ctx) {
+  const sums = { money: 0, ability: 0, fitness: 0, hasMoney: false, hasAbility: false, hasFitness: false };
+  for (const e of effects || []) {
+    if (e.kind === "budget") {
+      sums.money += resolveBudgetAmount(e, ctx) || 0;
+      sums.hasMoney = true;
+    } else if (e.kind === "ability" && typeof e.amount === "number") {
+      sums.ability += e.amount;
+      sums.hasAbility = true;
+    } else if (e.kind === "fitness" && typeof e.amount === "number") {
+      sums.fitness += e.amount;
+      sums.hasFitness = true;
+    }
+  }
+  return sums;
+}
+
+/**
+ * מסווג תוצאת הימור (branch) לצביעת מד האחוזים/הגלגל/המקרא:
+ *  - לכל סוג משאב שהתוצאה נוגעת בו (כסף/יכולת/כושר) נבדק הסכום הנטו
+ *    *מאותו סוג* - כולל ההשפעות הקבועות של האופציה. כך תוצאה שהיא
+ *    הפסד כספי נטו (למשל עלות 200,000€ מול רווח אפשרי של 100,000€)
+ *    תצבע אדום ולא ירוק רק כי הרווח עצמו חיובי.
+ *  - סוג שהתוצאה לא נוגעת בו בכלל (למשל עלות כספית קבועה לצד הימור על
+ *    יכולת) לא משפיע על הצבע - העלות כבר מוצגת כטקסט מעל מד האחוזים.
+ * סימן מעורב בין סוגים שונים (למשל עלות כספית + עליית יכולת באותה
+ * תוצאה) מסווג "mixed" (זהב).
+ */
+function gambleBranchTone(sureEffects, branchEffects, ctx) {
+  const sure = sumEffectsByKind(sureEffects, ctx);
+  const br = sumEffectsByKind(branchEffects, ctx);
+  let hasNeg = false;
+  let hasPos = false;
+  for (const [sum, has] of [
+    [sure.money + br.money, br.hasMoney],
+    [sure.ability + br.ability, br.hasAbility],
+    [sure.fitness + br.fitness, br.hasFitness],
+  ]) {
+    if (!has) continue;
+    if (sum < 0) hasNeg = true;
+    else if (sum > 0) hasPos = true;
+  }
+  if (hasNeg && hasPos) return "mixed";
+  if (hasNeg) return "negative";
+  if (hasPos) return "positive";
+  return "neutral";
+}
+
+/**
+ * אם כל התוצאות של אותו הימור יצאו באותו טון (למשל שתי תוצאות "ירוקות"
+ * כי שתיהן רווח - אחת גדולה ואחת קטנה), מבדילים ביניהן כדי שהצבע ישקף
+ * גם את הטיב *היחסי* בתוך ההימור ולא רק את הסימן המוחלט:
+ *  - כולן חיוביות: הטובה ביותר נשארת ירוקה, האחרות הופכות ניטרליות (זהב).
+ *  - כולן שליליות: הגרועה ביותר נשארת אדומה, האחרות הופכות ניטרליות.
+ *  - כולן מעורבות: הטובה ביותר הופכת ירוקה והגרועה ביותר אדומה.
+ * הדירוג לפי סכום ה-effects של ה-branch עצמו (העלות הקבועה של האופציה
+ * זהה לכל התוצאות ולכן לא משנה את הדירוג); בשוויון מלא מדרגים לפי סדר
+ * התוצאות בנתונים (הטובה מופיעה ראשונה).
+ */
+function differentiateTiedTones(branches, ctx) {
+  if (branches.length < 2) return;
+  const tone = branches[0].tone;
+  if (tone === "neutral" || !branches.every((b) => b.tone === tone)) return;
+  const scores = branches.map((b) => {
+    const s = sumEffectsByKind(b.rawEffects, ctx);
+    return s.hasMoney ? s.money : s.hasAbility ? s.ability : s.fitness;
+  });
+  // שוויון מוחלט בערכים (למשל הגרלת טווחים שהשוותה שתי תוצאות): מדרגים
+  // לפי הסדר בנתונים - בכל ההימורים התוצאה הטובה מופיעה ראשונה.
+  const order = branches.map((_, i) => i).sort((a, b) => scores[b] - scores[a] || a - b);
+  const best = order[0];
+  const worst = order[order.length - 1];
+  branches.forEach((b, i) => {
+    if (tone === "positive" && i !== best) b.tone = "neutral";
+    else if (tone === "negative" && i !== worst) b.tone = "neutral";
+    else if (tone === "mixed") {
+      if (i === best) b.tone = "positive";
+      else if (i === worst) b.tone = "negative";
+    }
+  });
+}
+
 /** מחלץ מידע הימור (אם יש) מתוך רצף effects, לתצוגת אחוזים לפני הבחירה. */
 function extractGamble(effects, ctx) {
   const randEff = (effects || []).find((e) => e.kind === "random_outcome");
   if (!randEff) return null;
-  return {
-    branches: randEff.branches.map((b) => ({
-      probability: b.probability,
-      label: b.label_he,
-      lines: describeEffects(b.effects, ctx),
-      tone: branchTone(b.effects, ctx),
-    })),
-  };
+  const sureEffects = (effects || []).filter((e) => e.kind !== "random_outcome");
+  const branches = randEff.branches.map((b) => ({
+    probability: b.probability,
+    label: b.label_he,
+    lines: describeEffects(b.effects, ctx),
+    tone: gambleBranchTone(sureEffects, b.effects, ctx),
+    rawEffects: b.effects,
+  }));
+  differentiateTiedTones(branches, ctx);
+  return { branches: branches.map(({ rawEffects, ...rest }) => rest) };
 }
 
 /**
@@ -406,6 +494,14 @@ export function resolveEventChoice(state, allPlayers, optionId, rng) {
 
   const ctx = state.pendingEvent.ctx;
   const { state: appliedState, notes, randomOutcome } = applyEffects(state, allPlayers, option.effects, ctx, rng);
+
+  // מסנכרנים את טון התוצאה שהוגרלה בפועל עם הטון שחושב ל-gamble (נטו
+  // כולל עלות האופציה + הבחנה יחסית בין תוצאות באותו טון), כדי שצבע
+  // שורת התוצאה יתאים לצבע הפלח בגלגל ובמקרא.
+  if (randomOutcome && option.gamble) {
+    const hit = option.gamble.branches.find((b) => b.label === randomOutcome.label);
+    if (hit) randomOutcome.tone = hit.tone;
+  }
 
   const lastEventOutcome = {
     eventId: def.id,
