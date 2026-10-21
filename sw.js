@@ -3,7 +3,7 @@
 
 // שים לב: בעת המיזוג ל-main יש לוודא שהגרסה גבוהה ב-1 מזו שב-main באותו רגע
 // (סוכן אחר עשוי להעלות גרסה במקביל - task 7).
-const CACHE_NAME = "fm-lite-cache-v15";
+const CACHE_NAME = "fm-lite-cache-v16";
 const CORE_ASSETS = [
   "./",
   "./index.html",

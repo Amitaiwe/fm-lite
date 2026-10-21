@@ -52,6 +52,7 @@ const ui = {
   lastSeasonEndData: null,
   lastEventOutcome: null,
   spinData: null, // { title, optionLabel, branches, winningLabel } - להגרלת eventSpin
+  settingsOpen: false, // תפריט ההגדרות (⚙️) פתוח?
   toast: null,
 };
 
@@ -149,13 +150,26 @@ function render() {
       html = `<div class="screen"><p>מסך לא ידוע: ${ui.screen}</p></div>`;
   }
 
-  // שורת החלפת שפת שמות השחקנים - מוצגת מעל כל מסך (כולל פתיחה,
-  // בחירת סגל ואירועים), כך שההחלפה זמינה תמיד והבחירה נשמרת
-  // ב-localStorage (ראו format.js).
+  // כפתור ההגדרות (⚙️) - מוצג מעל כל מסך (כולל פתיחה, בחירת סגל
+  // ואירועים). התפריט שנפתח ממנו מחזיק גם את החלפת שפת שמות השחקנים
+  // (נשמרת ב-localStorage, ראו format.js) וגם את כפתור ההתחלה מחדש,
+  // כך ששניהם זמינים תמיד בלי לתפוס מקום בתוכן המשחק.
   const nameLang = getNameLang();
-  const langBarHtml = `<div class="name-lang-bar"><button class="name-lang-toggle" data-action="toggle-name-lang">🌐 ${nameLang === "en" ? "שמות שחקנים: English" : "שמות שחקנים: עברית"}</button></div>`;
+  const settingsHtml = `
+    <div class="settings-bar">
+      <button class="settings-toggle" data-action="toggle-settings" aria-label="הגדרות">⚙️</button>
+      ${
+        ui.settingsOpen
+          ? `<div class="settings-backdrop" data-action="toggle-settings"></div>
+             <div class="settings-menu">
+               <button class="settings-item" data-action="toggle-name-lang">🌐 ${nameLang === "en" ? "שמות שחקנים: English" : "שמות שחקנים: עברית"}</button>
+               <button class="settings-item settings-danger" data-action="goto-new-game">🔁 התחלת משחק חדש</button>
+             </div>`
+          : ""
+      }
+    </div>`;
 
-  appEl.innerHTML = langBarHtml + html + (ui.toast ? `<div class="toast ${ui.toast.type}">${ui.toast.message}</div>` : "");
+  appEl.innerHTML = settingsHtml + html + (ui.toast ? `<div class="toast ${ui.toast.type}">${ui.toast.message}</div>` : "");
   // תמיד גוללים לראש המסך במעבר בין מסכים, כדי שתוצאת המחזור/האירוע
   // החדש תהיה מיד גלויה בלי שהמשתמש יצטרך לגלול ידנית.
   window.scrollTo(0, 0);
@@ -386,8 +400,14 @@ function wireEvents() {
     const action = el.dataset.action;
 
     switch (action) {
+      case "toggle-settings":
+        ui.settingsOpen = !ui.settingsOpen;
+        render();
+        break;
       case "goto-new-game":
         // משחק חדש = תמיד מסלול "ממתחיל לאגדה" (המשחק החופשי בוטל).
+        // אם יש משחק שמור, confirmOverwrite מפעיל מסך אישור לפני הדריסה.
+        ui.settingsOpen = false;
         ui.confirmOverwrite = controller.hasSavedGame();
         ui.screen = "leaguePick";
         render();

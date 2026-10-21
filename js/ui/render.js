@@ -56,6 +56,28 @@ function navTabsHtml(active, { hasTransferWindow = false } = {}) {
   `;
 }
 
+/**
+ * מסגרת ה"ריבוע המרכזי": פאנל מרכזי שמחזיק את כפתורי הטאבים (סגל / טבלה /
+ * כספים / שערים) ואת התוכן של הטאב הפעיל, ומתחתיו כפתור קבוע בתחתית
+ * המסך - "⚽ שחק מחזור הבא" - שזמין מכל טאב (ולא רק מטאב הסגל כמו קודם).
+ * הכפתור מופעל position:fixed כדי שיישאר גלוי גם בגלילה, וה-spacer שומר
+ * על מקום בתחתית הדף כדי שהוא לא יכסה תוכן.
+ */
+function gameHubHtml(active, state, contentHtml) {
+  return `
+    <div class="hub-panel">
+      ${navTabsHtml(active, { hasTransferWindow: !!state.transferWindow })}
+      <div class="hub-content">
+        ${contentHtml}
+      </div>
+    </div>
+    <div class="play-bar-spacer"></div>
+    <div class="play-bar-fixed">
+      <button class="btn" data-action="play-round">⚽ שחק מחזור הבא</button>
+    </div>
+  `;
+}
+
 /** תג קטן +/-N לשינוי אחרון (כושר אחרי משחק, יכולת אחרי אירוע) - נשאר מוצג עד השינוי הבא. */
 function deltaBadgeHtml(diff) {
   if (!diff) return "";
@@ -411,19 +433,12 @@ export function renderHome({ state, allPlayers }) {
         <span class="budget-display">${formatMoney(state.budget)}</span>
       </div>
 
-      ${navTabsHtml("home", { hasTransferWindow: !!state.transferWindow })}
+      ${gameHubHtml("home", state, `
+        <h2>הסגל שלך</h2>
+        ${squadPitchHtml(state, allPlayers)}
 
-      <h2>הסגל שלך</h2>
-      ${squadPitchHtml(state, allPlayers)}
-
-      ${nextOpponentHtml(state)}
-
-      <div style="margin-top:18px">
-        <button class="btn" data-action="play-round">⚽ שחק מחזור הבא</button>
-      </div>
-      <div style="margin-top:10px">
-        <button class="btn btn-secondary" data-action="goto-new-game">התחלת משחק חדש</button>
-      </div>
+        ${nextOpponentHtml(state)}
+      `)}
     </div>
   `;
 }
@@ -443,7 +458,7 @@ export function renderTable({ state }) {
       <div class="top-bar">
         <h2>טבלת ${league.name_he}</h2>
       </div>
-      ${navTabsHtml("table", { hasTransferWindow: !!state.transferWindow })}
+      ${gameHubHtml("table", state, `
       <div class="card" style="overflow-x:auto">
         <table class="league-table">
           <thead>
@@ -473,6 +488,7 @@ export function renderTable({ state }) {
           </tbody>
         </table>
       </div>
+      `)}
     </div>
   `;
 }
@@ -527,13 +543,13 @@ export function renderPlayerStats({ state, allPlayers }) {
       <div class="top-bar">
         <h2>⚽ מלך שערי העונה - ${league.name_he}</h2>
       </div>
-      ${navTabsHtml("stats", { hasTransferWindow: !!state.transferWindow })}
-
+      ${gameHubHtml("stats", state, `
       <h3>מלך שערי העונה</h3>
       ${tableHtml(topScorers, "goals", "שערים", "עדיין לא נקלעו שערים העונה.")}
 
       <h3 style="margin-top:18px">מלך הבישולים</h3>
       ${tableHtml(topAssisters, "assists", "בישולים", "עדיין לא נרשמו בישולים העונה.")}
+      `)}
     </div>
   `;
 }
@@ -562,8 +578,7 @@ export function renderFinances({ state }) {
       <div class="top-bar">
         <h2>מצב כספי - עונה ${state.season}</h2>
       </div>
-      ${navTabsHtml("finances", { hasTransferWindow: !!state.transferWindow })}
-
+      ${gameHubHtml("finances", state, `
       <div class="card row">
         <span>יתרה נוכחית</span>
         <span class="budget-display">${formatMoney(state.budget)}</span>
@@ -610,6 +625,7 @@ export function renderFinances({ state }) {
         <h3>שכר שחקנים עונתי נוכחי</h3>
         <div class="finance-line"><span>סה"כ שכר לתשלום בסוף העונה</span><b>${formatMoney(totalSquadSalary(state.squad))}</b></div>
       </div>
+      `)}
     </div>
   `;
 }

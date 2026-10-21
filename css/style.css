@@ -1255,30 +1255,88 @@ table.league-table tr.champion-row td.team-cell::before {
 
 /* שורת החלפת שפת שמות השחקנים - נזרקת מ-app.js מעל כל מסך.
    הכפתור תומך באותו סגנון "גלולת זכוכית" של טאבי הניווט. */
-.name-lang-bar {
+/* כפתור ההגדרות (⚙️) בפינת המסך + התפריט שנפתח ממנו (שפת שמות
+   השחקנים והתחלת משחק חדש). ה-backdrop סוגר את התפריט בלחיצה בחוץ. */
+.settings-bar {
+  position: relative;
   display: flex;
   justify-content: flex-start;
   margin-bottom: 10px;
+  z-index: 70;
 }
 
-.name-lang-toggle {
+.settings-toggle {
   background: var(--bg-elevated);
   backdrop-filter: var(--glass-blur);
   -webkit-backdrop-filter: var(--glass-blur);
   border: 1px solid var(--border);
   color: var(--text-dim);
-  padding: 6px 14px;
+  padding: 6px 12px;
   border-radius: 999px;
   cursor: pointer;
-  font-size: 0.78rem;
+  font-size: 1rem;
+  line-height: 1.3;
   font-weight: 600;
   font-family: inherit;
   transition: border-color 0.12s ease, color 0.12s ease;
 }
 
-.name-lang-toggle:hover {
+.settings-toggle:hover {
   color: var(--electric);
   border-color: var(--electric);
+}
+
+.settings-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 65;
+  background: transparent;
+  border: none;
+  cursor: default;
+}
+
+.settings-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  inset-inline-start: 0;
+  z-index: 70;
+  min-width: 230px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 6px;
+  background: rgba(11, 17, 32, 0.97);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.settings-item {
+  background: transparent;
+  border: none;
+  color: var(--text);
+  text-align: start;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: background 0.12s ease;
+}
+
+.settings-item:hover {
+  background: var(--electric-soft);
+}
+
+.settings-item.settings-danger {
+  color: #ef7382;
+}
+
+.settings-item.settings-danger:hover {
+  background: var(--red-soft);
 }
 
 /* סמלי קבוצות אמיתיים: הילה בהירה עדינה כדי שסמלים כהים (טוטנהאם, יובנטוס) ייראו על רקע כהה */
@@ -1314,3 +1372,48 @@ table.league-table tr.champion-row td.team-cell::before {
 }
 .scorer-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .scorer-min { font-variant-numeric: tabular-nums; opacity: 0.75; font-size: 0.8rem; }
+
+/* === הריבוע המרכזי + כפתור "שחק מחזור הבא" הקבוע ===
+   הפאנל המרכזי מחזיק את 4 הטאבים והתוכן שלהם; הכפתור קבוע בתחתית
+   המסך וזמין מכל טאב, כולל בזמן גלילה. */
+.hub-panel {
+  max-width: 560px;
+  margin: 0 auto;
+  background: var(--bg-elevated);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 14px;
+  box-shadow: var(--shadow);
+}
+
+.hub-panel .nav-tabs {
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.hub-content {
+  min-height: 220px;
+}
+
+/* שומר מקום בגובה הכפתור הקבוע כדי שהוא לא יכסה את סוף התוכן */
+.play-bar-spacer {
+  height: 76px;
+}
+
+.play-bar-fixed {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 60;
+  display: flex;
+  justify-content: center;
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(180deg, rgba(5, 7, 13, 0) 0%, rgba(5, 7, 13, 0.94) 38%);
+}
+
+.play-bar-fixed .btn {
+  max-width: 528px;
+}
