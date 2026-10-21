@@ -12,6 +12,7 @@ import { shouldTriggerEvent, triggerEvent } from "./events.js";
 import { applyMatchFitnessSwing } from "./squad.js";
 import { endSeason } from "./seasonEnd.js";
 import { resolveStageTeams } from "./career.js";
+import { teamScorerRoster, recordGoal } from "./playerStats.js";
 
 export function needsTransferWindow(state) {
   return (
@@ -95,6 +96,10 @@ export function playNextRound(state, allPlayers, rng) {
   let userMatch = null;
   let userOutcome = null;
   let economyState = state;
+  // מצבר "מלך שערי העונה" - עובר על *כל* משחקי המחזור (לא רק שלך), כי
+  // המנוע ממילא מסמלץ את כולם לצורך הטבלה. roster נלקח מ-state המקורי
+  // (לא economyState) כי סגל/teamRosters לא משתנים באמצע עיבוד המחזור.
+  let playerStats = state.playerStats || {};
 
   for (const [teamA, teamB] of round) {
     const isUserMatchA = teamA === state.teamId;
@@ -105,6 +110,11 @@ export function playNextRound(state, allPlayers, rng) {
     const match = { homeTeam: teamA, awayTeam: teamB, homeGoals: teamAGoals, awayGoals: teamBGoals };
     applyMatchResult(table, match);
     allMatches.push(match);
+
+    const rosterA = teamScorerRoster(teamA, state);
+    for (let i = 0; i < teamAGoals; i++) playerStats = recordGoal(playerStats, teamA, rosterA, rng);
+    const rosterB = teamScorerRoster(teamB, state);
+    for (let i = 0; i < teamBGoals; i++) playerStats = recordGoal(playerStats, teamB, rosterB, rng);
 
     if (isUserMatchA || isUserMatchB) {
       userMatch = match;
@@ -127,6 +137,7 @@ export function playNextRound(state, allPlayers, rng) {
     table,
     round: newRoundCount,
     matchResultsByRound: { ...state.matchResultsByRound, [roundIndex]: allMatches },
+    playerStats,
   };
 
   const standingsAfter = sortedTable(table);
@@ -149,7 +160,7 @@ export function playNextRound(state, allPlayers, rng) {
   // סוף עונה?
   if (newRoundCount >= state.fixtures.length) {
     const teamIds = stageTeams.map((t) => t.id);
-    const result = endSeason(newState, teamIds, rng);
+    const result = endSeason(newState, teamIds, allPlayers, rng);
     return {
       ok: true,
       state: result.state,

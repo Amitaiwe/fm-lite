@@ -9,6 +9,7 @@ import { initTable } from "./table.js";
 import { emptySeasonFinance } from "./economy.js";
 import { pickRandom } from "./rng.js";
 import { resolveStageTeams, CAREER_STAGES } from "./career.js";
+import { assignSeasonRosters } from "./playerStats.js";
 
 export const GAME_VERSION = 1;
 
@@ -38,6 +39,9 @@ export function createNewGame(leagueId, allPlayers, rng, teamId = null, chosenPl
     : draftInitialSquad(allPlayers, rng);
   const fixtures = generateFixtures(teamIds, rng);
   const table = initTable(teamIds);
+  // "סגל סטטיסטי" דקורטיבי ל-13 הקבוצות היריבות (ראו playerStats.js) -
+  // לצורך טבלת מלך שערי העונה/הבישולים, לא משפיע על עוצמת הקבוצה.
+  const teamRosters = assignSeasonRosters(teamIds, userTeam.id, squad, allPlayers, rng);
 
   return {
     version: GAME_VERSION,
@@ -53,6 +57,8 @@ export function createNewGame(leagueId, allPlayers, rng, teamId = null, chosenPl
     squad,
     fixtures,
     table,
+    teamRosters,
+    playerStats: {},
     matchResultsByRound: {}, // round index (0-based) -> array of {homeTeam, awayTeam, homeGoals, awayGoals}
     commitments: [],
     finance: emptySeasonFinance(),

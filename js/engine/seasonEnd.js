@@ -6,6 +6,7 @@ import { processSeasonEndEconomy, emptySeasonFinance } from "./economy.js";
 import { applySeasonFitnessSwing, resetAbilityToBase } from "./squad.js";
 import { generateFixtures } from "./fixtures.js";
 import { nextCareerLeagueId, resolveStageTeams } from "./career.js";
+import { assignSeasonRosters } from "./playerStats.js";
 
 /**
  * מבצע את כל שלבי סיום העונה. מחזיר { state, summary, bankrupt, championTeamId,
@@ -13,8 +14,10 @@ import { nextCareerLeagueId, resolveStageTeams } from "./career.js";
  * אם bankrupt=true, state.gameOver מוגדר ואין לפתוח עונה חדשה.
  * teamIds הוא רשימת 14 הקבוצות של השלב שהסתיים כרגע (ראו career.js) -
  * אם זה מסלול קריירה ואלופים, מתעלמים ממנה וממשיכים לשלב הבא.
+ * allPlayers נדרש כדי להגריל סגלים סטטיסטיים טריים ל"מלך שערי העונה"
+ * (ראו playerStats.js) לעונה הבאה.
  */
-export function endSeason(state, teamIds, rng) {
+export function endSeason(state, teamIds, allPlayers, rng) {
   const finalTableSorted = sortedTable(state.table);
   const finalPosition = finalTableSorted.findIndex((r) => r.teamId === state.teamId) + 1;
   const championTeamId = finalTableSorted[0]?.teamId ?? null;
@@ -95,6 +98,11 @@ export function endSeason(state, teamIds, rng) {
   const refreshedSquad = applySeasonFitnessSwing(squadWithResetAbility, rng);
   const newFixtures = generateFixtures(effectiveTeamIds, rng);
   const newTable = initTable(effectiveTeamIds);
+  // "מלך שערי העונה/הבישולים" - הגרלת סגלים סטטיסטיים טריים ואיפוס
+  // הסטטיסטיקה בכל עונה חדשה (ראו playerStats.js), בדיוק כמו שהלוח
+  // והטבלה מתאפסים - כולל במעבר שלב במסלול הקריירה (effectiveTeamIds
+  // כבר מעודכן לרשימת הקבוצות של השלב הבא אם הייתה עלייה).
+  const newTeamRosters = assignSeasonRosters(effectiveTeamIds, state.teamId, refreshedSquad, allPlayers, rng);
 
   const newState = {
     ...afterEconomy,
@@ -112,6 +120,8 @@ export function endSeason(state, teamIds, rng) {
     transferWindow: null,
     resolvedTransferWindows: [],
     lastRoundSummary: null,
+    teamRosters: newTeamRosters,
+    playerStats: {},
   };
 
   return {
