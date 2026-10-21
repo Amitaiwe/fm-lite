@@ -58,12 +58,30 @@ function randomizeEffect(eff, rng) {
     return { ...eff, amount: randomizeAroundBase(rng, eff.amount, DELTA_STEP) };
   }
   if (eff.kind === "random_outcome") {
-    return {
-      ...eff,
-      branches: (eff.branches || []).map((b) => ({ ...b, effects: resolveEffectsRandomization(b.effects, rng) })),
-    };
+    const branches = (eff.branches || []).map((b) => ({ ...b, effects: resolveEffectsRandomization(b.effects, rng) }));
+    return { ...eff, branches: keepBranchOrder(eff.branches || [], branches) };
   }
   return { ...eff };
+}
+
+// כל branch מוגרל בנפרד, ולכן התוצאה ה"רעה" יכלה לצאת גבוהה מה"טובה"
+// (למשל +600,000 מול +400,000). כאן משמרים את הסדר המקורי של הנתונים:
+// הערכים המוגרלים ממוינים ומוצמדים מחדש לפי הדירוג המקורי, ובמקרה של
+// שוויון מוסיפים קפיצה אחת כך שהתוצאה הטובה תמיד גבוהה ממש מהחלשה.
+function keepBranchOrder(origBranches, newBranches) {
+  const single = (b) =>
+    b.effects && b.effects.length === 1 && b.effects[0].kind === "budget" && typeof b.effects[0].amount === "number";
+  if (newBranches.length < 2 || !origBranches.every(single) || !newBranches.every(single)) return newBranches;
+  const order = origBranches.map((b, i) => i).sort((a, b) => origBranches[a].effects[0].amount - origBranches[b].effects[0].amount);
+  const values = newBranches.map((b) => b.effects[0].amount).sort((a, b) => a - b);
+  for (let i = 1; i < values.length; i++) {
+    if (values[i] <= values[i - 1]) values[i] = values[i - 1] + MONEY_STEP;
+  }
+  const out = newBranches.map((b) => ({ ...b, effects: [{ ...b.effects[0] }] }));
+  order.forEach((idx, rank) => {
+    out[idx].effects[0].amount = values[rank];
+  });
+  return out;
 }
 
 /** מגריל (פעם אחת) רצף effects שלם - כולל branches מקוננים של random_outcome. */
