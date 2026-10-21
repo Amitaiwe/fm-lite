@@ -16,6 +16,20 @@ function teamName(leagueId, teamId) {
   return t ? t.name_he : teamId;
 }
 
+/** ממיר קוד מדינה (ISO 3166-1 alpha-2, לדוגמה "fr") לאימוג'י דגל, ע"י הזזת כל אות לתו "אינדיקטור אזורי" (Regional Indicator Symbol). */
+function flagEmoji(countryCode) {
+  if (!countryCode || countryCode.length !== 2) return "";
+  const codePoints = [...countryCode.toUpperCase()].map((c) => 0x1f1e6 + (c.charCodeAt(0) - 65));
+  return String.fromCodePoint(...codePoints);
+}
+
+/** שם שחקן + דגל המדינה שלו (אם יש), לתצוגה אחידה בכל מקום שמציג שם שחקן. */
+function playerNameWithFlag(player) {
+  if (!player) return "";
+  const flag = flagEmoji(player.nationality);
+  return `${flag ? `<span class="player-flag">${flag}</span> ` : ""}${escapeHtml(player.name_he)}`;
+}
+
 /**
  * כפתורי הניווט העליונים. כאשר חלון העברות פתוח (state.transferWindow),
  * מוסיפים לו טאב "🔄 שוק" כדי שאפשר יהיה לקפוץ אליו ובחזרה מכל מסך
@@ -171,6 +185,7 @@ export function renderSquadDraft({ position, candidates, stepIndex, totalSteps }
               rating: p.ability,
               position: p.position,
               name: p.name_he,
+              nationality: p.nationality,
               size: "lg",
               statLines: [
                 { icon: "💰", value: formatMoneyShort(p.market_value) },
@@ -189,12 +204,13 @@ export function renderSquadDraft({ position, candidates, stepIndex, totalSteps }
  * גדול, עמדה, שם, ושורת סטטים עם אייקונים. משמש גם לסגל (עם כושר)
  * וגם להצעות שוק ההעברות (בלי כושר - עוד לא בסגל).
  */
-function futCardHtml({ rating, ratingDelta, position, name, statLines, size = "md" }) {
+function futCardHtml({ rating, ratingDelta, position, name, nationality, statLines, size = "md" }) {
+  const flag = flagEmoji(nationality);
   return `
     <div class="fut-card fut-card-${size}">
       <div class="fut-rating">${rating}${ratingDelta ? deltaBadgeHtml(ratingDelta) : ""}</div>
       <div class="fut-pos">${positionLabel(position)}</div>
-      <div class="fut-name">${escapeHtml(name)}</div>
+      <div class="fut-name">${flag ? `<span class="player-flag">${flag}</span> ` : ""}${escapeHtml(name)}</div>
       <div class="fut-stats">
         ${statLines.map((s) => `<span class="fut-stat"><span class="fut-stat-icon">${s.icon}</span>${s.value}</span>`).join("")}
       </div>
@@ -214,6 +230,7 @@ function pitchPlayerCardHtml(slot, allPlayers) {
     ratingDelta: slot.lastAbilityDelta,
     position: slot.position,
     name: player.name_he,
+    nationality: player.nationality,
     size: "sm",
     statLines: [
       { icon: "💪", value: `${slot.fitness}${deltaBadgeHtml(slot.lastFitnessDelta)}` },
@@ -571,12 +588,13 @@ export function renderTransferWindow({ state, allPlayers, feedback }) {
                   rating: p.ability,
                   position: p.position,
                   name: p.name_he,
+                  nationality: p.nationality,
                   size: "sm",
                   statLines: [{ icon: "💰", value: formatMoneyShort(p.market_value) }],
                 })}
                 <div style="text-align:left;flex:1">
                   <div class="muted" style="margin-bottom:4px">שחקן נוכחי בעמדה:</div>
-                  <div>${currentPlayer ? escapeHtml(currentPlayer.name_he) + " (" + formatMoneyShort(currentPlayer.market_value) + ")" : "-"}</div>
+                  <div>${currentPlayer ? playerNameWithFlag(currentPlayer) + " (" + formatMoneyShort(currentPlayer.market_value) + ")" : "-"}</div>
                 </div>
               </div>
               <div class="divider"></div>
@@ -797,7 +815,7 @@ export function renderRoundResult({ state, allPlayers, roundSummary, fitnessDiff
       const player = findById(allPlayers, slot.playerId);
       const diff = fitnessDiffs ? fitnessDiffs[slot.playerId] || 0 : 0;
       if (!diff) return null;
-      return `<div class="fitness-change-line"><span>${positionLabel(slot.position)} · ${escapeHtml(player.name_he)}</span><span class="${diff > 0 ? "income-amount" : "expense-amount"}">${diff > 0 ? "+" : ""}${diff} כושר</span></div>`;
+      return `<div class="fitness-change-line"><span>${positionLabel(slot.position)} · ${playerNameWithFlag(player)}</span><span class="${diff > 0 ? "income-amount" : "expense-amount"}">${diff > 0 ? "+" : ""}${diff} כושר</span></div>`;
     })
     .filter(Boolean)
     .join("");
