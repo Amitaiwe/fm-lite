@@ -121,9 +121,19 @@ function buildEventContext(eventDef, state, allPlayers, rng) {
   return ctx;
 }
 
-function formatText(template, ctx) {
+function formatText(template, ctx, lang = "he") {
+  // lang שולט רק בשם השחקן שמושתל בטקסט: "he" משתמש ב-name_he ו-"en"
+  // ב-name_en (עם נפילה חזרה לעברית אם חסר). שאר המשפט נשאר בעברית -
+  // ממשק המשחק עצמו עברי, רק שמות השחקנים מתחלפים.
+  const playerName = ctx.player
+    ? lang === "en" && ctx.player.name_en
+      ? ctx.player.name_en
+      : ctx.player.name_he
+    : lang === "en"
+      ? "the player"
+      : "השחקן";
   return template
-    .replaceAll("{playerName}", ctx.player ? ctx.player.name_he : "השחקן")
+    .replaceAll("{playerName}", playerName)
     .replaceAll("{positionLabel}", ctx.position ? POSITION_LABELS_HE[ctx.position] || ctx.position : "")
     .replaceAll("{amount}", fmt(ctx.amount))
     .replaceAll("{cost}", fmt(ctx.cost));
@@ -338,15 +348,22 @@ export function triggerEvent(state, allPlayers, rng) {
     }
   }
 
-  const description = formatText(def.description_he, ctx);
+  // מכינים שתי גרסאות מוכנות של הטקסטים (עברית/אנגלית) כבר כאן, כי
+  // הטקסט "נאפה" פעם אחת עם שם השחקן בתוכו ונשמר ב-state - כך ה-UI
+  // יכול להחליף שפה גם באמצע אירוע בלי לפרמט מחדש.
+  const description = formatText(def.description_he, ctx, "he");
+  const descriptionEn = formatText(def.description_he, ctx, "en");
 
   const pendingEvent = {
     eventId: def.id,
-    title: def.title_he ? formatText(def.title_he, ctx) : description,
+    title: def.title_he ? formatText(def.title_he, ctx, "he") : description,
+    titleEn: def.title_he ? formatText(def.title_he, ctx, "en") : descriptionEn,
     description,
+    descriptionEn,
     options: def.options.map((o, i) => ({
       id: o.id,
-      label: formatText(o.label_he, ctx),
+      label: formatText(o.label_he, ctx, "he"),
+      labelEn: formatText(o.label_he, ctx, "en"),
       summaryLines: describeEffects(resolvedOptionEffects[i], ctx),
       gamble: extractGamble(resolvedOptionEffects[i], ctx),
       effects: resolvedOptionEffects[i],
@@ -375,9 +392,12 @@ export function resolveEventChoice(state, allPlayers, optionId, rng) {
   const lastEventOutcome = {
     eventId: def.id,
     title: state.pendingEvent.title,
+    titleEn: state.pendingEvent.titleEn,
     description: state.pendingEvent.description,
+    descriptionEn: state.pendingEvent.descriptionEn,
     optionId: option.id,
     optionLabel: option.label,
+    optionLabelEn: option.labelEn,
     gamble: option.gamble,
     notes,
     randomOutcome,

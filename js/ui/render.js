@@ -7,7 +7,7 @@ import { findTeamMatch } from "../engine/fixtures.js";
 import { sortedTable } from "../engine/table.js";
 import { computeManagedTeamStrength, estimateMatchProbabilities } from "../engine/simulate.js";
 import { SETTINGS, POSITION_LABELS_HE } from "../data/settings.js";
-import { formatMoney, formatMoneyShort, positionLabel, escapeHtml } from "./format.js";
+import { formatMoney, formatMoneyShort, positionLabel, escapeHtml, getNameLang, playerDisplayName } from "./format.js";
 import { teamCrestSvg } from "./crest.js";
 import { CAREER_STAGES } from "../engine/career.js";
 
@@ -27,7 +27,7 @@ function flagEmoji(countryCode) {
 function playerNameWithFlag(player) {
   if (!player) return "";
   const flag = flagEmoji(player.nationality);
-  return `${flag ? `<span class="player-flag">${flag}</span> ` : ""}${escapeHtml(player.name_he)}`;
+  return `${flag ? `<span class="player-flag">${flag}</span> ` : ""}${escapeHtml(playerDisplayName(player))}`;
 }
 
 /**
@@ -185,7 +185,7 @@ export function renderSquadDraft({ position, candidates, stepIndex, totalSteps }
             ${futCardHtml({
               rating: p.ability,
               position: p.position,
-              name: p.name_he,
+              name: playerDisplayName(p),
               nationality: p.nationality,
               size: "lg",
               statLines: [
@@ -230,7 +230,7 @@ function pitchPlayerCardHtml(slot, allPlayers) {
     rating: slot.currentAbility,
     ratingDelta: slot.lastAbilityDelta,
     position: slot.position,
-    name: player.name_he,
+    name: playerDisplayName(player),
     nationality: player.nationality,
     size: "sm",
     statLines: [
@@ -483,7 +483,7 @@ export function renderPlayerStats({ state, allPlayers }) {
   const statsRows = Object.entries(state.playerStats || {}).map(([playerIdStr, s]) => {
     const player = findById(allPlayers, Number(playerIdStr));
     return {
-      name: player ? player.name_he : "?",
+      name: player ? playerDisplayName(player) : "?",
       nationality: player ? player.nationality : null,
       teamId: s.teamId,
       goals: s.goals || 0,
@@ -649,7 +649,7 @@ export function renderTransferWindow({ state, allPlayers, feedback }) {
                 ${futCardHtml({
                   rating: p.ability,
                   position: p.position,
-                  name: p.name_he,
+                  name: playerDisplayName(p),
                   nationality: p.nationality,
                   size: "sm",
                   statLines: [{ icon: "💰", value: formatMoneyShort(p.market_value) }],
@@ -705,13 +705,19 @@ function oddsBarHtml(branches) {
 
 export function renderEvent({ state }) {
   const ev = state.pendingEvent;
+  // שפת שמות השחקנים הנוכחית: לאירועים נשמרות שתי גרסאות מוכנות של
+  // הטקסטים (he/en) כבר ב-triggerEvent, כי הם "נאפים" פעם אחת עם שם
+  // השחקן בתוכם - כאן רק בוחרים איזו גרסה להציג.
+  const isEn = getNameLang() === "en";
+  const evTitle = isEn && ev.titleEn ? ev.titleEn : ev.title;
+  const evDescription = isEn && ev.descriptionEn ? ev.descriptionEn : ev.description;
   return `
     <div class="screen">
       <div class="card">
         <div class="center-col" style="padding-top:0;padding-bottom:8px">
           <div style="font-size:2rem">📣</div>
-          <h2>${escapeHtml(ev.title)}</h2>
-          <p>${escapeHtml(ev.description)}</p>
+          <h2>${escapeHtml(evTitle)}</h2>
+          <p>${escapeHtml(evDescription)}</p>
         </div>
         <div class="col-stack">
           ${ev.options
@@ -728,7 +734,7 @@ export function renderEvent({ state }) {
                 <div class="card-flat event-option">
                   <div class="row" style="align-items:flex-start">
                     <div style="flex:1">
-                      <div class="event-option-label">${escapeHtml(o.label)}</div>
+                      <div class="event-option-label">${escapeHtml(isEn && o.labelEn ? o.labelEn : o.label)}</div>
                       ${sureLines}
                       ${gambleHtml}
                     </div>
@@ -798,12 +804,15 @@ export function renderEventSpin({ title, optionLabel, branches, winningLabel }) 
 
 export function renderEventOutcome({ outcome }) {
   const ro = outcome.randomOutcome;
+  const isEn = getNameLang() === "en";
+  const outcomeTitle = isEn && outcome.titleEn ? outcome.titleEn : outcome.title;
+  const outcomeOptionLabel = isEn && outcome.optionLabelEn ? outcome.optionLabelEn : outcome.optionLabel;
   return `
     <div class="screen">
       <div class="card center-col">
         <div style="font-size:2rem">${ro ? "🎲" : "✅"}</div>
-        <h2>${escapeHtml(outcome.title)}</h2>
-        <p class="muted">בחרת: ${escapeHtml(outcome.optionLabel)}</p>
+        <h2>${escapeHtml(outcomeTitle)}</h2>
+        <p class="muted">בחרת: ${escapeHtml(outcomeOptionLabel)}</p>
 
         ${
           ro

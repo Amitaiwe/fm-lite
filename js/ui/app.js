@@ -9,6 +9,7 @@ import { needsTransferWindow } from "../engine/round.js";
 import { findTeamMatch } from "../engine/fixtures.js";
 import { CAREER_STAGES } from "../engine/career.js";
 import { SETTINGS } from "../data/settings.js";
+import { getNameLang, setNameLang } from "./format.js";
 import {
   renderStartScreen,
   renderLeaguePick,
@@ -148,7 +149,13 @@ function render() {
       html = `<div class="screen"><p>מסך לא ידוע: ${ui.screen}</p></div>`;
   }
 
-  appEl.innerHTML = html + (ui.toast ? `<div class="toast ${ui.toast.type}">${ui.toast.message}</div>` : "");
+  // שורת החלפת שפת שמות השחקנים - מוצגת מעל כל מסך (כולל פתיחה,
+  // בחירת סגל ואירועים), כך שההחלפה זמינה תמיד והבחירה נשמרת
+  // ב-localStorage (ראו format.js).
+  const nameLang = getNameLang();
+  const langBarHtml = `<div class="name-lang-bar"><button class="name-lang-toggle" data-action="toggle-name-lang">🌐 ${nameLang === "en" ? "שמות שחקנים: English" : "שמות שחקנים: עברית"}</button></div>`;
+
+  appEl.innerHTML = langBarHtml + html + (ui.toast ? `<div class="toast ${ui.toast.type}">${ui.toast.message}</div>` : "");
   // תמיד גוללים לראש המסך במעבר בין מסכים, כדי שתוצאת המחזור/האירוע
   // החדש תהיה מיד גלויה בלי שהמשתמש יצטרך לגלול ידנית.
   window.scrollTo(0, 0);
@@ -301,9 +308,13 @@ function onResolveEvent(optionId) {
   const gamble = pendingOption?.gamble;
   const randomOutcome = ui.lastEventOutcome?.randomOutcome;
   if (gamble && randomOutcome) {
+    const spinIsEn = getNameLang() === "en";
     ui.spinData = {
-      title: ui.lastEventOutcome.title,
-      optionLabel: ui.lastEventOutcome.optionLabel,
+      title: spinIsEn && ui.lastEventOutcome.titleEn ? ui.lastEventOutcome.titleEn : ui.lastEventOutcome.title,
+      optionLabel:
+        spinIsEn && ui.lastEventOutcome.optionLabelEn
+          ? ui.lastEventOutcome.optionLabelEn
+          : ui.lastEventOutcome.optionLabel,
       branches: gamble.branches,
       winningLabel: randomOutcome.label,
     };
@@ -441,6 +452,12 @@ function wireEvents() {
         break;
       case "tab":
         ui.screen = el.dataset.tab;
+        render();
+        break;
+      case "toggle-name-lang":
+        // מחליף את שפת שמות השחקנים (עברית <-> English) ושומר את הבחירה;
+        // render() מצייר מחדש את המסך הנוכחי כבר בשפה החדשה.
+        setNameLang(getNameLang() === "en" ? "he" : "en");
         render();
         break;
       case "play-round":
