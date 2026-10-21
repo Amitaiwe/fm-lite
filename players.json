@@ -5,7 +5,8 @@
     "name_en": "Kylian Mbappé",
     "position": "striker",
     "ability": 99,
-    "market_value": 180000000
+    "market_value": 180000000,
+    "nationality": "fr"
   },
   {
     "id": 1002,
@@ -13,7 +14,8 @@
     "name_en": "Rodri",
     "position": "midfielder",
     "ability": 99,
-    "market_value": 180000000
+    "market_value": 180000000,
+    "nationality": "es"
   },
   {
     "id": 1003,
@@ -21,7 +23,8 @@
     "name_en": "Jude Bellingham",
     "position": "midfielder",
     "ability": 98,
-    "market_value": 165000000
+    "market_value": 165000000,
+    "nationality": "gb"
   },
   {
     "id": 1004,
@@ -29,7 +32,8 @@
     "name_en": "Vini Jr.",
     "position": "striker",
     "ability": 98,
-    "market_value": 165000000
+    "market_value": 165000000,
+    "nationality": "br"
   },
   {
     "id": 1005,
@@ -37,7 +41,8 @@
     "name_en": "Kevin De Bruyne",
     "position": "midfielder",
     "ability": 98,
-    "market_value": 165000000
+    "market_value": 165000000,
+    "nationality": "be"
   },
   {
     "id": 1006,
@@ -45,7 +50,8 @@
     "name_en": "Harry Kane",
     "position": "striker",
     "ability": 98,
-    "market_value": 165000000
+    "market_value": 165000000,
+    "nationality": "gb"
   },
   {
     "id": 1007,
@@ -53,7 +59,8 @@
     "name_en": "Martin Ødegaard",
     "position": "midfielder",
     "ability": 97,
-    "market_value": 150000000
+    "market_value": 150000000,
+    "nationality": "no"
   },
   {
     "id": 1008,
@@ -61,7 +68,8 @@
     "name_en": "Gianluigi Donnarumma",
     "position": "goalkeeper",
     "ability": 97,
-    "market_value": 150000000
+    "market_value": 150000000,
+    "nationality": "it"
   },
   {
     "id": 1009,
@@ -69,7 +77,8 @@
     "name_en": "Alisson",
     "position": "goalkeeper",
     "ability": 97,
-    "market_value": 150000000
+    "market_value": 150000000,
+    "nationality": "br"
   },
   {
     "id": 1010,
@@ -77,7 +86,8 @@
     "name_en": "Lautaro Martínez",
     "position": "striker",
     "ability": 97,
-    "market_value": 150000000
+    "market_value": 150000000,
+    "nationality": "ar"
   },
   {
     "id": 1011,
@@ -85,7 +95,8 @@
     "name_en": "Virgil van Dijk",
     "position": "defender",
     "ability": 97,
-    "market_value": 150000000
+    "market_value": 150000000,
+    "nationality": "nl"
   },
   {
     "id": 1012,
@@ -93,7 +104,8 @@
     "name_en": "Marc-André ter Stegen",
     "position": "goalkeeper",
     "ability": 97,
-    "market_value": 150000000
+    "market_value": 150000000,
+    "nationality": "de"
   },
   {
     "id": 1013,
@@ -101,7 +113,8 @@
     "name_en": "Mohamed Salah",
     "position": "striker",
     "ability": 97,
-    "market_value": 150000000
+    "market_value": 150000000,
+    "nationality": "eg"
   },
   {
     "id": 1014,
@@ -109,7 +122,8 @@
     "name_en": "Phil Foden",
     "position": "striker",
     "ability": 96,
-    "market_value": 135000000
+    "market_value": 135000000,
+    "nationality": "gb"
   },
   {
     "id": 1015,
@@ -117,7 +131,8 @@
     "name_en": "Antoine Griezmann",
     "position": "striker",
     "ability": 96,
-    "market_value": 135000000
+    "market_value": 135000000,
+    "nationality": "fr"
   },
   {
     "id": 1016,
@@ -125,7 +140,8 @@
     "name_en": "Rúben Dias",
     "position": "defender",
     "ability": 96,
-    "market_value": 135000000
+    "market_value": 135000000,
+    "nationality": "pt"
   },
   {
     "id": 1017,
@@ -133,7 +149,8 @@
     "name_en": "Robert Lewandowski",
     "position": "striker",
     "ability": 96,
-    "market_value": 135000000
+    "market_value": 135000000,
+    "nationality": "pl"
   },
   {
     "id": 1018,
@@ -141,7 +158,8 @@
     "name_en": "Federico Valverde",
     "position": "midfielder",
     "ability": 96,
-    "market_value": 135000000
+    "market_value": 135000000,
+    "nationality": "uy"
   },
   {
     "id": 1019,
@@ -149,7 +167,8 @@
     "name_en": "Bernardo Silva",
     "position": "midfielder",
     "ability": 96,
-    "market_value": 135000000
+    "market_value": 135000000,
+    "nationality": "pt"
   },
   {
     "id": 1020,
@@ -157,7 +176,8 @@
     "name_en": "Jan Oblak",
     "position": "goalkeeper",
     "ability": 96,
-    "market_value": 135000000
+    "market_value": 135000000,
+    "nationality": "si"
   },
   {
     "id": 1021,
@@ -165,7 +185,8 @@
     "name_en": "Antonio Rüdiger",
     "position": "defender",
     "ability": 96,
-    "market_value": 135000000
+    "market_value": 135000000,
+    "nationality": "de"
   },
   {
     "id": 1022,
@@ -173,7 +194,8 @@
     "name_en": "Florian Wirtz",
     "position": "midfielder",
     "ability": 96,
-    "market_value": 135000000
+    "market_value": 135000000,
+    "nationality": "de"
   },
   {
     "id": 1023,
@@ -181,7 +203,8 @@
     "name_en": "Gregor Kobel",
     "position": "goalkeeper",
     "ability": 96,
-    "market_value": 135000000
+    "market_value": 135000000,
+    "nationality": "ch"
   },
   {
     "id": 1024,
@@ -189,7 +212,8 @@
     "name_en": "William Saliba",
     "position": "defender",
     "ability": 95,
-    "market_value": 120000000
+    "market_value": 120000000,
+    "nationality": "fr"
   },
   {
     "id": 1025,
@@ -197,7 +221,8 @@
     "name_en": "Victor Osimhen",
     "position": "striker",
     "ability": 95,
-    "market_value": 120000000
+    "market_value": 120000000,
+    "nationality": "ng"
   },
   {
     "id": 1026,
@@ -205,7 +230,8 @@
     "name_en": "Jamal Musiala",
     "position": "midfielder",
     "ability": 95,
-    "market_value": 120000000
+    "market_value": 120000000,
+    "nationality": "de"
   },
   {
     "id": 1027,
@@ -213,7 +239,8 @@
     "name_en": "Bukayo Saka",
     "position": "striker",
     "ability": 95,
-    "market_value": 120000000
+    "market_value": 120000000,
+    "nationality": "gb"
   },
   {
     "id": 1028,
@@ -221,7 +248,8 @@
     "name_en": "Paulo Dybala",
     "position": "midfielder",
     "ability": 95,
-    "market_value": 120000000
+    "market_value": 120000000,
+    "nationality": "ar"
   },
   {
     "id": 1029,
@@ -229,7 +257,8 @@
     "name_en": "Theo Hernández",
     "position": "defender",
     "ability": 95,
-    "market_value": 120000000
+    "market_value": 120000000,
+    "nationality": "fr"
   },
   {
     "id": 1030,
@@ -237,7 +266,8 @@
     "name_en": "Mike Maignan",
     "position": "goalkeeper",
     "ability": 95,
-    "market_value": 120000000
+    "market_value": 120000000,
+    "nationality": "fr"
   },
   {
     "id": 1031,
@@ -245,7 +275,8 @@
     "name_en": "Heung Min Son",
     "position": "striker",
     "ability": 95,
-    "market_value": 120000000
+    "market_value": 120000000,
+    "nationality": "kr"
   },
   {
     "id": 1032,
@@ -253,7 +284,8 @@
     "name_en": "Marquinhos",
     "position": "defender",
     "ability": 95,
-    "market_value": 120000000
+    "market_value": 120000000,
+    "nationality": "br"
   },
   {
     "id": 1033,
@@ -261,7 +293,8 @@
     "name_en": "Alessandro Bastoni",
     "position": "defender",
     "ability": 95,
-    "market_value": 120000000
+    "market_value": 120000000,
+    "nationality": "it"
   },
   {
     "id": 1034,
@@ -269,7 +302,8 @@
     "name_en": "Emiliano Martínez",
     "position": "goalkeeper",
     "ability": 95,
-    "market_value": 120000000
+    "market_value": 120000000,
+    "nationality": "ar"
   },
   {
     "id": 1035,
@@ -277,7 +311,8 @@
     "name_en": "Nicolò Barella",
     "position": "midfielder",
     "ability": 95,
-    "market_value": 120000000
+    "market_value": 120000000,
+    "nationality": "it"
   },
   {
     "id": 1036,
@@ -285,7 +320,8 @@
     "name_en": "Yann Sommer",
     "position": "goalkeeper",
     "ability": 95,
-    "market_value": 120000000
+    "market_value": 120000000,
+    "nationality": "ch"
   },
   {
     "id": 1037,
@@ -293,7 +329,8 @@
     "name_en": "Gabriel",
     "position": "defender",
     "ability": 94,
-    "market_value": 112000000
+    "market_value": 112000000,
+    "nationality": "br"
   },
   {
     "id": 1038,
@@ -301,7 +338,8 @@
     "name_en": "Granit Xhaka",
     "position": "midfielder",
     "ability": 94,
-    "market_value": 112000000
+    "market_value": 112000000,
+    "nationality": "ch"
   },
   {
     "id": 1039,
@@ -309,7 +347,8 @@
     "name_en": "Rafael Leão",
     "position": "striker",
     "ability": 94,
-    "market_value": 112000000
+    "market_value": 112000000,
+    "nationality": "pt"
   },
   {
     "id": 1040,
@@ -317,7 +356,8 @@
     "name_en": "Grimaldo",
     "position": "midfielder",
     "ability": 94,
-    "market_value": 112000000
+    "market_value": 112000000,
+    "nationality": "es"
   },
   {
     "id": 1041,
@@ -325,7 +365,8 @@
     "name_en": "Ousmane Dembélé",
     "position": "striker",
     "ability": 94,
-    "market_value": 112000000
+    "market_value": 112000000,
+    "nationality": "fr"
   },
   {
     "id": 1042,
@@ -333,7 +374,8 @@
     "name_en": "Trent Alexander-Arnold",
     "position": "defender",
     "ability": 94,
-    "market_value": 112000000
+    "market_value": 112000000,
+    "nationality": "gb"
   },
   {
     "id": 1043,
@@ -341,7 +383,8 @@
     "name_en": "Pedri",
     "position": "midfielder",
     "ability": 94,
-    "market_value": 112000000
+    "market_value": 112000000,
+    "nationality": "es"
   },
   {
     "id": 1044,
@@ -349,7 +392,8 @@
     "name_en": "Jonathan Tah",
     "position": "defender",
     "ability": 94,
-    "market_value": 112000000
+    "market_value": 112000000,
+    "nationality": "de"
   },
   {
     "id": 1045,
@@ -357,7 +401,8 @@
     "name_en": "Bremer",
     "position": "defender",
     "ability": 94,
-    "market_value": 112000000
+    "market_value": 112000000,
+    "nationality": "br"
   },
   {
     "id": 1046,
@@ -365,7 +410,8 @@
     "name_en": "Joshua Kimmich",
     "position": "defender",
     "ability": 94,
-    "market_value": 112000000
+    "market_value": 112000000,
+    "nationality": "de"
   },
   {
     "id": 1047,
@@ -373,7 +419,8 @@
     "name_en": "Unai Simón",
     "position": "goalkeeper",
     "ability": 94,
-    "market_value": 112000000
+    "market_value": 112000000,
+    "nationality": "es"
   },
   {
     "id": 1048,
@@ -381,7 +428,8 @@
     "name_en": "Manuel Neuer",
     "position": "goalkeeper",
     "ability": 94,
-    "market_value": 112000000
+    "market_value": 112000000,
+    "nationality": "de"
   },
   {
     "id": 1049,
@@ -389,7 +437,8 @@
     "name_en": "Hakan Çalhanoğlu",
     "position": "midfielder",
     "ability": 94,
-    "market_value": 112000000
+    "market_value": 112000000,
+    "nationality": "tr"
   },
   {
     "id": 1050,
@@ -397,7 +446,8 @@
     "name_en": "Alexander Isak",
     "position": "striker",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "se"
   },
   {
     "id": 1051,
@@ -405,7 +455,8 @@
     "name_en": "Andrew Robertson",
     "position": "defender",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "gb"
   },
   {
     "id": 1052,
@@ -413,7 +464,8 @@
     "name_en": "Cole Palmer",
     "position": "midfielder",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "gb"
   },
   {
     "id": 1053,
@@ -421,7 +473,8 @@
     "name_en": "Giorgi Mamardashvili",
     "position": "goalkeeper",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "ge"
   },
   {
     "id": 1054,
@@ -429,7 +482,8 @@
     "name_en": "James Maddison",
     "position": "midfielder",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "gb"
   },
   {
     "id": 1055,
@@ -437,7 +491,8 @@
     "name_en": "Jules Koundé",
     "position": "defender",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "fr"
   },
   {
     "id": 1056,
@@ -445,7 +500,8 @@
     "name_en": "Julian Brandt",
     "position": "midfielder",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "de"
   },
   {
     "id": 1057,
@@ -453,7 +509,8 @@
     "name_en": "Khvicha Kvaratskhelia",
     "position": "striker",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "ge"
   },
   {
     "id": 1058,
@@ -461,7 +518,8 @@
     "name_en": "Loïs Openda",
     "position": "striker",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "be"
   },
   {
     "id": 1059,
@@ -469,7 +527,8 @@
     "name_en": "Nico Schlotterbeck",
     "position": "defender",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "de"
   },
   {
     "id": 1060,
@@ -477,7 +536,8 @@
     "name_en": "Nico Williams",
     "position": "midfielder",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "es"
   },
   {
     "id": 1061,
@@ -485,7 +545,8 @@
     "name_en": "Ollie Watkins",
     "position": "striker",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "gb"
   },
   {
     "id": 1062,
@@ -493,7 +554,8 @@
     "name_en": "Palhinha",
     "position": "midfielder",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "pt"
   },
   {
     "id": 1063,
@@ -501,7 +563,8 @@
     "name_en": "Ronald Araujo",
     "position": "defender",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "uy"
   },
   {
     "id": 1064,
@@ -509,7 +572,8 @@
     "name_en": "Vitinha",
     "position": "midfielder",
     "ability": 93,
-    "market_value": 104000000
+    "market_value": 104000000,
+    "nationality": "pt"
   },
   {
     "id": 1065,
@@ -517,7 +581,8 @@
     "name_en": "Artem Dovbyk",
     "position": "striker",
     "ability": 92,
-    "market_value": 96000000
+    "market_value": 96000000,
+    "nationality": "ua"
   },
   {
     "id": 1066,
@@ -525,7 +590,8 @@
     "name_en": "Casemiro",
     "position": "midfielder",
     "ability": 92,
-    "market_value": 96000000
+    "market_value": 96000000,
+    "nationality": "br"
   },
   {
     "id": 1067,
@@ -533,7 +599,8 @@
     "name_en": "Dušan Vlahović",
     "position": "striker",
     "ability": 92,
-    "market_value": 96000000
+    "market_value": 96000000,
+    "nationality": "rs"
   },
   {
     "id": 1068,
@@ -541,7 +608,8 @@
     "name_en": "Iago Aspas",
     "position": "striker",
     "ability": 92,
-    "market_value": 96000000
+    "market_value": 96000000,
+    "nationality": "es"
   },
   {
     "id": 1069,
@@ -549,7 +617,8 @@
     "name_en": "Lukáš Hrádecký",
     "position": "goalkeeper",
     "ability": 92,
-    "market_value": 96000000
+    "market_value": 96000000,
+    "nationality": "fi"
   },
   {
     "id": 1070,
@@ -557,7 +626,8 @@
     "name_en": "Alessio Romagnoli",
     "position": "defender",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "it"
   },
   {
     "id": 1071,
@@ -565,7 +635,8 @@
     "name_en": "Douglas Luiz",
     "position": "midfielder",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "br"
   },
   {
     "id": 1072,
@@ -573,7 +644,8 @@
     "name_en": "Duván Zapata",
     "position": "striker",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "co"
   },
   {
     "id": 1073,
@@ -581,7 +653,8 @@
     "name_en": "Fikayo Tomori",
     "position": "defender",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "gb"
   },
   {
     "id": 1074,
@@ -589,7 +662,8 @@
     "name_en": "Gerard Moreno",
     "position": "striker",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "es"
   },
   {
     "id": 1075,
@@ -597,7 +671,8 @@
     "name_en": "Ivan Provedel",
     "position": "goalkeeper",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "it"
   },
   {
     "id": 1076,
@@ -605,7 +680,8 @@
     "name_en": "José María Giménez",
     "position": "defender",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "uy"
   },
   {
     "id": 1077,
@@ -613,7 +689,8 @@
     "name_en": "Lucas Hernández",
     "position": "defender",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "fr"
   },
   {
     "id": 1078,
@@ -621,7 +698,8 @@
     "name_en": "Mattia Zaccagni",
     "position": "striker",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "it"
   },
   {
     "id": 1079,
@@ -629,7 +707,8 @@
     "name_en": "Parejo",
     "position": "midfielder",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "es"
   },
   {
     "id": 1080,
@@ -637,7 +716,8 @@
     "name_en": "Robin Le Normand",
     "position": "defender",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "es"
   },
   {
     "id": 1081,
@@ -645,7 +725,8 @@
     "name_en": "Teun Koopmeiners",
     "position": "midfielder",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "nl"
   },
   {
     "id": 1082,
@@ -653,7 +734,8 @@
     "name_en": "Willi Orban",
     "position": "defender",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "hu"
   },
   {
     "id": 1083,
@@ -661,7 +743,8 @@
     "name_en": "Xavi Simons",
     "position": "midfielder",
     "ability": 91,
-    "market_value": 88000000
+    "market_value": 88000000,
+    "nationality": "nl"
   },
   {
     "id": 1084,
@@ -669,7 +752,8 @@
     "name_en": "Alexandre Lacazette",
     "position": "striker",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "fr"
   },
   {
     "id": 1085,
@@ -677,7 +761,8 @@
     "name_en": "Anthony Gordon",
     "position": "striker",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "gb"
   },
   {
     "id": 1086,
@@ -685,7 +770,8 @@
     "name_en": "Brice Samba",
     "position": "goalkeeper",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "cd"
   },
   {
     "id": 1087,
@@ -693,7 +779,8 @@
     "name_en": "Danilo",
     "position": "defender",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "br"
   },
   {
     "id": 1088,
@@ -701,7 +788,8 @@
     "name_en": "Emre Can",
     "position": "midfielder",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "de"
   },
   {
     "id": 1089,
@@ -709,7 +797,8 @@
     "name_en": "Gayà",
     "position": "defender",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "es"
   },
   {
     "id": 1090,
@@ -717,7 +806,8 @@
     "name_en": "Gianluca Mancini",
     "position": "defender",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "it"
   },
   {
     "id": 1091,
@@ -725,7 +815,8 @@
     "name_en": "Giovanni Di Lorenzo",
     "position": "defender",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "it"
   },
   {
     "id": 1092,
@@ -733,7 +824,8 @@
     "name_en": "Iñaki Williams",
     "position": "midfielder",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "gh"
   },
   {
     "id": 1093,
@@ -741,7 +833,8 @@
     "name_en": "John McGinn",
     "position": "midfielder",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "gb"
   },
   {
     "id": 1094,
@@ -749,7 +842,8 @@
     "name_en": "Kevin Trapp",
     "position": "goalkeeper",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "de"
   },
   {
     "id": 1095,
@@ -757,7 +851,8 @@
     "name_en": "Marco Carnesecchi",
     "position": "goalkeeper",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "it"
   },
   {
     "id": 1096,
@@ -765,7 +860,8 @@
     "name_en": "Matthias Ginter",
     "position": "defender",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "de"
   },
   {
     "id": 1097,
@@ -773,7 +869,8 @@
     "name_en": "Mohammed Kudus",
     "position": "midfielder",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "gh"
   },
   {
     "id": 1098,
@@ -781,7 +878,8 @@
     "name_en": "Nahuel Molina",
     "position": "defender",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "ar"
   },
   {
     "id": 1099,
@@ -789,7 +887,8 @@
     "name_en": "Niclas Füllkrug",
     "position": "striker",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "de"
   },
   {
     "id": 1100,
@@ -797,7 +896,8 @@
     "name_en": "Niklas Süle",
     "position": "defender",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "de"
   },
   {
     "id": 1101,
@@ -805,7 +905,8 @@
     "name_en": "Oyarzabal",
     "position": "striker",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "es"
   },
   {
     "id": 1102,
@@ -813,7 +914,8 @@
     "name_en": "Paulo Gazzaniga",
     "position": "goalkeeper",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "ar"
   },
   {
     "id": 1103,
@@ -821,7 +923,8 @@
     "name_en": "Péter Gulácsi",
     "position": "goalkeeper",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "hu"
   },
   {
     "id": 1104,
@@ -829,7 +932,8 @@
     "name_en": "Raphaël Varane",
     "position": "defender",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "fr"
   },
   {
     "id": 1105,
@@ -837,7 +941,8 @@
     "name_en": "Romelu Lukaku",
     "position": "striker",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "be"
   },
   {
     "id": 1106,
@@ -845,7 +950,8 @@
     "name_en": "Stanislav Lobotka",
     "position": "midfielder",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "sk"
   },
   {
     "id": 1107,
@@ -853,7 +959,8 @@
     "name_en": "Thomas Partey",
     "position": "midfielder",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "gh"
   },
   {
     "id": 1108,
@@ -861,7 +968,8 @@
     "name_en": "Tijjani Reijnders",
     "position": "midfielder",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "nl"
   },
   {
     "id": 1109,
@@ -869,7 +977,8 @@
     "name_en": "Yangel Herrera",
     "position": "midfielder",
     "ability": 90,
-    "market_value": 80000000
+    "market_value": 80000000,
+    "nationality": "ve"
   },
   {
     "id": 1110,
@@ -877,7 +986,8 @@
     "name_en": "Alexandr Golovin",
     "position": "midfielder",
     "ability": 89,
-    "market_value": 75000000
+    "market_value": 75000000,
+    "nationality": "ru"
   },
   {
     "id": 1111,
@@ -885,7 +995,8 @@
     "name_en": "Andrej Kramarić",
     "position": "striker",
     "ability": 89,
-    "market_value": 75000000
+    "market_value": 75000000,
+    "nationality": "hr"
   },
   {
     "id": 1112,
@@ -893,7 +1004,8 @@
     "name_en": "Brais Méndez",
     "position": "midfielder",
     "ability": 89,
-    "market_value": 75000000
+    "market_value": 75000000,
+    "nationality": "es"
   },
   {
     "id": 1113,
@@ -901,7 +1013,8 @@
     "name_en": "Daichi Kamada",
     "position": "midfielder",
     "ability": 89,
-    "market_value": 75000000
+    "market_value": 75000000,
+    "nationality": "jp"
   },
   {
     "id": 1114,
@@ -909,7 +1022,8 @@
     "name_en": "David Raum",
     "position": "defender",
     "ability": 89,
-    "market_value": 75000000
+    "market_value": 75000000,
+    "nationality": "de"
   },
   {
     "id": 1115,
@@ -917,7 +1031,8 @@
     "name_en": "Ellyes Skhiri",
     "position": "midfielder",
     "ability": 89,
-    "market_value": 75000000
+    "market_value": 75000000,
+    "nationality": "tn"
   },
   {
     "id": 1116,
@@ -925,7 +1040,8 @@
     "name_en": "Jonathan David",
     "position": "striker",
     "ability": 89,
-    "market_value": 75000000
+    "market_value": 75000000,
+    "nationality": "ca"
   },
   {
     "id": 1117,
@@ -933,7 +1049,8 @@
     "name_en": "Takefusa Kubo",
     "position": "striker",
     "ability": 89,
-    "market_value": 75000000
+    "market_value": 75000000,
+    "nationality": "jp"
   },
   {
     "id": 1118,
@@ -941,7 +1058,8 @@
     "name_en": "Alexander Nübel",
     "position": "goalkeeper",
     "ability": 88,
-    "market_value": 70000000
+    "market_value": 70000000,
+    "nationality": "de"
   },
   {
     "id": 1119,
@@ -949,7 +1067,8 @@
     "name_en": "Benjamin André",
     "position": "midfielder",
     "ability": 88,
-    "market_value": 70000000
+    "market_value": 70000000,
+    "nationality": "fr"
   },
   {
     "id": 1120,
@@ -957,7 +1076,8 @@
     "name_en": "Evanilson",
     "position": "striker",
     "ability": 88,
-    "market_value": 70000000
+    "market_value": 70000000,
+    "nationality": "br"
   },
   {
     "id": 1121,
@@ -965,7 +1085,8 @@
     "name_en": "Facundo Medina",
     "position": "defender",
     "ability": 88,
-    "market_value": 70000000
+    "market_value": 70000000,
+    "nationality": "ar"
   },
   {
     "id": 1122,
@@ -973,7 +1094,8 @@
     "name_en": "Hamari Traoré",
     "position": "defender",
     "ability": 88,
-    "market_value": 70000000
+    "market_value": 70000000,
+    "nationality": "ml"
   },
   {
     "id": 1123,
@@ -981,7 +1103,8 @@
     "name_en": "Joachim Andersen",
     "position": "defender",
     "ability": 88,
-    "market_value": 70000000
+    "market_value": 70000000,
+    "nationality": "dk"
   },
   {
     "id": 1124,
@@ -989,7 +1112,8 @@
     "name_en": "Jonathan Clauss",
     "position": "defender",
     "ability": 88,
-    "market_value": 70000000
+    "market_value": 70000000,
+    "nationality": "fr"
   },
   {
     "id": 1125,
@@ -997,7 +1121,8 @@
     "name_en": "Jordan Veretout",
     "position": "midfielder",
     "ability": 88,
-    "market_value": 70000000
+    "market_value": 70000000,
+    "nationality": "fr"
   },
   {
     "id": 1126,
@@ -1005,7 +1130,8 @@
     "name_en": "João Félix",
     "position": "striker",
     "ability": 88,
-    "market_value": 70000000
+    "market_value": 70000000,
+    "nationality": "pt"
   },
   {
     "id": 1127,
@@ -1013,7 +1139,8 @@
     "name_en": "Kevin Danso",
     "position": "defender",
     "ability": 88,
-    "market_value": 70000000
+    "market_value": 70000000,
+    "nationality": "at"
   },
   {
     "id": 1128,
@@ -1021,7 +1148,8 @@
     "name_en": "Lucas Chevalier",
     "position": "goalkeeper",
     "ability": 88,
-    "market_value": 70000000
+    "market_value": 70000000,
+    "nationality": "fr"
   },
   {
     "id": 1129,
@@ -1029,7 +1157,8 @@
     "name_en": "Téji Savanier",
     "position": "midfielder",
     "ability": 88,
-    "market_value": 70000000
+    "market_value": 70000000,
+    "nationality": "fr"
   },
   {
     "id": 1130,
@@ -1037,7 +1166,8 @@
     "name_en": "Anthony Lopes",
     "position": "goalkeeper",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "pt"
   },
   {
     "id": 1131,
@@ -1045,7 +1175,8 @@
     "name_en": "Ayoze Pérez",
     "position": "midfielder",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "es"
   },
   {
     "id": 1132,
@@ -1053,7 +1184,8 @@
     "name_en": "Boulaye Dia",
     "position": "striker",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "sn"
   },
   {
     "id": 1133,
@@ -1061,7 +1193,8 @@
     "name_en": "Chancel Mbemba",
     "position": "defender",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "cd"
   },
   {
     "id": 1134,
@@ -1069,7 +1202,8 @@
     "name_en": "Chris Führich",
     "position": "midfielder",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "de"
   },
   {
     "id": 1135,
@@ -1077,7 +1211,8 @@
     "name_en": "Dante",
     "position": "defender",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "br"
   },
   {
     "id": 1136,
@@ -1085,7 +1220,8 @@
     "name_en": "Edon Zhegrova",
     "position": "midfielder",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "xk"
   },
   {
     "id": 1137,
@@ -1093,7 +1229,8 @@
     "name_en": "Ermedin Demirović",
     "position": "striker",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "ba"
   },
   {
     "id": 1138,
@@ -1101,7 +1238,8 @@
     "name_en": "Gerónimo Rulli",
     "position": "goalkeeper",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "ar"
   },
   {
     "id": 1139,
@@ -1109,7 +1247,8 @@
     "name_en": "Leonardo Balerdi",
     "position": "defender",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "ar"
   },
   {
     "id": 1140,
@@ -1117,7 +1256,8 @@
     "name_en": "Marcin Bułka",
     "position": "goalkeeper",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "pl"
   },
   {
     "id": 1141,
@@ -1125,7 +1265,8 @@
     "name_en": "Marco Bizot",
     "position": "goalkeeper",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "nl"
   },
   {
     "id": 1142,
@@ -1133,7 +1274,8 @@
     "name_en": "Mason Greenwood",
     "position": "midfielder",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "gb"
   },
   {
     "id": 1143,
@@ -1141,7 +1283,8 @@
     "name_en": "Maximilian Mittelstädt",
     "position": "defender",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "de"
   },
   {
     "id": 1144,
@@ -1149,7 +1292,8 @@
     "name_en": "Nikola Milenković",
     "position": "defender",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "rs"
   },
   {
     "id": 1145,
@@ -1157,7 +1301,8 @@
     "name_en": "Omar Marmoush",
     "position": "striker",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "eg"
   },
   {
     "id": 1146,
@@ -1165,7 +1310,8 @@
     "name_en": "Philipp Lienhart",
     "position": "defender",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "at"
   },
   {
     "id": 1147,
@@ -1173,7 +1319,8 @@
     "name_en": "Pierre Lees-Melou",
     "position": "midfielder",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "fr"
   },
   {
     "id": 1148,
@@ -1181,7 +1328,8 @@
     "name_en": "Robin Koch",
     "position": "defender",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "de"
   },
   {
     "id": 1149,
@@ -1189,7 +1337,8 @@
     "name_en": "Romain Del Castillo",
     "position": "striker",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "fr"
   },
   {
     "id": 1150,
@@ -1197,7 +1346,8 @@
     "name_en": "Sébastien Haller",
     "position": "striker",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "ci"
   },
   {
     "id": 1151,
@@ -1205,7 +1355,8 @@
     "name_en": "Takumi Minamino",
     "position": "midfielder",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "jp"
   },
   {
     "id": 1152,
@@ -1213,7 +1364,8 @@
     "name_en": "Valentin Castellanos",
     "position": "striker",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "ar"
   },
   {
     "id": 1153,
@@ -1221,7 +1373,8 @@
     "name_en": "Wilfried Singo",
     "position": "defender",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "ci"
   },
   {
     "id": 1154,
@@ -1229,7 +1382,8 @@
     "name_en": "Đorđe Petrović",
     "position": "goalkeeper",
     "ability": 87,
-    "market_value": 65000000
+    "market_value": 65000000,
+    "nationality": "rs"
   },
   {
     "id": 1155,
@@ -1237,7 +1391,8 @@
     "name_en": "Borja Iglesias",
     "position": "striker",
     "ability": 86,
-    "market_value": 60000000
+    "market_value": 60000000,
+    "nationality": "es"
   },
   {
     "id": 1156,
@@ -1245,7 +1400,8 @@
     "name_en": "Giorgio Scalvini",
     "position": "defender",
     "ability": 86,
-    "market_value": 60000000
+    "market_value": 60000000,
+    "nationality": "it"
   },
   {
     "id": 1157,
@@ -1253,7 +1409,8 @@
     "name_en": "Guaita",
     "position": "goalkeeper",
     "ability": 86,
-    "market_value": 60000000
+    "market_value": 60000000,
+    "nationality": "es"
   },
   {
     "id": 1158,
@@ -1261,7 +1418,8 @@
     "name_en": "Jordan Teze",
     "position": "defender",
     "ability": 86,
-    "market_value": 60000000
+    "market_value": 60000000,
+    "nationality": "nl"
   },
   {
     "id": 1159,
@@ -1269,7 +1427,8 @@
     "name_en": "Leny Yoro",
     "position": "defender",
     "ability": 86,
-    "market_value": 60000000
+    "market_value": 60000000,
+    "nationality": "fr"
   },
   {
     "id": 1160,
@@ -1277,7 +1436,8 @@
     "name_en": "Lucas Perri",
     "position": "goalkeeper",
     "ability": 86,
-    "market_value": 60000000
+    "market_value": 60000000,
+    "nationality": "br"
   },
   {
     "id": 1161,
@@ -1285,7 +1445,8 @@
     "name_en": "M'Bala Nzola",
     "position": "striker",
     "ability": 86,
-    "market_value": 60000000
+    "market_value": 60000000,
+    "nationality": "ao"
   },
   {
     "id": 1162,
@@ -1293,7 +1454,8 @@
     "name_en": "Miguel Almirón",
     "position": "striker",
     "ability": 86,
-    "market_value": 60000000
+    "market_value": 60000000,
+    "nationality": "py"
   },
   {
     "id": 1163,
@@ -1301,7 +1463,8 @@
     "name_en": "Moncayola",
     "position": "midfielder",
     "ability": 86,
-    "market_value": 60000000
+    "market_value": 60000000,
+    "nationality": "es"
   },
   {
     "id": 1164,
@@ -1309,7 +1472,8 @@
     "name_en": "Solly March",
     "position": "midfielder",
     "ability": 86,
-    "market_value": 60000000
+    "market_value": 60000000,
+    "nationality": "gb"
   },
   {
     "id": 1165,
@@ -1317,7 +1481,8 @@
     "name_en": "Vladimír Coufal",
     "position": "defender",
     "ability": 86,
-    "market_value": 60000000
+    "market_value": 60000000,
+    "nationality": "cz"
   },
   {
     "id": 1166,
@@ -1325,7 +1490,8 @@
     "name_en": "Darwin Machís",
     "position": "midfielder",
     "ability": 85,
-    "market_value": 55000000
+    "market_value": 55000000,
+    "nationality": "ve"
   },
   {
     "id": 1167,
@@ -1333,7 +1499,8 @@
     "name_en": "Enzo Le Fée",
     "position": "midfielder",
     "ability": 85,
-    "market_value": 55000000
+    "market_value": 55000000,
+    "nationality": "fr"
   },
   {
     "id": 1168,
@@ -1341,7 +1508,8 @@
     "name_en": "Filip Jörgensen",
     "position": "goalkeeper",
     "ability": 85,
-    "market_value": 55000000
+    "market_value": 55000000,
+    "nationality": "dk"
   },
   {
     "id": 1169,
@@ -1349,7 +1517,8 @@
     "name_en": "Florian Sotoca",
     "position": "striker",
     "ability": 85,
-    "market_value": 55000000
+    "market_value": 55000000,
+    "nationality": "fr"
   },
   {
     "id": 1170,
@@ -1357,7 +1526,8 @@
     "name_en": "Jérémie Boga",
     "position": "striker",
     "ability": 85,
-    "market_value": 55000000
+    "market_value": 55000000,
+    "nationality": "ci"
   },
   {
     "id": 1171,
@@ -1365,7 +1535,8 @@
     "name_en": "Nicola Zalewski",
     "position": "midfielder",
     "ability": 85,
-    "market_value": 55000000
+    "market_value": 55000000,
+    "nationality": "pl"
   },
   {
     "id": 1172,
@@ -1373,7 +1544,8 @@
     "name_en": "Philip Billing",
     "position": "midfielder",
     "ability": 85,
-    "market_value": 55000000
+    "market_value": 55000000,
+    "nationality": "dk"
   },
   {
     "id": 1173,
@@ -1381,7 +1553,8 @@
     "name_en": "Ridle Baku",
     "position": "defender",
     "ability": 85,
-    "market_value": 55000000
+    "market_value": 55000000,
+    "nationality": "de"
   },
   {
     "id": 1174,
@@ -1389,7 +1562,8 @@
     "name_en": "Youssouf Sabaly",
     "position": "defender",
     "ability": 85,
-    "market_value": 55000000
+    "market_value": 55000000,
+    "nationality": "sn"
   },
   {
     "id": 1175,
@@ -1397,7 +1571,8 @@
     "name_en": "Alban Lafont",
     "position": "goalkeeper",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "fr"
   },
   {
     "id": 1176,
@@ -1405,7 +1580,8 @@
     "name_en": "Arne Maier",
     "position": "midfielder",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "de"
   },
   {
     "id": 1177,
@@ -1413,7 +1589,8 @@
     "name_en": "Carles Pérez",
     "position": "midfielder",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "es"
   },
   {
     "id": 1178,
@@ -1421,7 +1598,8 @@
     "name_en": "Corentin Tolisso",
     "position": "midfielder",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "fr"
   },
   {
     "id": 1179,
@@ -1429,7 +1607,8 @@
     "name_en": "Cristhian Stuani",
     "position": "striker",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "uy"
   },
   {
     "id": 1180,
@@ -1437,7 +1616,8 @@
     "name_en": "Eren Dinkçi",
     "position": "midfielder",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "de"
   },
   {
     "id": 1181,
@@ -1445,7 +1625,8 @@
     "name_en": "Gorosabel",
     "position": "defender",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "es"
   },
   {
     "id": 1182,
@@ -1453,7 +1634,8 @@
     "name_en": "Jeffrey Gouweleeuw",
     "position": "defender",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "nl"
   },
   {
     "id": 1183,
@@ -1461,7 +1643,8 @@
     "name_en": "Jesper Karlsson",
     "position": "striker",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "se"
   },
   {
     "id": 1184,
@@ -1469,7 +1652,8 @@
     "name_en": "Junior Dina Ebimbe",
     "position": "midfielder",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "fr"
   },
   {
     "id": 1185,
@@ -1477,7 +1661,8 @@
     "name_en": "Kevin Volland",
     "position": "striker",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "de"
   },
   {
     "id": 1186,
@@ -1485,7 +1670,8 @@
     "name_en": "Michael Zetterer",
     "position": "goalkeeper",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "de"
   },
   {
     "id": 1187,
@@ -1493,7 +1679,8 @@
     "name_en": "Michel Aebischer",
     "position": "midfielder",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "ch"
   },
   {
     "id": 1188,
@@ -1501,7 +1688,8 @@
     "name_en": "Miranda",
     "position": "defender",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "br"
   },
   {
     "id": 1189,
@@ -1509,7 +1697,8 @@
     "name_en": "Moussa Niakhaté",
     "position": "defender",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "sn"
   },
   {
     "id": 1190,
@@ -1517,7 +1706,8 @@
     "name_en": "Pepe Reina",
     "position": "goalkeeper",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "es"
   },
   {
     "id": 1191,
@@ -1525,7 +1715,8 @@
     "name_en": "Riccardo Sottil",
     "position": "striker",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "it"
   },
   {
     "id": 1192,
@@ -1533,7 +1724,8 @@
     "name_en": "Stephy Mavididi",
     "position": "striker",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "us"
   },
   {
     "id": 1193,
@@ -1541,7 +1733,8 @@
     "name_en": "Thilo Kehrer",
     "position": "defender",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "de"
   },
   {
     "id": 1194,
@@ -1549,7 +1742,8 @@
     "name_en": "Toti",
     "position": "defender",
     "ability": 84,
-    "market_value": 50000000
+    "market_value": 50000000,
+    "nationality": "pt"
   },
   {
     "id": 1195,
@@ -1557,7 +1751,8 @@
     "name_en": "Albert Sambi Lokonga",
     "position": "midfielder",
     "ability": 83,
-    "market_value": 45000000
+    "market_value": 45000000,
+    "nationality": "be"
   },
   {
     "id": 1196,
@@ -1565,7 +1760,8 @@
     "name_en": "Cédric Kipré",
     "position": "defender",
     "ability": 83,
-    "market_value": 45000000
+    "market_value": 45000000,
+    "nationality": "ci"
   },
   {
     "id": 1197,
@@ -1573,7 +1769,8 @@
     "name_en": "Josha Vagnoman",
     "position": "defender",
     "ability": 83,
-    "market_value": 45000000
+    "market_value": 45000000,
+    "nationality": "de"
   },
   {
     "id": 1198,
@@ -1581,7 +1778,8 @@
     "name_en": "Juan Cruz",
     "position": "defender",
     "ability": 83,
-    "market_value": 45000000
+    "market_value": 45000000,
+    "nationality": "es"
   },
   {
     "id": 1199,
@@ -1589,7 +1787,8 @@
     "name_en": "Kike Barja",
     "position": "midfielder",
     "ability": 83,
-    "market_value": 45000000
+    "market_value": 45000000,
+    "nationality": "es"
   },
   {
     "id": 1200,
@@ -1597,7 +1796,8 @@
     "name_en": "Lazar Samardžić",
     "position": "midfielder",
     "ability": 83,
-    "market_value": 45000000
+    "market_value": 45000000,
+    "nationality": "rs"
   },
   {
     "id": 1201,
@@ -1605,7 +1805,8 @@
     "name_en": "Nikola Krstović",
     "position": "striker",
     "ability": 83,
-    "market_value": 45000000
+    "market_value": 45000000,
+    "nationality": "me"
   },
   {
     "id": 1202,
@@ -1613,7 +1814,8 @@
     "name_en": "Ruben Vargas",
     "position": "midfielder",
     "ability": 83,
-    "market_value": 45000000
+    "market_value": 45000000,
+    "nationality": "ch"
   },
   {
     "id": 1203,
@@ -1621,7 +1823,8 @@
     "name_en": "Tom Cairney",
     "position": "midfielder",
     "ability": 83,
-    "market_value": 45000000
+    "market_value": 45000000,
+    "nationality": "gb"
   },
   {
     "id": 1204,
@@ -1629,7 +1832,8 @@
     "name_en": "Tomáš Čvančara",
     "position": "striker",
     "ability": 83,
-    "market_value": 45000000
+    "market_value": 45000000,
+    "nationality": "cz"
   },
   {
     "id": 1205,
@@ -1637,7 +1841,8 @@
     "name_en": "Anthony Losilla",
     "position": "midfielder",
     "ability": 82,
-    "market_value": 40000000
+    "market_value": 40000000,
+    "nationality": "de"
   },
   {
     "id": 1206,
@@ -1645,7 +1850,8 @@
     "name_en": "Robin Olsen",
     "position": "goalkeeper",
     "ability": 82,
-    "market_value": 40000000
+    "market_value": 40000000,
+    "nationality": "se"
   },
   {
     "id": 1207,
@@ -1653,7 +1859,8 @@
     "name_en": "Vinícius",
     "position": "striker",
     "ability": 82,
-    "market_value": 40000000
+    "market_value": 40000000,
+    "nationality": "br"
   },
   {
     "id": 1208,
@@ -1661,7 +1868,8 @@
     "name_en": "Boubakar Kouyaté",
     "position": "defender",
     "ability": 81,
-    "market_value": 35000000
+    "market_value": 35000000,
+    "nationality": "ml"
   },
   {
     "id": 1209,
@@ -1669,7 +1877,8 @@
     "name_en": "Carlos Baleba",
     "position": "midfielder",
     "ability": 81,
-    "market_value": 35000000
+    "market_value": 35000000,
+    "nationality": "cm"
   },
   {
     "id": 1210,
@@ -1677,7 +1886,8 @@
     "name_en": "Keane Lewis-Potter",
     "position": "striker",
     "ability": 81,
-    "market_value": 35000000
+    "market_value": 35000000,
+    "nationality": "gb"
   },
   {
     "id": 1211,
@@ -1685,7 +1895,8 @@
     "name_en": "Latasa",
     "position": "striker",
     "ability": 81,
-    "market_value": 35000000
+    "market_value": 35000000,
+    "nationality": "es"
   },
   {
     "id": 1212,
@@ -1693,7 +1904,8 @@
     "name_en": "Luca Mazzitelli",
     "position": "midfielder",
     "ability": 81,
-    "market_value": 35000000
+    "market_value": 35000000,
+    "nationality": "it"
   },
   {
     "id": 1213,
@@ -1701,7 +1913,8 @@
     "name_en": "Luke Woolfenden",
     "position": "defender",
     "ability": 81,
-    "market_value": 35000000
+    "market_value": 35000000,
+    "nationality": "gb"
   },
   {
     "id": 1214,
@@ -1709,7 +1922,8 @@
     "name_en": "Nediljko Labrović",
     "position": "goalkeeper",
     "ability": 81,
-    "market_value": 35000000
+    "market_value": 35000000,
+    "nationality": "hr"
   },
   {
     "id": 1215,
@@ -1717,7 +1931,8 @@
     "name_en": "Noah Atubolu",
     "position": "goalkeeper",
     "ability": 81,
-    "market_value": 35000000
+    "market_value": 35000000,
+    "nationality": "de"
   },
   {
     "id": 1216,
@@ -1725,7 +1940,8 @@
     "name_en": "Paul Joly",
     "position": "defender",
     "ability": 81,
-    "market_value": 35000000
+    "market_value": 35000000,
+    "nationality": "fr"
   },
   {
     "id": 1217,
@@ -1733,7 +1949,8 @@
     "name_en": "Rob Holding",
     "position": "defender",
     "ability": 81,
-    "market_value": 35000000
+    "market_value": 35000000,
+    "nationality": "gb"
   },
   {
     "id": 1218,
@@ -1741,7 +1958,8 @@
     "name_en": "Simone Scuffet",
     "position": "goalkeeper",
     "ability": 81,
-    "market_value": 35000000
+    "market_value": 35000000,
+    "nationality": "it"
   },
   {
     "id": 1219,
@@ -1749,7 +1967,8 @@
     "name_en": "Daley Sinkgraven",
     "position": "defender",
     "ability": 80,
-    "market_value": 30000000
+    "market_value": 30000000,
+    "nationality": "nl"
   },
   {
     "id": 1220,
@@ -1757,7 +1976,8 @@
     "name_en": "Dimitris Giannoulis",
     "position": "defender",
     "ability": 80,
-    "market_value": 30000000
+    "market_value": 30000000,
+    "nationality": "gr"
   },
   {
     "id": 1221,
@@ -1765,7 +1985,8 @@
     "name_en": "Jaume",
     "position": "goalkeeper",
     "ability": 80,
-    "market_value": 30000000
+    "market_value": 30000000,
+    "nationality": "es"
   },
   {
     "id": 1222,
@@ -1773,7 +1994,8 @@
     "name_en": "Junior Mwanga",
     "position": "midfielder",
     "ability": 80,
-    "market_value": 30000000
+    "market_value": 30000000,
+    "nationality": "cd"
   },
   {
     "id": 1223,
@@ -1781,7 +2003,8 @@
     "name_en": "Kialonda Gaspar",
     "position": "defender",
     "ability": 80,
-    "market_value": 30000000
+    "market_value": 30000000,
+    "nationality": "ao"
   },
   {
     "id": 1224,
@@ -1789,7 +2012,8 @@
     "name_en": "Mamadou Sylla",
     "position": "striker",
     "ability": 80,
-    "market_value": 30000000
+    "market_value": 30000000,
+    "nationality": "sn"
   },
   {
     "id": 1225,
@@ -1797,7 +2021,8 @@
     "name_en": "Oumar Diakité",
     "position": "striker",
     "ability": 80,
-    "market_value": 30000000
+    "market_value": 30000000,
+    "nationality": "ci"
   },
   {
     "id": 1226,
@@ -1805,7 +2030,8 @@
     "name_en": "Sebastiano Esposito",
     "position": "striker",
     "ability": 80,
-    "market_value": 30000000
+    "market_value": 30000000,
+    "nationality": "it"
   },
   {
     "id": 1227,
@@ -1813,7 +2039,8 @@
     "name_en": "Steven Skrzybski",
     "position": "striker",
     "ability": 80,
-    "market_value": 30000000
+    "market_value": 30000000,
+    "nationality": "de"
   },
   {
     "id": 1228,
@@ -1821,7 +2048,8 @@
     "name_en": "Yordan Osorio",
     "position": "defender",
     "ability": 80,
-    "market_value": 30000000
+    "market_value": 30000000,
+    "nationality": "ve"
   },
   {
     "id": 1229,
@@ -1829,7 +2057,8 @@
     "name_en": "Zuriko Davitashvili",
     "position": "midfielder",
     "ability": 80,
-    "market_value": 30000000
+    "market_value": 30000000,
+    "nationality": "ge"
   },
   {
     "id": 1230,
@@ -1837,7 +2066,8 @@
     "name_en": "Armindo Sieb",
     "position": "striker",
     "ability": 79,
-    "market_value": 28000000
+    "market_value": 28000000,
+    "nationality": "de"
   },
   {
     "id": 1231,
@@ -1845,7 +2075,8 @@
     "name_en": "Cesare Casadei",
     "position": "midfielder",
     "ability": 79,
-    "market_value": 28000000
+    "market_value": 28000000,
+    "nationality": "it"
   },
   {
     "id": 1232,
@@ -1853,7 +2084,8 @@
     "name_en": "Félix Lemaréchal",
     "position": "midfielder",
     "ability": 79,
-    "market_value": 28000000
+    "market_value": 28000000,
+    "nationality": "fr"
   },
   {
     "id": 1233,
@@ -1861,7 +2093,8 @@
     "name_en": "Isaac Hayden",
     "position": "midfielder",
     "ability": 79,
-    "market_value": 28000000
+    "market_value": 28000000,
+    "nationality": "gb"
   },
   {
     "id": 1234,
@@ -1869,7 +2102,8 @@
     "name_en": "Jackson Porozo",
     "position": "defender",
     "ability": 79,
-    "market_value": 28000000
+    "market_value": 28000000,
+    "nationality": "ec"
   },
   {
     "id": 1235,
@@ -1877,7 +2111,8 @@
     "name_en": "Manquillo",
     "position": "defender",
     "ability": 79,
-    "market_value": 28000000
+    "market_value": 28000000,
+    "nationality": "es"
   },
   {
     "id": 1236,
@@ -1885,7 +2120,8 @@
     "name_en": "Norman Theuerkauf",
     "position": "midfielder",
     "ability": 79,
-    "market_value": 28000000
+    "market_value": 28000000,
+    "nationality": "de"
   },
   {
     "id": 1237,
@@ -1893,7 +2129,8 @@
     "name_en": "Raúl Moro",
     "position": "midfielder",
     "ability": 79,
-    "market_value": 28000000
+    "market_value": 28000000,
+    "nationality": "es"
   },
   {
     "id": 1238,
@@ -1901,7 +2138,8 @@
     "name_en": "Ado Onaiwu",
     "position": "striker",
     "ability": 78,
-    "market_value": 26000000
+    "market_value": 26000000,
+    "nationality": "jp"
   },
   {
     "id": 1239,
@@ -1909,7 +2147,8 @@
     "name_en": "Caleb Ekuban",
     "position": "striker",
     "ability": 78,
-    "market_value": 26000000
+    "market_value": 26000000,
+    "nationality": "gh"
   },
   {
     "id": 1240,
@@ -1917,7 +2156,8 @@
     "name_en": "Karol Mets",
     "position": "defender",
     "ability": 78,
-    "market_value": 26000000
+    "market_value": 26000000,
+    "nationality": "ee"
   },
   {
     "id": 1241,
@@ -1925,7 +2165,8 @@
     "name_en": "Liam Henderson",
     "position": "midfielder",
     "ability": 78,
-    "market_value": 26000000
+    "market_value": 26000000,
+    "nationality": "gb"
   },
   {
     "id": 1242,
@@ -1933,7 +2174,8 @@
     "name_en": "Samuel Edozie",
     "position": "striker",
     "ability": 78,
-    "market_value": 26000000
+    "market_value": 26000000,
+    "nationality": "gb"
   },
   {
     "id": 1243,
@@ -1941,7 +2183,8 @@
     "name_en": "Carlos Martín",
     "position": "striker",
     "ability": 77,
-    "market_value": 24000000
+    "market_value": 24000000,
+    "nationality": "es"
   },
   {
     "id": 1244,
@@ -1949,7 +2192,8 @@
     "name_en": "Daniele Padelli",
     "position": "goalkeeper",
     "ability": 77,
-    "market_value": 24000000
+    "market_value": 24000000,
+    "nationality": "it"
   },
   {
     "id": 1245,
@@ -1957,7 +2201,8 @@
     "name_en": "Saïdou Sow",
     "position": "defender",
     "ability": 77,
-    "market_value": 24000000
+    "market_value": 24000000,
+    "nationality": "gn"
   },
   {
     "id": 1246,
@@ -1965,7 +2210,8 @@
     "name_en": "Timothée Pembélé",
     "position": "defender",
     "ability": 77,
-    "market_value": 24000000
+    "market_value": 24000000,
+    "nationality": "fr"
   },
   {
     "id": 1247,
@@ -1973,7 +2219,8 @@
     "name_en": "Alaa Bellaarouch",
     "position": "goalkeeper",
     "ability": 76,
-    "market_value": 22000000
+    "market_value": 22000000,
+    "nationality": "ma"
   },
   {
     "id": 1248,
@@ -1981,7 +2228,8 @@
     "name_en": "Dean Huijsen",
     "position": "defender",
     "ability": 76,
-    "market_value": 22000000
+    "market_value": 22000000,
+    "nationality": "es"
   },
   {
     "id": 1249,
@@ -1989,7 +2237,8 @@
     "name_en": "Marko Pajač",
     "position": "defender",
     "ability": 76,
-    "market_value": 22000000
+    "market_value": 22000000,
+    "nationality": "hr"
   },
   {
     "id": 1250,
@@ -1997,6 +2246,7 @@
     "name_en": "Thomas Dähne",
     "position": "goalkeeper",
     "ability": 76,
-    "market_value": 22000000
+    "market_value": 22000000,
+    "nationality": "de"
   }
 ]
