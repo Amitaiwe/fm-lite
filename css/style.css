@@ -1289,3 +1289,8 @@ table.league-table tr.champion-row td.team-cell::before {
   color: var(--electric);
   border-color: var(--electric);
 }
+
+/* סמלי קבוצות אמיתיים: הילה בהירה עדינה כדי שסמלים כהים (טוטנהאם, יובנטוס) ייראו על רקע כהה */
+.crest-img {
+  filter: drop-shadow(0 0 1.5px rgba(255, 255, 255, 0.75));
+}

@@ -27,7 +27,7 @@ function teamInitials(teamId) {
 }
 
 /** מחזיר מחרוזת SVG (מגן + ראשי תיבות) לקבוצה נתונה, בגודל נתון בפיקסלים. */
-export function teamCrestSvg(teamId, size = 26) {
+function generatedCrestSvg(teamId, size = 26, extra = "") {
   const hash = hashString(teamId);
   const hue1 = hash % 360;
   const hue2 = (hue1 + 35) % 360;
@@ -35,7 +35,7 @@ export function teamCrestSvg(teamId, size = 26) {
   const fontSize = initials.length > 3 ? 11 : 15;
   const gradId = `crestGrad_${teamId}`;
   return `
-    <svg class="crest" width="${size}" height="${size}" viewBox="0 0 48 56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <svg class="crest" ${extra} width="${size}" height="${size}" viewBox="0 0 48 56" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs>
         <linearGradient id="${gradId}" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stop-color="hsl(${hue1},72%,46%)" />
@@ -47,4 +47,13 @@ export function teamCrestSvg(teamId, size = 26) {
       <text x="24" y="33" text-anchor="middle" font-family="Arial, sans-serif" font-weight="800"
             font-size="${fontSize}" fill="#fff">${initials}</text>
     </svg>`;
+}
+
+/**
+ * סמל קבוצה: תמונת הסמל האמיתי מ-img/crests/<teamId>.png. אם הקובץ חסר או נכשל
+ * בטעינה, מוצג במקומו המגן הגנרי (SVG) כגיבוי.
+ */
+export function teamCrestSvg(teamId, size = 26) {
+  const fallback = generatedCrestSvg(teamId, size, 'style="display:none"');
+  return `<span class="crest-wrap" style="display:inline-flex;flex-shrink:0"><img class="crest crest-img" src="img/crests/${teamId}.png" width="${size}" height="${size}" alt="" loading="lazy" decoding="async" style="object-fit:contain" onerror="this.nextElementSibling.style.display='block';this.remove()" />${fallback}</span>`;
 }

@@ -1,7 +1,7 @@
 // Service Worker פשוט - מאפשר התקנה כ-PWA והפעלה אופליין בסיסית
 // ע"י cache-first לקבצים הסטטיים של האפליקציה.
 
-const CACHE_NAME = "fm-lite-cache-v9";
+const CACHE_NAME = "fm-lite-cache-v10";
 const CORE_ASSETS = [
   "./",
   "./index.html",
